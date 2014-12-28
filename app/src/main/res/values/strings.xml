@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">QuotesBook</string>
+    <string name="tl_home">Algunas citas</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="drawer_opened">Menú Abierto</string>
+    <string name="drawer_closed">Menú Cerrado</string>
+
+</resources>
