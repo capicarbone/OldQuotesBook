@@ -1,9 +1,12 @@
 package com.medic.quotesbook.views.activities;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,8 +14,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.appspot.quotesbookapp.quotesclient.Quotesclient;
+import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuoteMsg;
+import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuotesCollection;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+
 import com.medic.quotesbook.R;
 
+import com.google.api.client.json.gson.GsonFactory;
+import com.medic.quotesbook.tasks.GetLastQuotesTask;
+import com.medic.quotesbook.views.fragments.SomeQuotesFragment;
+
+import java.io.IOException;
 
 public class BaseActivity extends ActionBarActivity {
 
@@ -26,8 +38,6 @@ public class BaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-
-        Quotesclient a;
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerOptionsView = (ListView) findViewById(R.id.drawer_options_view);
@@ -50,13 +60,20 @@ public class BaseActivity extends ActionBarActivity {
             }
         };
 
-
         mDrawerOptionsView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mDrawerOptions));
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        // Setting the fragment
+
+        Fragment f = new SomeQuotesFragment();
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .add(R.id.frame_content, new SomeQuotesFragment())
+                .commit();
 
     }
 
