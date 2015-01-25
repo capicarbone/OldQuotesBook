@@ -10,9 +10,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.appspot.quotesbookapp.quotesclient.Quotesclient;
 import com.medic.quotesbook.R;
-
-import quo
 
 
 public class BaseActivity extends ActionBarActivity {
@@ -28,7 +27,7 @@ public class BaseActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
-        QuotesClient a;
+        Quotesclient a;
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerOptionsView = (ListView) findViewById(R.id.drawer_options_view);
