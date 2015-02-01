@@ -9,6 +9,7 @@ import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuoteMsg;
 import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuotesCollection;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
+import com.google.gson.Gson;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.QuoteNetwork;
 import com.medic.quotesbook.views.adapters.QuotesAdapter;
@@ -44,12 +45,16 @@ public class GetLastQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote
 
         if (response != null) {
 
+            try {
+                Log.d("QuotesBook", response.toPrettyString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             for (Iterator<ApiMessagesQuoteMsg> iter = response.getQuotes().iterator(); iter.hasNext();){
                 ApiMessagesQuoteMsg quoteMsg= iter.next();
 
-                Quote q = new Quote();
-                q.setBody(quoteMsg.getBody());
-                quotes.add(q);
+                quotes.add(new Quote(quoteMsg));
             }
         }
 
