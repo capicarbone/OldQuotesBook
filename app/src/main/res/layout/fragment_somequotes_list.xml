@@ -8,7 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        android:paddingTop="8dp"
+        android:paddingLeft="@dimen/standard_padding"
+        android:paddingRight="@dimen/standard_padding"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+
         >
 
     </android.support.v7.widget.RecyclerView>

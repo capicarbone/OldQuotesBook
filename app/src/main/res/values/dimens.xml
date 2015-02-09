@@ -3,6 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="standard_padding">8dp</dimen>
+
     <dimen name="some_quote_padding">16dp</dimen>
     <dimen name="image_author_small">85dp</dimen>
 </resources>
