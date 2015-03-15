@@ -17,23 +17,29 @@
         android:orientation="horizontal"
         >
 
-        <RelativeLayout
-            android:layout_width="@dimen/image_author_small"
-            android:layout_height="match_parent">
-            <ImageView
+
+            <!-- <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:scaleType="center"
                 android:src="@drawable/author_pic_test"
                 android:baselineAlignBottom="true"
+                /> -->
+
+            <com.medic.quotesbook.views.widgets.ImageAutoFitView android:id="@+id/author_picture"
+                android:layout_width="@dimen/image_author_small"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:layout_margin="0dp"
                 />
-        </RelativeLayout>
+
+
 
 
         <TextView android:id="@+id/quote_body"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textColor="#000"
             android:padding="@dimen/some_quote_padding"
             android:textSize="18dp"

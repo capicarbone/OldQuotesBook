@@ -12,6 +12,7 @@ public class Author implements MessageBasedModelInterface {
     private String lastName;
     private String shortDescription;
     private String biography;
+    private String pictureURL;
 
     public Author(GenericJson message) {
         fromMessage(message);
@@ -44,6 +45,14 @@ public class Author implements MessageBasedModelInterface {
         return shortDescription;
     }
 
+    public String getPictureURL() {
+        return pictureURL;
+    }
+
+    public void setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
+    }
+
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
     }
@@ -63,6 +72,7 @@ public class Author implements MessageBasedModelInterface {
         this.lastName = msg.getLastName();
         this.shortDescription = msg.getShortDescription();
         this.biography = msg.getBiography();
+        this.pictureURL = msg.getPictureUrl();
     }
 
     @Override

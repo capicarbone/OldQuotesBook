@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.utils.QuoteNetwork;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -20,14 +23,26 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
     public ArrayList<Quote> quotes;
 
+    private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView bodyView;
+        public NetworkImageView authorPictureView;
+        public int height = -1;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            //authorPictureView = (NetworkImageView) itemView.findViewById(R.id.author_picture);
             bodyView = (TextView) itemView.findViewById(R.id.quote_body);
+
+            if (height == -1){
+                height = itemView.getHeight();
+            }else{
+                itemView.setMinimumHeight(height);
+            }
+
         }
     }
 
@@ -48,7 +63,13 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int i) {
-        holder.bodyView.setText(quotes.get(i).getBody());
+
+        Quote quote = quotes.get(i);
+
+        holder.bodyView.setText(quote.getBody());
+
+        //holder
+        //.authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureURL(), imageLoader );
     }
 
     @Override

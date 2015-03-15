@@ -39,6 +39,14 @@ public class Quote implements MessageBasedModelInterface {
         this.aditional = aditional;
     }
 
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
     @Override
     public void fromMessage(GenericJson message) {
 
