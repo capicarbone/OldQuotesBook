@@ -1,9 +1,13 @@
 package com.medic.quotesbook.views.adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -28,21 +32,20 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView bodyView;
-        public NetworkImageView authorPictureView;
-        public int height = -1;
+        //public NetworkImageView authorPictureView;
+        public ImageView authorPictureView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             //authorPictureView = (NetworkImageView) itemView.findViewById(R.id.author_picture);
             bodyView = (TextView) itemView.findViewById(R.id.quote_body);
+            authorPictureView = (ImageView) itemView.findViewById(R.id.author_picture);
 
-            if (height == -1){
-                height = itemView.getHeight();
-            }else{
-                itemView.setMinimumHeight(height);
-            }
+            //setIsRecyclable(false);
 
+            //BitmapDrawable b = (BitmapDrawable) authorPictureView.getDrawable();
+            //Log.d("QuotesAdapter", "El tamaña de la imagen es " + new Integer(b.getBitmap().getHeight()).toString());
         }
     }
 
@@ -67,6 +70,9 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         Quote quote = quotes.get(i);
 
         holder.bodyView.setText(quote.getBody());
+        holder.authorPictureView.setImageBitmap(null);
+
+        //Log.d("QuotesAdapter", "BindViewHolder");
 
         //holder
         //.authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureURL(), imageLoader );
