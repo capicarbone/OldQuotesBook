@@ -16,6 +16,7 @@ import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.QuoteNetwork;
+import com.medic.quotesbook.views.widgets.ImageAutoFitView;
 
 
 import java.util.ArrayList;
@@ -33,14 +34,14 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         public TextView bodyView;
         //public NetworkImageView authorPictureView;
-        public ImageView authorPictureView;
+        public ImageAutoFitView authorPictureView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             //authorPictureView = (NetworkImageView) itemView.findViewById(R.id.author_picture);
             bodyView = (TextView) itemView.findViewById(R.id.quote_body);
-            authorPictureView = (ImageView) itemView.findViewById(R.id.author_picture);
+            authorPictureView = (ImageAutoFitView) itemView.findViewById(R.id.author_picture);
 
             //setIsRecyclable(false);
 
@@ -74,8 +75,29 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         //Log.d("QuotesAdapter", "BindViewHolder");
 
-        //holder
-        //.authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureURL(), imageLoader );
+        holder
+        .authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureURL(), imageLoader );
+
+        holder.authorPictureView.addOnLayoutChangeListener(new View.OnLayoutChangeListener(){
+
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+
+                ImageAutoFitView i = (ImageAutoFitView) v;
+
+                Bitmap bitmap = ( (BitmapDrawable) i.getDrawable()).getBitmap();
+
+                if (bitmap != null){
+                    int diff = i.getMeasuredHeight() - bitmap.getWidth();
+
+                    if (i.getMeasuredHeight() > 0){
+                        i.setImageBitmap(bitmap.createScaledBitmap(bitmap, bitmap.getWidth() + diff, i.getMeasuredHeight(), false));
+
+                    }
+                }
+
+            }
+        });
     }
 
     @Override
