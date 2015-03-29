@@ -83,15 +83,28 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
 
-                ImageAutoFitView i = (ImageAutoFitView) v;
+                ImageAutoFitView imageView = (ImageAutoFitView) v;
 
-                Bitmap bitmap = ( (BitmapDrawable) i.getDrawable()).getBitmap();
+                Bitmap bitmap = ( (BitmapDrawable) imageView.getDrawable()).getBitmap();
 
                 if (bitmap != null){
-                    int diff = i.getMeasuredHeight() - bitmap.getWidth();
+                    int diff = 0;
 
-                    if (i.getMeasuredHeight() > 0){
-                        i.setImageBitmap(bitmap.createScaledBitmap(bitmap, bitmap.getWidth() + diff, i.getMeasuredHeight(), false));
+                    if (imageView.getMeasuredHeight() > 0){
+
+
+                        if (imageView.getMeasuredWidth() > bitmap.getWidth()){
+
+                            diff = imageView.getMeasuredWidth() - bitmap.getHeight();
+                            bitmap = bitmap.createScaledBitmap(bitmap, imageView.getMeasuredWidth(), bitmap.getHeight() + diff, false );
+
+                            imageView.setImageBitmap(bitmap);
+                        }
+
+                        diff = imageView.getMeasuredHeight() - bitmap.getWidth();
+
+                        if (diff > 0)
+                            imageView.setImageBitmap(bitmap.createScaledBitmap(bitmap, bitmap.getWidth() + diff, imageView.getMeasuredHeight(), false));
 
                     }
                 }
