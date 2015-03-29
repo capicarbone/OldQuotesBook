@@ -38,7 +38,8 @@ public class GetLastQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote
         ApiMessagesQuotesCollection response = null;
 
         try {
-            response = service.quotes().execute();
+            response = service.quotes().some().setLimit(12).execute();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
