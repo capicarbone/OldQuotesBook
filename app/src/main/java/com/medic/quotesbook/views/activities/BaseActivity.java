@@ -69,12 +69,14 @@ public class BaseActivity extends ActionBarActivity {
 
         // Setting the fragment
 
-        Fragment f = new SomeQuotesFragment();
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction()
-                .add(R.id.frame_content, new SomeQuotesFragment())
-                .commit();
+       if (savedInstanceState == null) {
 
+           Fragment f = new SomeQuotesFragment();
+           FragmentManager fm = getSupportFragmentManager();
+           fm.beginTransaction()
+                   .add(R.id.frame_content, new SomeQuotesFragment())
+                   .commit();
+       }
     }
 
     @Override

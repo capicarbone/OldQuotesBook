@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<android.support.v7.widget.CardView
+<LinearLayout
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    card_view:cardCornerRadius="2dp"
-    android:layout_margin="0dp"
-    android:padding="0dp"
+    android:layout_marginTop="@dimen/standard_padding"
     >
-
-    <LinearLayout
+    <android.support.v7.widget.CardView android:id="@+id/quote_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="4dp"
         android:layout_margin="0dp"
-        android:padding="0dp"
         >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="0dp"
+            android:padding="0dp"
+            >
 
             <com.medic.quotesbook.views.widgets.ImageAutoFitView android:id="@+id/author_picture"
                 android:layout_width="@dimen/image_author_small"
@@ -29,21 +32,38 @@
                 />
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/some_quote_padding"
+                >
 
-
-        <TextView android:id="@+id/quote_body"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#000"
-            android:padding="@dimen/some_quote_padding"
-            android:textSize="18dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                <TextView android:id="@+id/quote_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="#000"
+                    android:textSize="18dp"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. "
-            android:background="#fff"
-            />
+                    />
 
-     </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" - Aristóteles"
+                    android:textSize="16dp"
+                    android:textColor="@color/less"
+                    android:paddingTop="@dimen/standard_padding"
+                    android:gravity="right" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
 
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
+

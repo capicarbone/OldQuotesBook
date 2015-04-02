@@ -2,6 +2,7 @@ package com.medic.quotesbook.views.adapters;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,20 +34,17 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView bodyView;
-        //public NetworkImageView authorPictureView;
         public ImageAutoFitView authorPictureView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            //authorPictureView = (NetworkImageView) itemView.findViewById(R.id.author_picture);
             bodyView = (TextView) itemView.findViewById(R.id.quote_body);
             authorPictureView = (ImageAutoFitView) itemView.findViewById(R.id.author_picture);
 
-            //setIsRecyclable(false);
+            CardView quotesCardView = (CardView) itemView.findViewById(R.id.quote_card_view);
+            quotesCardView.setPreventCornerOverlap(false);
 
-            //BitmapDrawable b = (BitmapDrawable) authorPictureView.getDrawable();
-            //Log.d("QuotesAdapter", "El tamaña de la imagen es " + new Integer(b.getBitmap().getHeight()).toString());
         }
     }
 
