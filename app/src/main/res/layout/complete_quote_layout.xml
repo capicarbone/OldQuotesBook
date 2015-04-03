@@ -48,7 +48,7 @@
 tempor incididunt ut labore et dolore magna aliqua. "
                     />
 
-                <TextView
+                <TextView android:id="@+id/quote_author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=" - Aristóteles"

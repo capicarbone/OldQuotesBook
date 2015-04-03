@@ -35,12 +35,14 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         public TextView bodyView;
         public ImageAutoFitView authorPictureView;
+        public TextView authorNameView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             bodyView = (TextView) itemView.findViewById(R.id.quote_body);
             authorPictureView = (ImageAutoFitView) itemView.findViewById(R.id.author_picture);
+            authorNameView = (TextView) itemView.findViewById(R.id.quote_author);
 
             CardView quotesCardView = (CardView) itemView.findViewById(R.id.quote_card_view);
             quotesCardView.setPreventCornerOverlap(false);
@@ -70,6 +72,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         holder.bodyView.setText(quote.getBody());
         holder.authorPictureView.setImageBitmap(null);
+        holder.authorNameView.setText("- " + quote.getAuthor().getFullName());
 
         //Log.d("QuotesAdapter", "BindViewHolder");
 

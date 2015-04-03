@@ -65,6 +65,19 @@ public class Author implements MessageBasedModelInterface {
         this.biography = biography;
     }
 
+    public String getFullName(){
+
+        if (this.lastName == null){
+            return this.fistName;
+        }
+
+        if (this.fistName == null){
+            return this.lastName;
+        }
+
+        return this.fistName + " " + this.lastName;
+    }
+
     @Override
     public void fromMessage(GenericJson message) {
         ApiMessagesAuthorMsg msg = (ApiMessagesAuthorMsg) message;
