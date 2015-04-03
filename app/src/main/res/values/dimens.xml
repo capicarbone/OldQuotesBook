@@ -7,4 +7,7 @@
 
     <dimen name="some_quote_padding">16dp</dimen>
     <dimen name="image_author_small">85dp</dimen>
+
+    <dimen name="cards_borders">4dp</dimen>
+
 </resources>
