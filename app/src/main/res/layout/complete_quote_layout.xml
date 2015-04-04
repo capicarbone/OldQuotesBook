@@ -30,7 +30,7 @@
                 android:layout_margin="0dp"
                 android:padding="0dp"
                 card_view:sriv_left_bottom_corner_radius="@dimen/cards_borders"
-                card_view:sriv_right_top_corner_radius="@dimen/cards_borders"
+                card_view:sriv_left_top_corner_radius="@dimen/cards_borders"
                 />
 
 

@@ -241,7 +241,7 @@ public class RoundedImageAutoFitView extends ImageAutoFitView {
         updateDrawable();
         invalidate();
     }
-    static class SelectableRoundedCornerDrawable extends Drawable {
+    public static class SelectableRoundedCornerDrawable extends Drawable {
         private static final String TAG = "SelectableRoundedCornerDrawable";
         private static final int DEFAULT_BORDER_COLOR = Color.BLACK;
         private RectF mBounds = new RectF();
@@ -288,6 +288,11 @@ public class RoundedImageAutoFitView extends ImageAutoFitView {
                 return null;
             }
         }
+
+        public Bitmap getBitmap() {
+            return mBitmap;
+        }
+
         public static Drawable fromDrawable(Drawable drawable, Resources r) {
             if (drawable != null) {
                 if (drawable instanceof SelectableRoundedCornerDrawable) {

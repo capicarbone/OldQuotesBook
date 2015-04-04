@@ -18,6 +18,7 @@ import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.QuoteNetwork;
 import com.medic.quotesbook.views.widgets.ImageAutoFitView;
+import com.medic.quotesbook.views.widgets.RoundedImageAutoFitView;
 
 
 import java.util.ArrayList;
@@ -86,30 +87,31 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
                 ImageAutoFitView imageView = (ImageAutoFitView) v;
 
-                Bitmap bitmap = ( (BitmapDrawable) imageView.getDrawable()).getBitmap();
+                if ( imageView != null && imageView.getDrawable() != null) {
+                    Bitmap bitmap = ((RoundedImageAutoFitView.SelectableRoundedCornerDrawable) imageView.getDrawable()).getBitmap();
 
-                if (bitmap != null){
-                    int diff = 0;
+                    if (bitmap != null) {
+                        int diff = 0;
 
-                    if (imageView.getMeasuredHeight() > 0){
+                        if (imageView.getMeasuredHeight() > 0) {
 
 
-                        if (imageView.getMeasuredWidth() > bitmap.getWidth()){
+                            if (imageView.getMeasuredWidth() > bitmap.getWidth()) {
 
-                            diff = imageView.getMeasuredWidth() - bitmap.getHeight();
-                            bitmap = bitmap.createScaledBitmap(bitmap, imageView.getMeasuredWidth(), bitmap.getHeight() + diff, false );
+                                diff = imageView.getMeasuredWidth() - bitmap.getHeight();
+                                bitmap = bitmap.createScaledBitmap(bitmap, imageView.getMeasuredWidth(), bitmap.getHeight() + diff, false);
 
-                            imageView.setImageBitmap(bitmap);
+                                imageView.setImageBitmap(bitmap);
+                            }
+
+                            diff = imageView.getMeasuredHeight() - bitmap.getWidth();
+
+                            if (diff > 0)
+                                imageView.setImageBitmap(bitmap.createScaledBitmap(bitmap, bitmap.getWidth() + diff, imageView.getMeasuredHeight(), false));
+
                         }
-
-                        diff = imageView.getMeasuredHeight() - bitmap.getWidth();
-
-                        if (diff > 0)
-                            imageView.setImageBitmap(bitmap.createScaledBitmap(bitmap, bitmap.getWidth() + diff, imageView.getMeasuredHeight(), false));
-
                     }
                 }
-
             }
         });
     }
