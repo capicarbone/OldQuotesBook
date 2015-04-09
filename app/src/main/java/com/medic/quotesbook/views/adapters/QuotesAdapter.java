@@ -1,5 +1,6 @@
 package com.medic.quotesbook.views.adapters;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.CardView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.medic.quotesbook.AppController;
+import com.medic.quotesbook.QuoteActivity;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.QuoteNetwork;
@@ -32,7 +34,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView bodyView;
         public ImageAutoFitView authorPictureView;
@@ -47,6 +49,12 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
             CardView quotesCardView = (CardView) itemView.findViewById(R.id.quote_card_view);
             quotesCardView.setPreventCornerOverlap(false);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+
 
         }
     }

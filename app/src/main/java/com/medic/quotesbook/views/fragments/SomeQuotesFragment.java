@@ -96,6 +96,8 @@ public class SomeQuotesFragment extends Fragment{ // implements AbsListView.OnIt
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+
+
         GetLastQuotesTask task = new GetLastQuotesTask(adapter);
         task.execute();
 
