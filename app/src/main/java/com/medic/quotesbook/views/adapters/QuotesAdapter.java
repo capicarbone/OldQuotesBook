@@ -1,24 +1,18 @@
 package com.medic.quotesbook.views.adapters;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.medic.quotesbook.AppController;
-import com.medic.quotesbook.QuoteActivity;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
-import com.medic.quotesbook.utils.QuoteNetwork;
+import com.medic.quotesbook.utils.ChangeActivityRequestListener;
 import com.medic.quotesbook.views.widgets.ImageAutoFitView;
 import com.medic.quotesbook.views.widgets.RoundedImageAutoFitView;
 
@@ -31,6 +25,7 @@ import java.util.ArrayList;
 public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder>{
 
     public ArrayList<Quote> quotes;
+    private ChangeActivityRequestListener listener;
 
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
@@ -40,8 +35,15 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         public ImageAutoFitView authorPictureView;
         public TextView authorNameView;
 
-        public ViewHolder(View itemView) {
+        Quote quote;
+
+        ChangeActivityRequestListener listener;
+
+        public ViewHolder(View itemView, Quote quote, ChangeActivityRequestListener listener) {
             super(itemView);
+
+            this.listener = listener;
+            this.quote = quote;
 
             bodyView = (TextView) itemView.findViewById(R.id.quote_body);
             authorPictureView = (ImageAutoFitView) itemView.findViewById(R.id.author_picture);
@@ -50,10 +52,14 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
             CardView quotesCardView = (CardView) itemView.findViewById(R.id.quote_card_view);
             quotesCardView.setPreventCornerOverlap(false);
 
+            itemView.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View v) {
+
+            listener.showQuote(this.quote);
 
 
         }
@@ -63,13 +69,18 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         this.quotes = quotes;
     }
 
+    public QuotesAdapter(ArrayList<Quote> quotes, ChangeActivityRequestListener listener) {
+        this.quotes = quotes;
+        this.listener = listener;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.complete_quote_layout, parent, false);
 
-        ViewHolder vh = new ViewHolder(v);
+        ViewHolder vh = new ViewHolder(v, quotes.get(i), listener);
 
         return vh;
     }

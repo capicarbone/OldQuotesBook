@@ -7,15 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.tasks.GetLastQuotesTask;
+import com.medic.quotesbook.utils.ChangeActivityRequestListener;
 import com.medic.quotesbook.views.adapters.QuotesAdapter;
 import com.medic.quotesbook.views.fragments.dummy.DummyContent;
 
@@ -91,11 +89,10 @@ public class SomeQuotesFragment extends Fragment{ // implements AbsListView.OnIt
         // Set the adapter
         recyclerView = (RecyclerView) view.findViewById(R.id.quotes_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
-        QuotesAdapter adapter = new QuotesAdapter(null);
+        QuotesAdapter adapter = new QuotesAdapter(null, (ChangeActivityRequestListener) getActivity());
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
 
 
         GetLastQuotesTask task = new GetLastQuotesTask(adapter);

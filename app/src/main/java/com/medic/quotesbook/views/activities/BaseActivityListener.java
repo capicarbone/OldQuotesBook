@@ -1,38 +1,33 @@
 package com.medic.quotesbook.views.activities;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.appspot.quotesbookapp.quotesclient.Quotesclient;
-import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuoteMsg;
-import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuotesCollection;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-
+import com.medic.quotesbook.QuoteActivity;
 import com.medic.quotesbook.R;
 
-import com.google.api.client.json.gson.GsonFactory;
-import com.medic.quotesbook.tasks.GetLastQuotesTask;
+import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.utils.ChangeActivityRequestListener;
 import com.medic.quotesbook.views.fragments.SomeQuotesFragment;
 
-import java.io.IOException;
-
-public class BaseActivity extends ActionBarActivity {
+public class BaseActivityListener extends ActionBarActivity implements ChangeActivityRequestListener {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerOptionsView;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private String[] mDrawerOptions;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,5 +106,12 @@ public class BaseActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showQuote(Quote quote) {
+
+        Intent i = new Intent(this, QuoteActivity.class);
+        startActivity(i);
     }
 }
