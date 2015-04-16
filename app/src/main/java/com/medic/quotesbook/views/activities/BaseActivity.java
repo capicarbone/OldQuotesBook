@@ -20,7 +20,7 @@ import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.ChangeActivityRequestListener;
 import com.medic.quotesbook.views.fragments.SomeQuotesFragment;
 
-public class BaseActivityListener extends ActionBarActivity implements ChangeActivityRequestListener {
+public class BaseActivity extends ActionBarActivity implements ChangeActivityRequestListener {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerOptionsView;
@@ -112,6 +112,7 @@ public class BaseActivityListener extends ActionBarActivity implements ChangeAct
     public void showQuote(Quote quote) {
 
         Intent i = new Intent(this, QuoteActivity.class);
+        i.putExtra(QuoteActivity.QUOTE_KEY, quote);
         startActivity(i);
     }
 }

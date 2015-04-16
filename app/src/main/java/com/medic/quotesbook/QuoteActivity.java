@@ -5,15 +5,32 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.medic.quotesbook.models.Quote;
+
 
 public class QuoteActivity extends ActionBarActivity {
+
+    public static final String QUOTE_KEY = "quotesbook.quote";
+
+    private Quote quote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote);
+
+        quote = this.getIntent().getParcelableExtra(QUOTE_KEY);
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+//        getActionBar().setTitle(quote.getAuthor().getLastName());
+
+        getSupportActionBar().setTitle(quote.getAuthor().getFistName());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

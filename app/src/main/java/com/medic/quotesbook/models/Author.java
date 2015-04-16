@@ -1,12 +1,15 @@
 package com.medic.quotesbook.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesAuthorMsg;
 import com.google.api.client.json.GenericJson;
 
 /**
  * Created by capi on 01/02/15.
  */
-public class Author implements MessageBasedModelInterface {
+public class Author implements MessageBasedModelInterface, Parcelable {
 
     private String fistName;
     private String lastName;
@@ -23,6 +26,14 @@ public class Author implements MessageBasedModelInterface {
         this.lastName = lastName;
         this.shortDescription = shortDescription;
         this.biography = biography;
+    }
+
+    public Author(Parcel in){
+        fistName = in.readString();
+        lastName = in.readString();
+        shortDescription = in.readString();
+        biography = in.readString();
+
     }
 
     public String getFistName() {
@@ -92,4 +103,29 @@ public class Author implements MessageBasedModelInterface {
     public GenericJson toMessage() {
         return null;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(fistName);
+        dest.writeString(lastName);
+        dest.writeString(shortDescription);
+        dest.writeString(biography);
+        dest.writeString(pictureURL);
+    }
+
+    public static final Parcelable.Creator<Author> CREATOR
+            = new Parcelable.Creator<Author>() {
+        public Author createFromParcel(Parcel in) {
+            return new Author(in);
+        }
+
+        public Author[] newArray(int size) {
+            return new Author[size];
+        }
+    };
 }

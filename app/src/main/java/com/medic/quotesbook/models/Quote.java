@@ -1,12 +1,15 @@
 package com.medic.quotesbook.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuoteMsg;
 import com.google.api.client.json.GenericJson;
 
 /**
  * Created by capi on 25/01/15.
  */
-public class Quote implements MessageBasedModelInterface {
+public class Quote implements MessageBasedModelInterface, Parcelable {
 
     private String body;
     private String aditional;
@@ -21,6 +24,13 @@ public class Quote implements MessageBasedModelInterface {
     public Quote(String body, String aditional) {
         this.body = body;
         this.aditional = aditional;
+    }
+
+    public Quote(Parcel in){
+
+        body = in.readString();
+        aditional = in.readString();
+        author = in.readParcelable(Author.class.getClassLoader());
     }
 
     public String getBody() {
@@ -59,4 +69,28 @@ public class Quote implements MessageBasedModelInterface {
     public GenericJson toMessage() {
         return null;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeString(body);
+        dest.writeString(aditional);
+        dest.writeParcelable(author, 0);
+    }
+
+    public static final Parcelable.Creator<Quote> CREATOR
+            = new Parcelable.Creator<Quote>() {
+        public Quote createFromParcel(Parcel in) {
+            return new Quote(in);
+        }
+
+        public Quote[] newArray(int size) {
+            return new Quote[size];
+        }
+    };
 }
