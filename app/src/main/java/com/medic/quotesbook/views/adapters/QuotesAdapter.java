@@ -3,6 +3,7 @@ package com.medic.quotesbook.views.adapters;
 import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         public ImageAutoFitView authorPictureView;
         public TextView authorNameView;
 
-        Quote quote;
+        public Quote quote;
 
         ChangeActivityRequestListener listener;
 
@@ -58,6 +59,8 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
+
+            Log.d("QuotesAdapter", "Click sobre " + authorNameView.getText() );
 
             listener.showQuote(this.quote);
 
@@ -93,6 +96,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         holder.bodyView.setText(quote.getBody());
         holder.authorPictureView.setImageBitmap(null);
         holder.authorNameView.setText("- " + quote.getAuthor().getFullName());
+        holder.quote = quote;
 
         //Log.d("QuotesAdapter", "BindViewHolder");
 

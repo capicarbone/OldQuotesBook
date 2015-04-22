@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.medic.quotesbook.models.Quote;
 
@@ -12,6 +13,8 @@ public class QuoteActivity extends ActionBarActivity {
 
     public static final String QUOTE_KEY = "quotesbook.quote";
 
+    TextView quoteBodyView;
+
     private Quote quote;
 
     @Override
@@ -19,7 +22,12 @@ public class QuoteActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote);
 
+        quoteBodyView = (TextView) findViewById(R.id.quote_body);
+
         quote = this.getIntent().getParcelableExtra(QUOTE_KEY);
+
+        quoteBodyView.setText(quote.getBody());
+
 
     }
 
@@ -27,9 +35,7 @@ public class QuoteActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
-//        getActionBar().setTitle(quote.getAuthor().getLastName());
-
-        getSupportActionBar().setTitle(quote.getAuthor().getFistName());
+        getSupportActionBar().setTitle(quote.getAuthor().getFullName());
     }
 
     @Override
