@@ -10,4 +10,10 @@
 
     <dimen name="cards_borders">4dp</dimen>
 
+    <dimen name="author_picture_size">200dp</dimen>
+    <dimen name="author_picture_borders">100dp</dimen>
+
+    <dimen name="quote_text_size">20dp</dimen>
+
+
 </resources>

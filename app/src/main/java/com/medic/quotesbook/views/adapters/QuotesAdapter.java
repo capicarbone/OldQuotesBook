@@ -14,8 +14,7 @@ import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.ChangeActivityRequestListener;
-import com.medic.quotesbook.views.widgets.ImageAutoFitView;
-import com.medic.quotesbook.views.widgets.RoundedImageAutoFitView;
+import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
 
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView bodyView;
-        public ImageAutoFitView authorPictureView;
+        public RoundedImageNetworkView authorPictureView;
         public TextView authorNameView;
 
         public Quote quote;
@@ -47,7 +46,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
             this.quote = quote;
 
             bodyView = (TextView) itemView.findViewById(R.id.quote_body);
-            authorPictureView = (ImageAutoFitView) itemView.findViewById(R.id.author_picture);
+            authorPictureView = (RoundedImageNetworkView) itemView.findViewById(R.id.author_picture);
             authorNameView = (TextView) itemView.findViewById(R.id.quote_author);
 
             CardView quotesCardView = (CardView) itemView.findViewById(R.id.quote_card_view);
@@ -108,10 +107,10 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
 
-                ImageAutoFitView imageView = (ImageAutoFitView) v;
+                RoundedImageNetworkView imageView = (RoundedImageNetworkView) v;
 
                 if ( imageView != null && imageView.getDrawable() != null) {
-                    Bitmap bitmap = ((RoundedImageAutoFitView.SelectableRoundedCornerDrawable) imageView.getDrawable()).getBitmap();
+                    Bitmap bitmap = ((RoundedImageNetworkView.SelectableRoundedCornerDrawable) imageView.getDrawable()).getBitmap();
 
                     if (bitmap != null) {
                         int diff = 0;

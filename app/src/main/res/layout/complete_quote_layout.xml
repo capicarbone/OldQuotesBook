@@ -23,7 +23,8 @@
             android:padding="0dp"
             >
 
-            <com.medic.quotesbook.views.widgets.RoundedImageAutoFitView android:id="@+id/author_picture"
+            <com.medic.quotesbook.views.widgets.RoundedImageNetworkView
+                android:id="@+id/author_picture"
                 android:layout_width="@dimen/image_author_small"
                 android:layout_height="match_parent"
                 android:scaleType="center"

@@ -6,7 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
 
 
 public class QuoteActivity extends ActionBarActivity {
@@ -14,6 +16,10 @@ public class QuoteActivity extends ActionBarActivity {
     public static final String QUOTE_KEY = "quotesbook.quote";
 
     TextView quoteBodyView;
+    RoundedImageNetworkView authorPictureView;
+
+    private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
 
     private Quote quote;
 
@@ -23,11 +29,12 @@ public class QuoteActivity extends ActionBarActivity {
         setContentView(R.layout.activity_quote);
 
         quoteBodyView = (TextView) findViewById(R.id.quote_body);
+        authorPictureView = (RoundedImageNetworkView) findViewById(R.id.author_picture);
 
         quote = this.getIntent().getParcelableExtra(QUOTE_KEY);
 
         quoteBodyView.setText(quote.getBody());
-
+        authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureURL(), imageLoader);
 
     }
 

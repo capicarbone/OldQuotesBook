@@ -33,6 +33,7 @@ public class Author implements MessageBasedModelInterface, Parcelable {
         lastName = in.readString();
         shortDescription = in.readString();
         biography = in.readString();
+        pictureURL = in.readString();
 
     }
 
