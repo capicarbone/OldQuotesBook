@@ -5,13 +5,13 @@
 
     <dimen name="standard_padding">8dp</dimen>
 
-    <dimen name="some_quote_padding">16dp</dimen>
+    <dimen name="standard_spacing">16dp</dimen>
     <dimen name="image_author_small">85dp</dimen>
 
     <dimen name="cards_borders">4dp</dimen>
 
-    <dimen name="author_picture_size">200dp</dimen>
-    <dimen name="author_picture_borders">100dp</dimen>
+    <dimen name="author_picture_size">180dp</dimen>
+    <dimen name="author_picture_borders">90dp</dimen>
 
     <dimen name="quote_text_size">20dp</dimen>
 

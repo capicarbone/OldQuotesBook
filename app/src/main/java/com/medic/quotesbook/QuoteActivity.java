@@ -16,7 +16,9 @@ public class QuoteActivity extends ActionBarActivity {
     public static final String QUOTE_KEY = "quotesbook.quote";
 
     TextView quoteBodyView;
+    TextView authorNameView;
     RoundedImageNetworkView authorPictureView;
+    TextView authorDescriptionView;
 
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
@@ -29,11 +31,19 @@ public class QuoteActivity extends ActionBarActivity {
         setContentView(R.layout.activity_quote);
 
         quoteBodyView = (TextView) findViewById(R.id.quote_body);
+        authorNameView = (TextView) findViewById(R.id.author_name);
+        authorDescriptionView = (TextView) findViewById(R.id.author_description);
         authorPictureView = (RoundedImageNetworkView) findViewById(R.id.author_picture);
 
         quote = this.getIntent().getParcelableExtra(QUOTE_KEY);
 
         quoteBodyView.setText(quote.getBody());
+
+        if (quote.getAuthor() != null){
+            authorNameView.setText("- "  + quote.getAuthor().getFullName());
+            authorDescriptionView.setText(quote.getAuthor().getShortDescription());
+        }
+
         authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureURL(), imageLoader);
 
     }

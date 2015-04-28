@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/some_quote_padding"
+                android:padding="@dimen/standard_spacing"
                 >
 
                 <TextView android:id="@+id/quote_body"
@@ -58,7 +58,9 @@ tempor incididunt ut labore et dolore magna aliqua. "
                     android:textSize="16dp"
                     android:textColor="@color/less"
                     android:paddingTop="@dimen/standard_padding"
-                    android:gravity="right" />
+                    android:gravity="right"
+                    android:textAllCaps="true"
+                    />
 
             </LinearLayout>
 
