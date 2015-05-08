@@ -21,8 +21,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".QuoteActivity"
-            android:label="@string/title_activity_quote" >
+            android:name=".views.activities.QuoteActivity"
+            android:label="@string/title_activity_quote"
+            android:parentActivityName=".views.activities.BaseActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.medic.quotesbook.views.activities.BaseActivity" />
+        </activity>
+        <activity
+            android:name=".views.activities.AuthorsActivity"
+            android:label="@string/title_activity_authors" >
         </activity>
     </application>
 

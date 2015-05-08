@@ -1,4 +1,4 @@
-package com.medic.quotesbook;
+package com.medic.quotesbook.views.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.medic.quotesbook.AppController;
+import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
 
@@ -55,6 +57,7 @@ public class QuoteActivity extends ActionBarActivity {
         getSupportActionBar().setTitle(quote.getAuthor().getFullName());
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -76,4 +79,6 @@ public class QuoteActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    */
 }

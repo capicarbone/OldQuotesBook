@@ -1,5 +1,6 @@
 package com.medic.quotesbook.views.activities;
 
+import android.app.AlarmManager;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.medic.quotesbook.QuoteActivity;
 import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.models.Quote;
@@ -72,6 +72,10 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
                    .add(R.id.frame_content, new SomeQuotesFragment())
                    .commit();
        }
+
+
+        AlarmManager am = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+        // TODO: Vamos a pedir 5 quotes aleatorios luego de 5 minutos
     }
 
     @Override
