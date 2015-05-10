@@ -21,11 +21,11 @@ import java.util.Iterator;
 /**
  * Created by capi on 25/01/15.
  */
-public class GetLastQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote>> {
+public class GetSomeQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote>> {
 
     QuotesAdapter mAdapter;
 
-    public GetLastQuotesTask(QuotesAdapter a) {
+    public GetSomeQuotesTask(QuotesAdapter a) {
         mAdapter = a;
     }
 

@@ -1,19 +1,26 @@
 package com.medic.quotesbook.views.activities;
 
 import android.app.AlarmManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ShareActionProvider;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.models.Quote;
@@ -21,6 +28,13 @@ import com.medic.quotesbook.utils.ChangeActivityRequestListener;
 import com.medic.quotesbook.views.fragments.SomeQuotesFragment;
 
 public class BaseActivity extends ActionBarActivity implements ChangeActivityRequestListener {
+
+    static final String TAG = "BaseActivity";
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    public static final String PROPERTY_REG_ID = "REGISTRATION_ID";
+
+    GoogleCloudMessaging gcm;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerOptionsView;
@@ -74,8 +88,18 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
        }
 
 
-        AlarmManager am = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        // TODO: Vamos a pedir 5 quotes aleatorios luego de 5 minutos
+        if (checkPlayServices()){
+            gcm = GoogleCloudMessaging.getInstance(this);
+
+            String regid;
+
+            regid = getRegistrationId(this);
+
+            if (regid.isEmpty()){
+                Log.d(TAG, "Tenemos que registrarnos");
+            }
+
+        };
     }
 
     @Override
@@ -118,5 +142,32 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
         Intent i = new Intent(this, QuoteActivity.class);
         i.putExtra(QuoteActivity.QUOTE_KEY, quote);
         startActivity(i);
+    }
+
+    private boolean checkPlayServices(){
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+
+        if (resultCode != ConnectionResult.SUCCESS){
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)){
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            }else{
+                Log.i(TAG, "This device is not supported.");
+            }
+
+            return false;
+        }
+
+        return true;
+
+    }
+
+    private String getRegistrationId(Context context){
+
+        final SharedPreferences prefs = this.getSharedPreferences(getString(R.string.gcm_preferences), Context.MODE_PRIVATE);
+
+        String registrationId = prefs.getString(PROPERTY_REG_ID, "");
+
+        return registrationId;
+
     }
 }

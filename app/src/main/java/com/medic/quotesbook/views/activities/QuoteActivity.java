@@ -2,11 +2,14 @@ package com.medic.quotesbook.views.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
@@ -14,6 +17,8 @@ import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
 
 
 public class QuoteActivity extends ActionBarActivity {
+
+    static final String TAG = "QuoteActivity";
 
     public static final String QUOTE_KEY = "quotesbook.quote";
 

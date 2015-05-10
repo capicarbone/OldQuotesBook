@@ -103,6 +103,7 @@
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="guava-jdk5-13.0" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-android-1.19.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-3.1.59" level="project" />
     <orderEntry type="module" module-name="quotesclient" exported="" />
   </component>
 </module>

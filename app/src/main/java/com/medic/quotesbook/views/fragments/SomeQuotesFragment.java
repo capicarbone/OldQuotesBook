@@ -12,7 +12,7 @@ import android.widget.ListAdapter;
 
 import com.medic.quotesbook.R;
 
-import com.medic.quotesbook.tasks.GetLastQuotesTask;
+import com.medic.quotesbook.tasks.GetSomeQuotesTask;
 import com.medic.quotesbook.utils.ChangeActivityRequestListener;
 import com.medic.quotesbook.views.adapters.QuotesAdapter;
 import com.medic.quotesbook.views.fragments.dummy.DummyContent;
@@ -95,7 +95,7 @@ public class SomeQuotesFragment extends Fragment{ // implements AbsListView.OnIt
         recyclerView.setAdapter(adapter);
 
 
-        GetLastQuotesTask task = new GetLastQuotesTask(adapter);
+        GetSomeQuotesTask task = new GetSomeQuotesTask(adapter);
         task.execute();
 
         // Set OnItemClickListener so we can be notified on item clicks
