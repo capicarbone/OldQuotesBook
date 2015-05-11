@@ -8,6 +8,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.appspot.quotesbookapp.quotesclient.Quotesclient;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.json.gson.GsonFactory;
 import com.medic.quotesbook.utils.LruBitmapCache;
 
 /**
@@ -19,6 +22,8 @@ public class AppController extends Application{
 
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
+
+    private Quotesclient quotesClient;
 
     private static AppController mInstance;
 
@@ -38,6 +43,19 @@ public class AppController extends Application{
         }
 
         return mRequestQueue;
+    }
+
+    public Quotesclient getQuotesClient(){
+
+        if (quotesClient == null){
+            Quotesclient.Builder builder = new Quotesclient.Builder(AndroidHttp.newCompatibleTransport(),
+                    new GsonFactory(),
+                    null );
+
+            return builder.build();
+        }
+
+        return quotesClient;
     }
 
     public ImageLoader getImageLoader(){

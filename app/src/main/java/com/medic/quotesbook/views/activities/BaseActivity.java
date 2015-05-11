@@ -24,6 +24,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.ChangeActivityRequestListener;
 import com.medic.quotesbook.views.fragments.SomeQuotesFragment;
 
@@ -97,6 +98,9 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
 
             if (regid.isEmpty()){
                 Log.d(TAG, "Tenemos que registrarnos");
+
+                RegisterGCMAppTask register = new RegisterGCMAppTask(gcm);
+                register.execute(this);
             }
 
         };
