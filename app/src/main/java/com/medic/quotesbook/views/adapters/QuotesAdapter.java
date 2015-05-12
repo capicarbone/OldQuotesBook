@@ -1,12 +1,15 @@
 package com.medic.quotesbook.views.adapters;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -88,7 +91,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int i) {
+    public void onBindViewHolder(final ViewHolder holder, int i) {
 
         Quote quote = quotes.get(i);
 
@@ -100,42 +103,87 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         //Log.d("QuotesAdapter", "BindViewHolder");
 
         holder
-        .authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureURL(), imageLoader );
+        .authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureURL(), imageLoader);
 
-        holder.authorPictureView.addOnLayoutChangeListener(new View.OnLayoutChangeListener(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+            holder.authorPictureView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
 
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
 
-                RoundedImageNetworkView imageView = (RoundedImageNetworkView) v;
+                    RoundedImageNetworkView imageView = (RoundedImageNetworkView) v;
 
-                if ( imageView != null && imageView.getDrawable() != null) {
-                    Bitmap bitmap = ((RoundedImageNetworkView.SelectableRoundedCornerDrawable) imageView.getDrawable()).getBitmap();
+                    if (imageView != null && imageView.getDrawable() != null) {
+                        Bitmap bitmap = ((RoundedImageNetworkView.SelectableRoundedCornerDrawable) imageView.getDrawable()).getBitmap();
 
-                    if (bitmap != null) {
-                        int diff = 0;
+                        if (bitmap != null) {
+                            int diff = 0;
 
-                        if (imageView.getMeasuredHeight() > 0) {
+                            if (imageView.getMeasuredHeight() > 0) {
 
 
-                            if (imageView.getMeasuredWidth() > bitmap.getWidth()) {
+                                if (imageView.getMeasuredWidth() > bitmap.getWidth()) {
 
-                                diff = imageView.getMeasuredWidth() - bitmap.getHeight();
-                                bitmap = bitmap.createScaledBitmap(bitmap, imageView.getMeasuredWidth(), bitmap.getHeight() + diff, false);
+                                    diff = imageView.getMeasuredWidth() - bitmap.getHeight();
+                                    bitmap = bitmap.createScaledBitmap(bitmap, imageView.getMeasuredWidth(), bitmap.getHeight() + diff, false);
 
-                                imageView.setImageBitmap(bitmap);
+                                    imageView.setImageBitmap(bitmap);
+                                }
+
+                                diff = imageView.getMeasuredHeight() - bitmap.getWidth();
+
+                                if (diff > 0)
+                                    imageView.setImageBitmap(bitmap.createScaledBitmap(bitmap, bitmap.getWidth() + diff, imageView.getMeasuredHeight(), false));
+
                             }
-
-                            diff = imageView.getMeasuredHeight() - bitmap.getWidth();
-
-                            if (diff > 0)
-                                imageView.setImageBitmap(bitmap.createScaledBitmap(bitmap, bitmap.getWidth() + diff, imageView.getMeasuredHeight(), false));
-
                         }
                     }
                 }
-            }
-        });
+            });
+        }else{
+
+            // TODO: Quizás debería quitar esto.
+
+            ViewTreeObserver vto = holder.authorPictureView.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    RoundedImageNetworkView imageView = holder.authorPictureView;
+
+                    if (imageView != null && imageView.getDrawable() != null) {
+                        Bitmap bitmap = ((RoundedImageNetworkView.SelectableRoundedCornerDrawable) imageView.getDrawable()).getBitmap();
+
+                        if (bitmap != null) {
+                            int diff = 0;
+
+                            if (imageView.getMeasuredHeight() > 0) {
+
+
+                                if (imageView.getMeasuredWidth() > bitmap.getWidth()) {
+
+                                    diff = imageView.getMeasuredWidth() - bitmap.getHeight();
+                                    bitmap = bitmap.createScaledBitmap(bitmap, imageView.getMeasuredWidth(), bitmap.getHeight() + diff, false);
+
+                                    imageView.setImageBitmap(bitmap);
+                                }
+
+                                diff = imageView.getMeasuredHeight() - bitmap.getWidth();
+
+                                if (diff > 0)
+                                    imageView.setImageBitmap(bitmap.createScaledBitmap(bitmap, bitmap.getWidth() + diff, imageView.getMeasuredHeight(), false));
+
+                            }
+                        }
+                    }
+
+
+                }
+            });
+        }
+
+
+
+
     }
 
     @Override
