@@ -4,14 +4,20 @@ import android.app.IntentService;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuoteMsg;
+import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuotesCollection;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.utils.DevUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -23,33 +29,37 @@ public class GlueQuotesService extends IntentService{
 
     public final String TAG = "GlueQuoteService";
 
+    public static final String QUOTES_QUEUE_FILE = "quotes_queue";
+
     public GlueQuotesService() {
         super("GlueQuotesService");
     }
 
+
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        sendNotification("Nos llegó un mensaje");
+        DevUtils.showNotification("Llegaron citas", this.getBaseContext());
 
         Bundle extras = intent.getExtras();
 
-        Gson gson = new Gson();
+        String rawQuotes = extras.getString("quotes");
 
-        Quote[] quotes = gson.fromJson(extras.getString("quotes"), Quote[].class);
+        if ( rawQuotes != null){
 
-        Log.d(TAG, "Todo bien" );
+            SharedPreferences sp = getApplicationContext().getSharedPreferences(QUOTES_QUEUE_FILE, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
 
-    }
+            editor.putString("quotes", rawQuotes);
+            editor.commit();
 
-    private void sendNotification(String msg){
+        }
 
-        NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setContentTitle("Tenemos algo")
-                .setContentText(msg);
+        //Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
-        manager.notify(1, builder.build());
+        //Quote[] quotes = gson.fromJson(extras.getString("quotes"), Quote[].class);
+
+        Log.d(TAG, "Todo bien");
 
     }
 

@@ -11,7 +11,7 @@ import com.google.api.client.json.GenericJson;
  */
 public class Author implements MessageBasedModelInterface, Parcelable {
 
-    private String fistName;
+    private String firstName;
     private String lastName;
     private String shortDescription;
     private String biography;
@@ -21,15 +21,15 @@ public class Author implements MessageBasedModelInterface, Parcelable {
         fromMessage(message);
     }
 
-    public Author(String fistName, String lastName, String shortDescription, String biography) {
-        this.fistName = fistName;
+    public Author(String firstName, String lastName, String shortDescription, String biography) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.shortDescription = shortDescription;
         this.biography = biography;
     }
 
     public Author(Parcel in){
-        fistName = in.readString();
+        firstName = in.readString();
         lastName = in.readString();
         shortDescription = in.readString();
         biography = in.readString();
@@ -37,12 +37,12 @@ public class Author implements MessageBasedModelInterface, Parcelable {
 
     }
 
-    public String getFistName() {
-        return fistName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFistName(String fistName) {
-        this.fistName = fistName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -80,20 +80,20 @@ public class Author implements MessageBasedModelInterface, Parcelable {
     public String getFullName(){
 
         if (this.lastName == null){
-            return this.fistName;
+            return this.firstName;
         }
 
-        if (this.fistName == null){
+        if (this.firstName == null){
             return this.lastName;
         }
 
-        return this.fistName + " " + this.lastName;
+        return this.firstName + " " + this.lastName;
     }
 
     @Override
     public void fromMessage(GenericJson message) {
         ApiMessagesAuthorMsg msg = (ApiMessagesAuthorMsg) message;
-        this.fistName = msg.getFirstName();
+        this.firstName = msg.getFirstName();
         this.lastName = msg.getLastName();
         this.shortDescription = msg.getShortDescription();
         this.biography = msg.getBiography();
@@ -112,7 +112,7 @@ public class Author implements MessageBasedModelInterface, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(fistName);
+        dest.writeString(firstName);
         dest.writeString(lastName);
         dest.writeString(shortDescription);
         dest.writeString(biography);

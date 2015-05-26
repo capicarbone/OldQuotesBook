@@ -1,11 +1,13 @@
 package com.medic.quotesbook.views.activities;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.ChangeActivityRequestListener;
+import com.medic.quotesbook.utils.DevUtils;
 import com.medic.quotesbook.views.fragments.SomeQuotesFragment;
 
 public class BaseActivity extends ActionBarActivity implements ChangeActivityRequestListener {
@@ -104,6 +107,7 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
             }
 
         };
+
     }
 
     @Override
@@ -174,4 +178,5 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
         return registrationId;
 
     }
+
 }

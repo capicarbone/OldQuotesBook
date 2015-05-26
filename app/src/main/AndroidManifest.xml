@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <permission android:name="com.medic.quotesbook.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
@@ -45,6 +46,12 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <category android:name="com.medic.quotesbook" />
 
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receivers.OnBootReceiver">
+            <intent-filter>
+                <action android:name="ANDROID.INTENT.ACTION.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
         <service android:name=".services.GlueQuotesService"></service>
