@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.medic.quotesbook.utils.DevUtils;
 
@@ -25,6 +26,8 @@ public class OnBootReceiver extends BroadcastReceiver {
         this.ctx = context;
 
         setQuoteTimeAlarm();
+
+        DevUtils.showNotification("Alarma colocada", ctx);
     }
 
 
@@ -41,9 +44,7 @@ public class OnBootReceiver extends BroadcastReceiver {
         time.set(Calendar.HOUR_OF_DAY, 8);
         time.set(Calendar.MINUTE, 0);
 
-        am.setInexactRepeating(AlarmManager.RTC, time.getTimeInMillis(), AlarmManager.INTERVAL_DAY, quoteTimeIntent);
-
-        DevUtils.showNotification("Alarma colocada", ctx);
+        am.setInexactRepeating(AlarmManager.RTC, time.getTimeInMillis(), AlarmManager.INTERVAL_HALF_DAY, quoteTimeIntent);
 
 
     }

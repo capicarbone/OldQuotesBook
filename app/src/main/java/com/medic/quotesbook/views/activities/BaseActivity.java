@@ -26,6 +26,8 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.receivers.OnBootReceiver;
+import com.medic.quotesbook.receivers.QuoteTimeReceiver;
 import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.ChangeActivityRequestListener;
 import com.medic.quotesbook.utils.DevUtils;
@@ -104,9 +106,14 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
 
                 RegisterGCMAppTask register = new RegisterGCMAppTask(gcm);
                 register.execute(this);
+
+                // We set the alarm.
+                Intent i = new Intent(this, OnBootReceiver.class);
+                sendBroadcast(i);
             }
 
-        };
+        }
+
 
     }
 

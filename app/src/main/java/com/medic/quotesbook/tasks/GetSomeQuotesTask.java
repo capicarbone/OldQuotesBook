@@ -46,11 +46,11 @@ public class GetSomeQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote
 
         if (response != null) {
 
-            try {
+            /*try {
                 Log.d("QuotesBook", response.toPrettyString());
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
 
             for (Iterator<ApiMessagesQuoteMsg> iter = response.getQuotes().iterator(); iter.hasNext();){
                 ApiMessagesQuoteMsg quoteMsg= iter.next();

@@ -54,7 +54,10 @@
                 <action android:name="ANDROID.INTENT.ACTION.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+        <receiver android:name=".receivers.QuoteTimeReceiver"></receiver>
+
         <service android:name=".services.GlueQuotesService"></service>
+        <service android:name=".services.PrepareDaysQuoteService"></service>
     </application>
 
 </manifest>
