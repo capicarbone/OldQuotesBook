@@ -42,7 +42,7 @@ public class OnBootReceiver extends BroadcastReceiver {
         Calendar time = Calendar.getInstance();
         time.setTimeInMillis(System.currentTimeMillis());
         time.set(Calendar.HOUR_OF_DAY, 8);
-        time.set(Calendar.MINUTE, 0);
+        time.set(Calendar.MINUTE, 30);
 
         am.setInexactRepeating(AlarmManager.RTC, time.getTimeInMillis(), AlarmManager.INTERVAL_HALF_DAY, quoteTimeIntent);
 

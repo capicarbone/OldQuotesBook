@@ -2,7 +2,9 @@ package com.medic.quotesbook.services;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +17,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.views.activities.BaseActivity;
+import com.medic.quotesbook.views.activities.QuoteActivity;
 
 /**
  * Created by capi on 27/05/15.
@@ -87,6 +91,22 @@ public class PrepareDaysQuoteService extends IntentService {
         builder.setContentTitle("Un mensaje de " + quote.getAuthor().getFullName())
                 .setContentText("Alguien tiene algo que decirte")
                 .setSmallIcon(R.drawable.ic_launcher);
+
+        Intent intent = new Intent(ctx, QuoteActivity.class);
+        intent.putExtra(QuoteActivity.QUOTE_KEY, quote);
+
+        /*
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(ctx);
+        stackBuilder.addParentStack(BaseActivity.class);
+        stackBuilder.addNextIntent(intent);
+
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        */
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(5, builder.build());
