@@ -41,7 +41,7 @@ package com.appspot.quotesbookapp.quotesclient;
 @SuppressWarnings("javadoc")
 public class Quotesclient extends com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient {
 
-  // Note: Leave this static initializer at the top of the file.
+  // Note: Leave this static initializer at the top of the filez.
   static {
     com.google.api.client.util.Preconditions.checkState(
         com.google.api.client.googleapis.GoogleUtils.MAJOR_VERSION == 1 &&

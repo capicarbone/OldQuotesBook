@@ -41,7 +41,7 @@
             android:label="@string/title_activity_authors" >
         </activity>
 
-        <receiver android:name=".receivers.QuotesBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+        <receiver android:name=".receivers.QuotesReceiver" android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <category android:name="com.medic.quotesbook" />

@@ -19,6 +19,8 @@ import com.medic.quotesbook.utils.DevUtils;
 
 /**
  * Created by capi on 25/05/15.
+ *
+ * Broadcast activado cuando llega la hora de notificar la cita del día.
  */
 public class QuoteTimeReceiver extends BroadcastReceiver {
 

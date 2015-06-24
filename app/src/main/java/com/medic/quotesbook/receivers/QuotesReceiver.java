@@ -11,10 +11,13 @@ import com.medic.quotesbook.services.GlueQuotesService;
 
 /**
  * Created by capi on 15/05/15.
+ *
+ * Broadcast activado cuando se reciben citas del backend.
+ *
  */
-public class QuotesBroadcastReceiver extends WakefulBroadcastReceiver {
+public class QuotesReceiver extends WakefulBroadcastReceiver {
 
-    private static final String TAG = "QuotesBroadcastReceiver";
+    private static final String TAG = "QuotesReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {

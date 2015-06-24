@@ -13,6 +13,9 @@ import java.util.Calendar;
 
 /**
  * Created by capi on 24/05/15.
+ *
+ * Broadcast que coloca la alarma para la cita del día.
+ *
  */
 public class OnBootReceiver extends BroadcastReceiver {
 

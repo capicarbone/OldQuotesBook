@@ -22,6 +22,8 @@ import com.medic.quotesbook.views.activities.QuoteActivity;
 
 /**
  * Created by capi on 27/05/15.
+ *
+ * Servicio que prepara la cita del día para ser notificada al usuario.
  */
 public class PrepareDaysQuoteService extends IntentService {
 
