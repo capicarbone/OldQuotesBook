@@ -28,6 +28,7 @@ import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.receivers.OnBootReceiver;
 import com.medic.quotesbook.receivers.QuoteTimeReceiver;
+import com.medic.quotesbook.services.PrepareDaysQuoteService;
 import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.ChangeActivityRequestListener;
 import com.medic.quotesbook.utils.DevUtils;
@@ -114,6 +115,8 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
 
         }
 
+        Intent i = new Intent(this, PrepareDaysQuoteService.class);
+        this.startService(i);
 
     }
 

@@ -15,7 +15,7 @@ public class Author implements MessageBasedModelInterface, Parcelable {
     private String lastName;
     private String shortDescription;
     private String biography;
-    private String pictureURL;
+    private String pictureUrl;
 
     public Author(GenericJson message) {
         fromMessage(message);
@@ -33,7 +33,7 @@ public class Author implements MessageBasedModelInterface, Parcelable {
         lastName = in.readString();
         shortDescription = in.readString();
         biography = in.readString();
-        pictureURL = in.readString();
+        pictureUrl = in.readString();
 
     }
 
@@ -57,12 +57,12 @@ public class Author implements MessageBasedModelInterface, Parcelable {
         return shortDescription;
     }
 
-    public String getPictureURL() {
-        return pictureURL;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
-    public void setPictureURL(String pictureURL) {
-        this.pictureURL = pictureURL;
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     public void setShortDescription(String shortDescription) {
@@ -97,7 +97,7 @@ public class Author implements MessageBasedModelInterface, Parcelable {
         this.lastName = msg.getLastName();
         this.shortDescription = msg.getShortDescription();
         this.biography = msg.getBiography();
-        this.pictureURL = msg.getPictureUrl();
+        this.pictureUrl = msg.getPictureUrl();
     }
 
     @Override
@@ -116,7 +116,7 @@ public class Author implements MessageBasedModelInterface, Parcelable {
         dest.writeString(lastName);
         dest.writeString(shortDescription);
         dest.writeString(biography);
-        dest.writeString(pictureURL);
+        dest.writeString(pictureUrl);
     }
 
     public static final Parcelable.Creator<Author> CREATOR

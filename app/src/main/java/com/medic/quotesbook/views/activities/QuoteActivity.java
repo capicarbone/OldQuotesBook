@@ -2,14 +2,9 @@ package com.medic.quotesbook.views.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
@@ -51,7 +46,7 @@ public class QuoteActivity extends ActionBarActivity {
             authorDescriptionView.setText(quote.getAuthor().getShortDescription());
         }
 
-        authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureURL(), imageLoader);
+        authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureUrl(), imageLoader);
 
     }
 

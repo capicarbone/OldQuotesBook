@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -103,7 +102,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         //Log.d("QuotesAdapter", "BindViewHolder");
 
         holder
-        .authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureURL(), imageLoader);
+        .authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureUrl(), imageLoader);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
             holder.authorPictureView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
