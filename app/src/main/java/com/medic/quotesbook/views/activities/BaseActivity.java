@@ -115,8 +115,10 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
 
         }
 
-        Intent i = new Intent(this, PrepareDaysQuoteService.class);
-        this.startService(i);
+        // For test QuoteDayService
+
+        //Intent i = new Intent(this, PrepareDaysQuoteService.class);
+        //this.startService(i);
 
     }
 
