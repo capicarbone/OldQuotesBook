@@ -11,10 +11,14 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.appspot.quotesbookapp.quotesclient.Quotesclient;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -116,7 +120,9 @@ public class PrepareDaysQuoteService extends IntentService {
 
         builder.setContentText("Un mensaje de " + quote.getAuthor().getFullName())
                 .setContentTitle("Alguien tiene algo que decirte")
-                .setSmallIcon(R.drawable.ic_launcher);
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setAutoCancel(true);
+
 
         if (quote.getAuthor() != null){
             Bitmap authorImage = getAuthorImage("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureUrl());
@@ -140,7 +146,16 @@ public class PrepareDaysQuoteService extends IntentService {
 
         builder.setContentIntent(pendingIntent);
 
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+
         NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(5, builder.build());
+
+        ringtone.play();
+    }
+
+    public static void saveQuotesFromModel(Quote[] quotes){
+
     }
 }

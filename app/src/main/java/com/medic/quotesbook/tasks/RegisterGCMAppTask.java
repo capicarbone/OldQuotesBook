@@ -6,9 +6,15 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.appspot.quotesbookapp.quotesclient.Quotesclient;
+import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuotesCollection;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
+import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.services.GlueQuotesService;
 import com.medic.quotesbook.views.activities.BaseActivity;
 
 import java.io.IOException;
@@ -40,12 +46,36 @@ public class RegisterGCMAppTask extends AsyncTask<Context, Void, Boolean> {
         try{
             regid = gcm.register(senderId);
 
-            server.gcmClient().save().set("gcm_id", regid).execute();
+            ApiMessagesQuotesCollection quotesMessage = server.gcmClient().save().set("gcm_id", regid).execute();
+
+            Quote[] quotes = new Quote[quotesMessage.getQuotes().size()];
+
+            for (int i = 0; i < quotesMessage.getQuotes().size() ; i++) {
+
+                quotes[i] = new Quote(quotesMessage.getQuotes().get(i));
+
+            }
+
+            // Codigo tomado de PrepareDaysQuoteService, si es modificado alla debe modificarse aqui
+            // TODO: Ver como colocar esto en un procedimiento
+
+
+            Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+
+            String quotesRaw = gson.toJson(quotes, Quote[].class);
+
+            SharedPreferences sp = ctx.getSharedPreferences(GlueQuotesService.QUOTES_QUEUE_FILE, ctx.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+
+            editor.putString("quotes", quotesRaw);
+
+            editor.commit();
+
 
             // Save in Shared Preferences
 
             final SharedPreferences prefs = ctx.getSharedPreferences(ctx.getString(R.string.gcm_preferences), Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
+            editor = prefs.edit();
 
             editor.putString(BaseActivity.PROPERTY_REG_ID, regid);
             editor.commit();
