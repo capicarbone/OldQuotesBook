@@ -14,6 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         card_view:cardCornerRadius="@dimen/cards_borders"
+        card_view:cardElevation="1dp"
+        card_view:cardUseCompatPadding="true"
         android:layout_margin="0dp"
         >
 

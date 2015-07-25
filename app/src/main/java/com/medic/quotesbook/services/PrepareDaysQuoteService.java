@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.utils.DaysQuoteManager;
 import com.medic.quotesbook.views.activities.BaseActivity;
 import com.medic.quotesbook.views.activities.QuoteActivity;
 
@@ -52,50 +53,14 @@ public class PrepareDaysQuoteService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        Quote quote = unqueuQuote(this.getBaseContext());
+        DaysQuoteManager quotesManager = new DaysQuoteManager(this.getBaseContext());
+
+        Quote quote = quotesManager.getNextQuote();
 
         if (quote != null)
             giveQuote(quote, this.getBaseContext());
     }
 
-    private Quote unqueuQuote(Context ctx){
-
-        Quote nextQuote = null;
-
-        SharedPreferences sp = ctx.getSharedPreferences(GlueQuotesService.QUOTES_QUEUE_FILE, ctx.MODE_PRIVATE);
-
-        String quotesRaw = sp.getString("quotes", null);
-
-        if (quotesRaw != null){
-
-            Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-
-            Quote[] quotes = gson.fromJson(quotesRaw, Quote[].class);
-
-            if (quotes.length > 0 ){
-                nextQuote = quotes[0];
-
-                Quote[] newQueue = new Quote[quotes.length-1];
-
-                for (int i = newQueue.length; i > 0; i-- ){
-
-                    newQueue[i-1] = quotes[i];
-                }
-
-                quotesRaw = gson.toJson(newQueue, Quote[].class);
-
-                SharedPreferences.Editor editor = sp.edit();
-
-                editor.putString("quotes", quotesRaw);
-
-                editor.commit();
-            }
-
-        }
-
-        return nextQuote;
-
-    }
 
     private Bitmap getAuthorImage(String imageUrl){
 
@@ -155,7 +120,4 @@ public class PrepareDaysQuoteService extends IntentService {
         ringtone.play();
     }
 
-    public static void saveQuotesFromModel(Quote[] quotes){
-
-    }
 }
