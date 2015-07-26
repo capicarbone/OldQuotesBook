@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.medic.quotesbook.AppController;
@@ -32,6 +33,7 @@ public class DrawerOptionsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    TextView authorName;
     ListView mDrawerOptionsView;
     RoundedImageNetworkView authorPhotoView;
 
@@ -77,6 +79,7 @@ public class DrawerOptionsFragment extends Fragment {
         ctx = this.getActivity();
         View v = inflater.inflate(R.layout.fragment_drawer_options, container, false);
 
+        authorName = (TextView) v.findViewById(R.id.author_name);
         mDrawerOptionsView = (ListView) v.findViewById(R.id.drawer_options_view);
         authorPhotoView = (RoundedImageNetworkView) v.findViewById(R.id.author_picture);
 
@@ -90,6 +93,7 @@ public class DrawerOptionsFragment extends Fragment {
 
         if (quote != null && quote.getAuthor() != null){
             authorPhotoView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
+            authorName.setText("Por " + quote.getAuthor().getFullName());
         }
 
         return v;
