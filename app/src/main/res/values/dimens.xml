@@ -11,6 +11,7 @@
     <dimen name="cards_borders">4dp</dimen>
 
     <dimen name="author_picture_size">180dp</dimen>
+    <dimen name="author_picture_tiny_size">40dp</dimen>
     <dimen name="author_picture_borders">90dp</dimen>
 
     <dimen name="quote_text_size">20dp</dimen>

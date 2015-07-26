@@ -90,6 +90,10 @@ public class Author implements MessageBasedModelInterface, Parcelable {
         return this.firstName + " " + this.lastName;
     }
 
+    public String getFullPictureURL(){
+        return "http://quotesbookapp.appspot.com/" + getPictureUrl();
+    }
+
     @Override
     public void fromMessage(GenericJson message) {
         ApiMessagesAuthorMsg msg = (ApiMessagesAuthorMsg) message;

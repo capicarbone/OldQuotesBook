@@ -46,7 +46,7 @@ public class QuoteActivity extends ActionBarActivity {
             authorDescriptionView.setText(quote.getAuthor().getShortDescription());
         }
 
-        authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureUrl(), imageLoader);
+        authorPictureView.setImageUrl( quote.getAuthor().getFullPictureURL(), imageLoader);
 
     }
 

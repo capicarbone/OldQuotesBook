@@ -32,6 +32,7 @@ import com.medic.quotesbook.services.PrepareDaysQuoteService;
 import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.ChangeActivityRequestListener;
 import com.medic.quotesbook.utils.DevUtils;
+import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 import com.medic.quotesbook.views.fragments.SomeQuotesFragment;
 
 public class BaseActivity extends ActionBarActivity implements ChangeActivityRequestListener {
@@ -56,8 +57,8 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
         setContentView(R.layout.activity_base);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerOptionsView = (ListView) findViewById(R.id.drawer_options_view);
-        mDrawerOptions = getResources().getStringArray(R.array.drawer_options);
+//        mDrawerOptionsView = (ListView) findViewById(R.id.drawer_options_view);
+//        mDrawerOptions = getResources().getStringArray(R.array.drawer_options);
 
         getSupportActionBar().setTitle(R.string.tl_home);
 
@@ -76,7 +77,7 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
             }
         };
 
-        mDrawerOptionsView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mDrawerOptions));
+//        mDrawerOptionsView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mDrawerOptions));
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
@@ -87,11 +88,15 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
 
        if (savedInstanceState == null) {
 
-           Fragment f = new SomeQuotesFragment();
+           Fragment initialView = new SomeQuotesFragment();
+           Fragment drawerOptions = new DrawerOptionsFragment();
+
            FragmentManager fm = getSupportFragmentManager();
            fm.beginTransaction()
-                   .add(R.id.frame_content, new SomeQuotesFragment())
+                   .add(R.id.frame_content, initialView)
+                   .add(R.id.frame_drawer_options, drawerOptions)
                    .commit();
+
        }
 
 
