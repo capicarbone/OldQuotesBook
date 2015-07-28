@@ -4,6 +4,7 @@ package com.medic.quotesbook.views.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,9 @@ import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
  * create an instance of this fragment.
  */
 public class DrawerOptionsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    static final String TAG = "DrawerOptionsFragment";
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -98,6 +100,5 @@ public class DrawerOptionsFragment extends Fragment {
 
         return v;
     }
-
 
 }

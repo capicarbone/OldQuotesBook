@@ -16,6 +16,7 @@
                 android:layout_height="80dp"
                 android:background="@color/primary"
                 android:padding="10dp"
+                android:onClick="showTodayQuote"
                 >
 
                 <TextView android:id="@+id/days_quote_title"

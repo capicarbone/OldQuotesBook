@@ -31,6 +31,7 @@ import com.medic.quotesbook.receivers.QuoteTimeReceiver;
 import com.medic.quotesbook.services.PrepareDaysQuoteService;
 import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.ChangeActivityRequestListener;
+import com.medic.quotesbook.utils.DaysQuoteManager;
 import com.medic.quotesbook.utils.DevUtils;
 import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 import com.medic.quotesbook.views.fragments.SomeQuotesFragment;
@@ -194,6 +195,15 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
 
         return registrationId;
 
+    }
+
+    public void showTodayQuote(View v){
+
+        DaysQuoteManager qManager = new DaysQuoteManager(this);
+
+        Quote q = qManager.getTodayQuote();
+
+        showQuote(q);
     }
 
 }
