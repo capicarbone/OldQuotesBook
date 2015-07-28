@@ -93,9 +93,17 @@ public class DrawerOptionsFragment extends Fragment {
 
         Quote quote = quoteM.getTodayQuote();
 
-        if (quote != null && quote.getAuthor() != null){
-            authorPhotoView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
-            authorName.setText("Por " + quote.getAuthor().getFullName());
+        if (quote != null){
+
+            if (quote.getAuthor() != null){
+                authorPhotoView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
+                authorName.setText("Por " + quote.getAuthor().getFullName());
+            }else{
+                authorName.setText("Por Anónimo");
+            }
+
+        }else{
+            authorName.setText("Esperando la cita");
         }
 
         return v;

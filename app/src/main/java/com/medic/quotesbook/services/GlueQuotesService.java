@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.utils.DaysQuoteManager;
 import com.medic.quotesbook.utils.DevUtils;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class GlueQuotesService extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        DevUtils.showNotification("Llegaron citas", this.getBaseContext());
+        //DevUtils.showNotification("Llegaron citas", this.getBaseContext());
 
         Bundle extras = intent.getExtras();
 
@@ -47,19 +48,10 @@ public class GlueQuotesService extends IntentService{
 
         if ( rawQuotes != null){
 
-            SharedPreferences sp = getApplicationContext().getSharedPreferences(QUOTES_QUEUE_FILE, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sp.edit();
-
-            editor.putString("quotes", rawQuotes);
-            editor.commit();
+            DaysQuoteManager qManager = new DaysQuoteManager(getBaseContext());
+            qManager.changeQuotesList(rawQuotes);
 
         }
-
-        //Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-
-        //Quote[] quotes = gson.fromJson(extras.getString("quotes"), Quote[].class);
-
-        Log.d(TAG, "Todo bien");
 
     }
 

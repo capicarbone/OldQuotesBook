@@ -35,7 +35,7 @@ public class DaysQuoteManager {
 
         Quote todayQuote = null;
 
-        if (quotes.length > 0){
+        if (quotes != null && quotes.length > 0){
             todayQuote = quotes[0];
         }
 
@@ -47,7 +47,7 @@ public class DaysQuoteManager {
 
         Quote nextQuote = null;
 
-        if (quotes.length > 0){
+        if (quotes != null && quotes.length > 0){
 
             Quote[] newQueue = new Quote[quotes.length-1];
 
@@ -76,6 +76,20 @@ public class DaysQuoteManager {
         editor.putString("quotes", quotesRaw);
 
         editor.commit();
+
+    }
+
+    public void changeQuotesList(String fromServer){
+
+        Quote[] newQuotes = gson.fromJson(fromServer, Quote[].class);
+
+        Quote todayQuote = quotes[0];
+
+        newQuotes[0] = todayQuote;
+
+        quotes = newQuotes;
+
+        updateQuotesList();
 
     }
 
