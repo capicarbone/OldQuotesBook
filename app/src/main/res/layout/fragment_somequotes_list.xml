@@ -4,6 +4,34 @@
     android:layout_height="match_parent"
     tools:context="com.medic.quotesbook.views.fragments.SomeQuotesFragment">
 
+    <RelativeLayout android:id="@+id/loader_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_loading_quotes"
+            android:textSize="15dp"
+            android:layout_above="@+id/progressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp" />
+
+
+        <com.github.rahatarmanahmed.cpv.CircularProgressView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/progressBar"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:cpv_animAutostart="true"
+            app:cpv_indeterminate="true"
+            app:cpv_color="@color/primary"
+            app:cpv_animDuration="6000"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView android:id="@+id/quotes_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,12 +40,10 @@
         android:paddingRight="@dimen/standard_padding"
         android:paddingTop="0dp"
         android:paddingBottom="0dp"
+        android:visibility="gone"
 
         >
 
     </android.support.v7.widget.RecyclerView>
-
-    <TextView android:id="@android:id/empty" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:gravity="center" />
 
 </FrameLayout>

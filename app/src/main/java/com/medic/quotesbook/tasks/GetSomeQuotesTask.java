@@ -3,6 +3,7 @@ package com.medic.quotesbook.tasks;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.appspot.quotesbookapp.quotesclient.Quotesclient;
 import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuoteMsg;
@@ -24,9 +25,14 @@ import java.util.Iterator;
 public class GetSomeQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote>> {
 
     QuotesAdapter mAdapter;
+    View loaderLayout;
+    View mainLayout;
 
-    public GetSomeQuotesTask(QuotesAdapter a) {
+
+    public GetSomeQuotesTask(QuotesAdapter a, View loaderLayout, View mainLayout) {
         mAdapter = a;
+        this.loaderLayout = loaderLayout;
+        this.mainLayout = mainLayout;
     }
 
     @Override
@@ -67,5 +73,8 @@ public class GetSomeQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote
 
         mAdapter.quotes = quotes;
         mAdapter.notifyDataSetChanged();
+
+        loaderLayout.setVisibility(View.GONE);
+        mainLayout.setVisibility(View.VISIBLE);
     }
 }

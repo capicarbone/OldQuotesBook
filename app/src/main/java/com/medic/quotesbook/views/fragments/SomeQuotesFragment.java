@@ -86,6 +86,9 @@ public class SomeQuotesFragment extends Fragment{ // implements AbsListView.OnIt
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_somequotes, container, false);
 
+        View loaderLayout = view.findViewById(R.id.loader_layout);
+        View quotesView = view.findViewById(R.id.quotes_list);
+
         // Set the adapter
         recyclerView = (RecyclerView) view.findViewById(R.id.quotes_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
@@ -95,7 +98,7 @@ public class SomeQuotesFragment extends Fragment{ // implements AbsListView.OnIt
         recyclerView.setAdapter(adapter);
 
 
-        GetSomeQuotesTask task = new GetSomeQuotesTask(adapter);
+        GetSomeQuotesTask task = new GetSomeQuotesTask(adapter, loaderLayout, quotesView);
         task.execute();
 
         // Set OnItemClickListener so we can be notified on item clicks
