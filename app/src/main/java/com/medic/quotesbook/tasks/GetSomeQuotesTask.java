@@ -28,6 +28,10 @@ public class GetSomeQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote
     View loaderLayout;
     View mainLayout;
 
+    boolean loading;
+
+    ArrayList<Quote> quotes = new ArrayList<Quote>();
+
 
     public GetSomeQuotesTask(QuotesAdapter a, View loaderLayout, View mainLayout) {
         mAdapter = a;
@@ -35,11 +39,20 @@ public class GetSomeQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote
         this.mainLayout = mainLayout;
     }
 
+    public GetSomeQuotesTask(QuotesAdapter mAdapter) {
+        this.mAdapter = mAdapter;
+    }
+
+    public boolean isLoading(){
+        return loading;
+    }
+
     @Override
     protected ArrayList<Quote> doInBackground(Integer... limit) {
 
+        loading = true;
+
         Quotesclient service = QuoteNetwork.getQuotesService();
-        ArrayList<Quote> quotes = new ArrayList<Quote>();
 
         ApiMessagesQuotesCollection response = null;
 
@@ -65,16 +78,24 @@ public class GetSomeQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote
             }
         }
 
+        loading = false;
+
         return quotes;
     }
 
     @Override
     protected void onPostExecute(ArrayList<Quote> quotes) {
 
-        mAdapter.quotes = quotes;
-        mAdapter.notifyDataSetChanged();
+        if (mAdapter.quotes == null ){
+            mAdapter.quotes = quotes;
 
-        loaderLayout.setVisibility(View.GONE);
-        mainLayout.setVisibility(View.VISIBLE);
+            loaderLayout.setVisibility(View.GONE);
+            mainLayout.setVisibility(View.VISIBLE);
+
+            mAdapter.notifyDataSetChanged();
+        }else{
+            mAdapter.quotes.addAll(quotes);
+        }
+
     }
 }

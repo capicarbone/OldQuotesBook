@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,9 @@ import com.medic.quotesbook.views.fragments.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class SomeQuotesFragment extends Fragment{ // implements AbsListView.OnItemClickListener {
+public class SomeQuotesFragment extends Fragment{
+
+    private final String TAG = "SomeQuotesFragment";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -91,14 +94,35 @@ public class SomeQuotesFragment extends Fragment{ // implements AbsListView.OnIt
 
         // Set the adapter
         recyclerView = (RecyclerView) view.findViewById(R.id.quotes_list);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         QuotesAdapter adapter = new QuotesAdapter(null, (ChangeActivityRequestListener) getActivity());
+
+        GetSomeQuotesTask task = new GetSomeQuotesTask(adapter, loaderLayout, quotesView);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
 
+            GetSomeQuotesTask nextTask = null;
 
-        GetSomeQuotesTask task = new GetSomeQuotesTask(adapter, loaderLayout, quotesView);
+            @Override
+            public void onScrolled( RecyclerView view, int dx, int dy){
+
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+
+                int remainingItems = totalItemCount - pastVisiblesItems;
+
+                if (remainingItems <= 6 && (nextTask == null || !nextTask.isLoading()) ){
+                    nextTask = new GetSomeQuotesTask((QuotesAdapter) view.getAdapter());
+                    nextTask.execute();
+                }
+
+                //Log.d(TAG, "Visibles: " + Integer.toString(visibleItemCount) + ", totals: " + Integer.toString(totalItemCount) + ", past: " + Integer.toString(pastVisiblesItems) + ", remaining: " + Integer.toString(remainingItems));
+            }
+        });
+
         task.execute();
 
         // Set OnItemClickListener so we can be notified on item clicks
