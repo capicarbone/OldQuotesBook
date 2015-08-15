@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
@@ -31,6 +33,12 @@ public class QuoteActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote);
+
+        AdView adView = (AdView) findViewById(R.id.ad_view);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("032aa466d0233b54")
+                .build();
+        adView.loadAd(adRequest);
 
         quoteBodyView = (TextView) findViewById(R.id.quote_body);
         authorNameView = (TextView) findViewById(R.id.author_name);
