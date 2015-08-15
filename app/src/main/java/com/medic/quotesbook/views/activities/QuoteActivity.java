@@ -36,7 +36,8 @@ public class QuoteActivity extends ActionBarActivity {
 
         AdView adView = (AdView) findViewById(R.id.ad_view);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("032aa466d0233b54")
+                .addTestDevice("7DC08B2B34AC3B6CD04D5E05DF311803") // Nexus 5
+                .addTestDevice("95523B02E1B93A6E1B4B82DF09FCE7A5") // Logic X3
                 .build();
         adView.loadAd(adRequest);
 
