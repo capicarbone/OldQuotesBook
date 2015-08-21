@@ -2,6 +2,7 @@ package com.medic.quotesbook.views.fragments;
 
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -76,8 +77,6 @@ public class DrawerOptionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-
         ctx = this.getActivity();
         View v = inflater.inflate(R.layout.fragment_drawer_options, container, false);
 
@@ -89,24 +88,64 @@ public class DrawerOptionsFragment extends Fragment {
 
         mDrawerOptionsView.setAdapter(new ArrayAdapter<String>(ctx, android.R.layout.simple_list_item_1, mDrawerOptions));
 
-        DaysQuoteManager quoteM = new DaysQuoteManager(ctx);
-
-        Quote quote = quoteM.getTodayQuote();
-
-        if (quote != null){
-
-            if (quote.getAuthor() != null){
-                authorPhotoView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
-                authorName.setText("Por " + quote.getAuthor().getFullName());
-            }else{
-                authorName.setText("Por Anónimo");
-            }
-
-        }else{
-            authorName.setText("Esperando la cita");
-        }
+        ShowDayQuoteOnDrawer showQuoteTask = new ShowDayQuoteOnDrawer(authorName, authorPhotoView);
+        showQuoteTask.execute();
 
         return v;
+    }
+
+    private class ShowDayQuoteOnDrawer extends AsyncTask<Void, Void, Quote>{
+
+        TextView authorName;
+        RoundedImageNetworkView authorPhotoView;
+
+        public ShowDayQuoteOnDrawer(TextView authorName, RoundedImageNetworkView authorPhotoView){
+
+            this.authorName = authorName;
+            this.authorPhotoView = authorPhotoView;
+        }
+
+        @Override
+        protected Quote doInBackground(Void... params) {
+
+            Quote quote = null;
+            DaysQuoteManager quoteM = new DaysQuoteManager(ctx);
+
+            while(quote == null){
+
+                quote = quoteM.getTodayQuote();
+
+                if (quote == null){
+                    try {
+                        Thread.sleep(500, 0);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            return quote;
+
+        }
+
+        @Override
+        protected void onPostExecute(Quote quote) {
+
+            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
+            if (quote != null){
+
+                if (quote.getAuthor() != null){
+                    authorPhotoView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
+                    authorName.setText("Por " + quote.getAuthor().getFullName());
+                }else{
+                    authorName.setText("Por Anónimo");
+                }
+
+            }
+
+        }
     }
 
 }
