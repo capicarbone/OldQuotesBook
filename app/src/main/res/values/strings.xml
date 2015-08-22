@@ -3,7 +3,8 @@
 
     <string name="app_name">QuotesBook</string>
     <string name="tl_home">Algunas citas</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Coniguración</string>
+    <string name="action_share">Compartir</string>
     <string name="drawer_opened">Menú Abierto</string>
     <string name="drawer_closed">Menú Cerrado</string>
     <string name="title_activity_quote">QuoteActivity</string>

@@ -1,7 +1,12 @@
 package com.medic.quotesbook.views.activities;
 
+import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.support.v7.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -39,6 +44,7 @@ public class QuoteActivity extends ActionBarActivity {
                 .addTestDevice("7DC08B2B34AC3B6CD04D5E05DF311803") // Nexus 5
                 .addTestDevice("95523B02E1B93A6E1B4B82DF09FCE7A5") // Logic X3
                 .build();
+
         adView.loadAd(adRequest);
 
         quoteBodyView = (TextView) findViewById(R.id.quote_body);
@@ -66,14 +72,30 @@ public class QuoteActivity extends ActionBarActivity {
         getSupportActionBar().setTitle(quote.getAuthor().getFullName());
     }
 
-    /*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_quote, menu);
+
+        MenuItem item = menu.findItem(R.id.action_share);
+
+        ShareActionProvider actionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, quote.getShareable());
+        intent.setType("text/plain");
+        Intent.createChooser(intent, "QuotesBook");
+
+        actionProvider.setShareIntent(intent);
+
         return true;
     }
 
+
+
+    /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

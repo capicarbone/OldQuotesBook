@@ -57,6 +57,20 @@ public class Quote implements MessageBasedModelInterface, Parcelable {
         this.author = author;
     }
 
+    public String getShareable(){
+
+        String sQuote = "\"" + body + "\" - ";
+
+        if (author != null){
+
+            sQuote = sQuote +  author.getFullName();
+        }else{
+            sQuote = sQuote + "Anónimo";
+        }
+
+        return sQuote;
+    }
+
     @Override
     public void fromMessage(GenericJson message) {
 
