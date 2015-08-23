@@ -3,33 +3,21 @@ package com.medic.quotesbook.services;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
-import com.appspot.quotesbookapp.quotesclient.Quotesclient;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
-import com.medic.quotesbook.utils.DaysQuoteManager;
-import com.medic.quotesbook.views.activities.BaseActivity;
+import com.medic.quotesbook.utils.TodayQuoteManager;
 import com.medic.quotesbook.views.activities.QuoteActivity;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 
 /**
@@ -53,7 +41,7 @@ public class PrepareDaysQuoteService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        DaysQuoteManager quotesManager = new DaysQuoteManager(this.getBaseContext());
+        TodayQuoteManager quotesManager = new TodayQuoteManager(this.getBaseContext());
 
         Quote quote = quotesManager.getNextQuote();
 

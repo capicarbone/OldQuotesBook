@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
-import com.medic.quotesbook.utils.DaysQuoteManager;
+import com.medic.quotesbook.utils.TodayQuoteManager;
 import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
 
 /**
@@ -109,7 +108,7 @@ public class DrawerOptionsFragment extends Fragment {
         protected Quote doInBackground(Void... params) {
 
             Quote quote = null;
-            DaysQuoteManager quoteM = new DaysQuoteManager(ctx);
+            TodayQuoteManager quoteM = new TodayQuoteManager(ctx);
 
             while(quote == null){
 

@@ -1,13 +1,10 @@
 package com.medic.quotesbook.views.activities;
 
-import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -16,9 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ShareActionProvider;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -27,12 +22,9 @@ import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.receivers.OnBootReceiver;
-import com.medic.quotesbook.receivers.QuoteTimeReceiver;
-import com.medic.quotesbook.services.PrepareDaysQuoteService;
 import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.ChangeActivityRequestListener;
-import com.medic.quotesbook.utils.DaysQuoteManager;
-import com.medic.quotesbook.utils.DevUtils;
+import com.medic.quotesbook.utils.TodayQuoteManager;
 import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 import com.medic.quotesbook.views.fragments.SomeQuotesFragment;
 
@@ -199,7 +191,7 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
 
     public void showTodayQuote(View v){
 
-        DaysQuoteManager qManager = new DaysQuoteManager(this);
+        TodayQuoteManager qManager = new TodayQuoteManager(this);
 
         Quote q = qManager.getTodayQuote();
 

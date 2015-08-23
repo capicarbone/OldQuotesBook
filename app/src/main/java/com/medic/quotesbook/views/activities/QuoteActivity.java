@@ -18,11 +18,13 @@ import android.widget.Toast;
 import android.view.View.OnTouchListener;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.utils.QuotesStorage;
 import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
 
 
@@ -56,12 +58,23 @@ public class QuoteActivity extends ActionBarActivity {
     public void setupAd(){
 
         AdView adView = (AdView) findViewById(R.id.ad_view);
+        final View adWrapper = findViewById(R.id.ad_wrapper);
+
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("7DC08B2B34AC3B6CD04D5E05DF311803") // Nexus 5
                 .addTestDevice("95523B02E1B93A6E1B4B82DF09FCE7A5") // Logic X3
                 .build();
 
         adView.loadAd(adRequest);
+
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+
+                adWrapper.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 
@@ -84,8 +97,12 @@ public class QuoteActivity extends ActionBarActivity {
         authorPictureView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
     }
 
-    public void FABClick(View view){
-        Log.d(TAG, "Presionado");
+    public void setSavedIcon(FloatingActionButton btn){
+        btn.setImageResource(R.drawable.ic_star_white_24dp);
+    }
+
+    public void setUnsavedIcon(FloatingActionButton btn){
+        btn.setImageResource(R.drawable.ic_star_border_white_24dp);
     }
 
     public void setupFAB(){
@@ -93,10 +110,21 @@ public class QuoteActivity extends ActionBarActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         final Context ctx = this;
+        final boolean savedIcon;
+
+        final QuotesStorage qStorage = new QuotesStorage(QuotesStorage.QUOTESBOOK_FILE, this);
+
+        if (qStorage.findQuote(quote.getKey()) != -1 ){
+            savedIcon = true;
+            setSavedIcon(fab);
+        }else{
+            savedIcon= false;
+        }
+
 
         fab.setOnClickListener(new OnClickListener(){
 
-            private boolean saved = false;
+            private boolean saved = savedIcon;
 
             @Override
             public void onClick(View view) {
@@ -107,17 +135,25 @@ public class QuoteActivity extends ActionBarActivity {
 
                 if (saved == false){
 
+                    qStorage.addQuoteTop(quote);
+                    qStorage.commit();
+
                     Toast toast = Toast.makeText(ctx, R.string.message_quote_saved, Toast.LENGTH_SHORT);
                     toast.show();
 
-                    btn.setImageResource(R.drawable.ic_star_white_24dp);
+                    setSavedIcon(btn);
 
                 }else{
+
+                    qStorage.removeQuote(quote.getKey());
+                    qStorage.commit();
 
                     Toast toast = Toast.makeText(ctx, R.string.message_quote_unsaved, Toast.LENGTH_SHORT);
                     toast.show();
 
                     btn.setImageResource(R.drawable.ic_star_border_white_24dp);
+
+                    setUnsavedIcon(btn);
                 }
 
                 saved = !saved;

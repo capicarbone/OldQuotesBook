@@ -14,6 +14,7 @@ public class Quote implements MessageBasedModelInterface, Parcelable {
     private String body;
     private String aditional;
     private Author author;
+    private String key;
     // private Date dateRealized;
 
 
@@ -31,6 +32,7 @@ public class Quote implements MessageBasedModelInterface, Parcelable {
         body = in.readString();
         aditional = in.readString();
         author = in.readParcelable(Author.class.getClassLoader());
+        key = in.readString();
     }
 
     public String getBody() {
@@ -57,6 +59,10 @@ public class Quote implements MessageBasedModelInterface, Parcelable {
         this.author = author;
     }
 
+    public String getKey() {
+        return key;
+    }
+
     public String getShareable(){
 
         String sQuote = "\"" + body + "\" - ";
@@ -77,6 +83,7 @@ public class Quote implements MessageBasedModelInterface, Parcelable {
         this.body = ((ApiMessagesQuoteMsg) message).getBody();
         this.aditional = ((ApiMessagesQuoteMsg) message).getAditional();
         this.author = new Author(((ApiMessagesQuoteMsg) message).getAuthor());
+        this.key = ((ApiMessagesQuoteMsg) message).getKey();
     }
 
     @Override
@@ -95,6 +102,7 @@ public class Quote implements MessageBasedModelInterface, Parcelable {
         dest.writeString(body);
         dest.writeString(aditional);
         dest.writeParcelable(author, 0);
+        dest.writeString(key);
     }
 
     public static final Parcelable.Creator<Quote> CREATOR

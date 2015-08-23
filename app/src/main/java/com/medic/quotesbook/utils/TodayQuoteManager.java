@@ -12,7 +12,7 @@ import com.medic.quotesbook.services.GlueQuotesService;
 /**
  * Created by capi on 25/07/15.
  */
-public class DaysQuoteManager {
+public class TodayQuoteManager {
 
     private Gson gson;
     private SharedPreferences sp;
@@ -20,7 +20,7 @@ public class DaysQuoteManager {
 
     private Quote[] quotes;
 
-    public DaysQuoteManager(Context ctx){
+    public TodayQuoteManager(Context ctx){
 
         sp = ctx.getSharedPreferences(GlueQuotesService.QUOTES_QUEUE_FILE, ctx.MODE_PRIVATE);
         quotesRaw = sp.getString("quotes", null);
