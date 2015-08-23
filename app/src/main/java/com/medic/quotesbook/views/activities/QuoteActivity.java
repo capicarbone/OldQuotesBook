@@ -1,13 +1,21 @@
 package com.medic.quotesbook.views.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.ShareActionProvider;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.view.View.OnTouchListener;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.google.android.gms.ads.AdRequest;
@@ -39,6 +47,14 @@ public class QuoteActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote);
 
+        setupAd();
+        setupContent();
+        setupFAB();
+
+    }
+
+    public void setupAd(){
+
         AdView adView = (AdView) findViewById(R.id.ad_view);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("7DC08B2B34AC3B6CD04D5E05DF311803") // Nexus 5
@@ -46,6 +62,10 @@ public class QuoteActivity extends ActionBarActivity {
                 .build();
 
         adView.loadAd(adRequest);
+
+    }
+
+    public void setupContent(){
 
         quoteBodyView = (TextView) findViewById(R.id.quote_body);
         authorNameView = (TextView) findViewById(R.id.author_name);
@@ -61,7 +81,49 @@ public class QuoteActivity extends ActionBarActivity {
             authorDescriptionView.setText(quote.getAuthor().getShortDescription());
         }
 
-        authorPictureView.setImageUrl( quote.getAuthor().getFullPictureURL(), imageLoader);
+        authorPictureView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
+    }
+
+    public void FABClick(View view){
+        Log.d(TAG, "Presionado");
+    }
+
+    public void setupFAB(){
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        final Context ctx = this;
+
+        fab.setOnClickListener(new OnClickListener(){
+
+            private boolean saved = false;
+
+            @Override
+            public void onClick(View view) {
+
+                Log.d(TAG, "Presionado");
+
+                FloatingActionButton btn = (FloatingActionButton) view;
+
+                if (saved == false){
+
+                    Toast toast = Toast.makeText(ctx, R.string.message_quote_saved, Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    btn.setImageResource(R.drawable.ic_star_white_24dp);
+
+                }else{
+
+                    Toast toast = Toast.makeText(ctx, R.string.message_quote_unsaved, Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    btn.setImageResource(R.drawable.ic_star_border_white_24dp);
+                }
+
+                saved = !saved;
+
+            }
+        });
 
     }
 
@@ -75,7 +137,7 @@ public class QuoteActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_quote, menu);
 
         MenuItem item = menu.findItem(R.id.action_share);

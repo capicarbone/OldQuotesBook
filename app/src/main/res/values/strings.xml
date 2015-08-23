@@ -12,6 +12,9 @@
     <string name="title_activity_authors">AuthorsActivity</string>
     <string name="text_loading_quotes">Consultando a sabios...</string>
 
+    <string name="message_quote_saved">Cita guardada</string>
+    <string name="message_quote_unsaved">Cita eliminada</string>
+
     <!-- Ids -->
 
     <string name="adid_quote">ca-app-pub-3556838383179218/1569803684</string>
