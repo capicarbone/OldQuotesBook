@@ -22,35 +22,21 @@ import java.util.Iterator;
 /**
  * Created by capi on 25/01/15.
  */
-public class GetSomeQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote>> {
-
-    QuotesAdapter mAdapter;
-    View loaderLayout;
-    View mainLayout;
-
-    boolean loading;
-
-    ArrayList<Quote> quotes = new ArrayList<Quote>();
-
+public class GetSomeQuotesTask extends GetQuotesTask {
 
     public GetSomeQuotesTask(QuotesAdapter a, View loaderLayout, View mainLayout) {
-        mAdapter = a;
-        this.loaderLayout = loaderLayout;
-        this.mainLayout = mainLayout;
+        super(a, loaderLayout, mainLayout);
     }
 
-    public GetSomeQuotesTask(QuotesAdapter mAdapter) {
-        this.mAdapter = mAdapter;
-    }
-
-    public boolean isLoading(){
-        return loading;
+    public GetSomeQuotesTask(QuotesAdapter a) {
+        super(a);
     }
 
     @Override
     protected ArrayList<Quote> doInBackground(Integer... limit) {
+        super.doInBackground(limit);
 
-        loading = true;
+        ArrayList<Quote> quotes = new ArrayList<Quote>();
 
         Quotesclient service = QuoteNetwork.getQuotesService();
 
@@ -78,24 +64,7 @@ public class GetSomeQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote
             }
         }
 
-        loading = false;
-
         return quotes;
     }
 
-    @Override
-    protected void onPostExecute(ArrayList<Quote> quotes) {
-
-        if (mAdapter.quotes == null ){
-            mAdapter.quotes = quotes;
-
-            loaderLayout.setVisibility(View.GONE);
-            mainLayout.setVisibility(View.VISIBLE);
-
-            mAdapter.notifyDataSetChanged();
-        }else{
-            mAdapter.quotes.addAll(quotes);
-        }
-
-    }
 }

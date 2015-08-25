@@ -93,6 +93,10 @@ public class QuotesStorage {
 
     }
 
+    public Quote[] getQuotes(){
+        return quotes;
+    }
+
     public String[] getKeys(){
 
         String[] keys = new String[quotes.length];

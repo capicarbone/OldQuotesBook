@@ -4,19 +4,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 
 import com.medic.quotesbook.R;
 
+import com.medic.quotesbook.tasks.GetQuotesTask;
+import com.medic.quotesbook.tasks.GetQuotesbookTask;
 import com.medic.quotesbook.tasks.GetSomeQuotesTask;
 import com.medic.quotesbook.utils.ChangeActivityRequestListener;
 import com.medic.quotesbook.views.adapters.QuotesAdapter;
-import com.medic.quotesbook.views.fragments.dummy.DummyContent;
 
 /**
  * A fragment representing a list of Items.
@@ -27,18 +25,16 @@ import com.medic.quotesbook.views.fragments.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class SomeQuotesFragment extends Fragment{
+public class QuotesListFragment extends Fragment{
 
-    private final String TAG = "SomeQuotesFragment";
+    private final String TAG = "QuotesListFragment";
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+
+    private static final String ARG_FROM_QUOTESBOOK = "QuotesFragment.FROM_QUOTESBOOK";
+
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private boolean fromQuotesbook;
 
     private OnFragmentInteractionListener mListener;
 
@@ -46,19 +42,15 @@ public class SomeQuotesFragment extends Fragment{
      * The fragment's ListView/GridView.
      */
     private RecyclerView recyclerView;
+    QuotesAdapter adapter;
 
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static SomeQuotesFragment newInstance(String param1, String param2) {
-        SomeQuotesFragment fragment = new SomeQuotesFragment();
+    public static QuotesListFragment newInstance(String param1, String param2) {
+        QuotesListFragment fragment = new QuotesListFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,7 +59,7 @@ public class SomeQuotesFragment extends Fragment{
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public SomeQuotesFragment() {
+    public QuotesListFragment() {
     }
 
     @Override
@@ -75,13 +67,9 @@ public class SomeQuotesFragment extends Fragment{
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            fromQuotesbook = getArguments().getBoolean(ARG_FROM_QUOTESBOOK);
         }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
     }
 
     @Override
@@ -92,16 +80,36 @@ public class SomeQuotesFragment extends Fragment{
         View loaderLayout = view.findViewById(R.id.loader_layout);
         View quotesView = view.findViewById(R.id.quotes_list);
 
-        // Set the adapter
-        recyclerView = (RecyclerView) view.findViewById(R.id.quotes_list);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
-        QuotesAdapter adapter = new QuotesAdapter(null, (ChangeActivityRequestListener) getActivity());
+        adapter = new QuotesAdapter(null, (ChangeActivityRequestListener) getActivity());
 
-        GetSomeQuotesTask task = new GetSomeQuotesTask(adapter, loaderLayout, quotesView);
+        setupRecyclerView(view, adapter);
+
+        GetQuotesTask task;
+
+        if (!fromQuotesbook)
+            task = new GetSomeQuotesTask(adapter, loaderLayout, quotesView);
+        else
+            task = new GetQuotesbookTask(adapter, loaderLayout, quotesView, getActivity());
+
+
+        task.execute();
+
+        // Set OnItemClickListener so we can be notified on item clicks
+        //recyclerView.setOnItemClickListener(this);
+
+        return view;
+    }
+
+    private void setupRecyclerView(View view, QuotesAdapter adapter){
+        recyclerView = (RecyclerView) view.findViewById(R.id.quotes_list);
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
+
+        if (!fromQuotesbook)
+            recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
 
             GetSomeQuotesTask nextTask = null;
 
@@ -123,12 +131,6 @@ public class SomeQuotesFragment extends Fragment{
             }
         });
 
-        task.execute();
-
-        // Set OnItemClickListener so we can be notified on item clicks
-        //recyclerView.setOnItemClickListener(this);
-
-        return view;
     }
 
     /*

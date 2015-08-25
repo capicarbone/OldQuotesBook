@@ -26,7 +26,7 @@ import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.ChangeActivityRequestListener;
 import com.medic.quotesbook.utils.TodayQuoteManager;
 import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
-import com.medic.quotesbook.views.fragments.SomeQuotesFragment;
+import com.medic.quotesbook.views.fragments.QuotesListFragment;
 
 public class BaseActivity extends ActionBarActivity implements ChangeActivityRequestListener {
 
@@ -81,7 +81,7 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
 
        if (savedInstanceState == null) {
 
-           Fragment initialView = new SomeQuotesFragment();
+           Fragment initialView = new QuotesListFragment();
            Fragment drawerOptions = new DrawerOptionsFragment();
 
            FragmentManager fm = getSupportFragmentManager();
