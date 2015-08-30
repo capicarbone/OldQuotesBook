@@ -2,7 +2,6 @@
 <resources>
     <string-array name="drawer_options">
         <item>Algunas citas</item>
-        <item>Citas</item>
         <item>Mi libro de citas</item>
     </string-array>
 </resources>

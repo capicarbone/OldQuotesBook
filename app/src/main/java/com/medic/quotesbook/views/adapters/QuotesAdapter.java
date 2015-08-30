@@ -15,7 +15,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
-import com.medic.quotesbook.utils.ChangeActivityRequestListener;
+import com.medic.quotesbook.utils.BaseActivityRequestListener;
 import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
 
 
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder>{
 
     public ArrayList<Quote> quotes;
-    private ChangeActivityRequestListener listener;
+    private BaseActivityRequestListener listener;
 
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
@@ -39,9 +39,9 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         public Quote quote;
 
-        ChangeActivityRequestListener listener;
+        BaseActivityRequestListener listener;
 
-        public ViewHolder(View itemView, Quote quote, ChangeActivityRequestListener listener) {
+        public ViewHolder(View itemView, Quote quote, BaseActivityRequestListener listener) {
             super(itemView);
 
             this.listener = listener;
@@ -73,7 +73,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         this.quotes = quotes;
     }
 
-    public QuotesAdapter(ArrayList<Quote> quotes, ChangeActivityRequestListener listener) {
+    public QuotesAdapter(ArrayList<Quote> quotes, BaseActivityRequestListener listener) {
         this.quotes = quotes;
         this.listener = listener;
     }

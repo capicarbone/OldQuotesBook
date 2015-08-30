@@ -3,6 +3,7 @@ package com.medic.quotesbook.views.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -23,17 +24,19 @@ import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.receivers.OnBootReceiver;
 import com.medic.quotesbook.tasks.RegisterGCMAppTask;
-import com.medic.quotesbook.utils.ChangeActivityRequestListener;
+import com.medic.quotesbook.utils.BaseActivityRequestListener;
 import com.medic.quotesbook.utils.TodayQuoteManager;
 import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 import com.medic.quotesbook.views.fragments.QuotesListFragment;
 
-public class BaseActivity extends ActionBarActivity implements ChangeActivityRequestListener {
+public class BaseActivity extends ActionBarActivity implements BaseActivityRequestListener {
 
     static final String TAG = "BaseActivity";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     public static final String PROPERTY_REG_ID = "REGISTRATION_ID";
+
+    private static final String DATA_OPTION_SELECTED = "option_selected";
 
     GoogleCloudMessaging gcm;
 
@@ -42,6 +45,8 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
     private ActionBarDrawerToggle mDrawerToggle;
 
     private String[] mDrawerOptions;
+
+    int optionSelected = 0;
 
 
     @Override
@@ -60,13 +65,13 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(getResources().getString(R.string.tl_home));
+                //getSupportActionBar().setTitle(getResources().getString(R.string.tl_home));
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle(R.string.app_name);
+                //getSupportActionBar().setTitle(R.string.app_name);
             }
         };
 
@@ -79,18 +84,20 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
 
         // Setting the fragment
 
-       if (savedInstanceState == null) {
+        FragmentManager fm = getSupportFragmentManager();
 
-           Fragment initialView = new QuotesListFragment();
-           Fragment drawerOptions = new DrawerOptionsFragment();
 
-           FragmentManager fm = getSupportFragmentManager();
-           fm.beginTransaction()
-                   .add(R.id.frame_content, initialView)
-                   .add(R.id.frame_drawer_options, drawerOptions)
-                   .commit();
+        if (savedInstanceState != null){
 
-       }
+            optionSelected = savedInstanceState.getInt(DATA_OPTION_SELECTED);
+        }
+
+       Fragment initialView = getFragmentForOption(optionSelected);
+
+       fm.beginTransaction()
+               .replace(R.id.frame_content, initialView)
+               .add(R.id.frame_drawer_options, new DrawerOptionsFragment())
+               .commit();
 
 
         if (checkPlayServices()){
@@ -118,6 +125,18 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
         //Intent i = new Intent(this, PrepareDaysQuoteService.class);
         //this.startService(i);
 
+    }
+
+    private Fragment getFragmentForOption(int i){
+
+        Fragment optionView = null;
+
+        switch (i){
+            case 0: optionView = QuotesListFragment.newInstance(false); break;
+            case 1: optionView = QuotesListFragment.newInstance(true); break;
+        }
+
+        return optionView;
     }
 
     @Override
@@ -155,12 +174,40 @@ public class BaseActivity extends ActionBarActivity implements ChangeActivityReq
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(DATA_OPTION_SELECTED, optionSelected);
+
+
+    }
+
+    @Override
     public void showQuote(Quote quote) {
 
         Intent i = new Intent(this, QuoteActivity.class);
         i.putExtra(QuoteActivity.QUOTE_KEY, quote);
         startActivity(i);
     }
+
+    @Override
+    public void showOption(int i) {
+
+        Fragment optionView = null;
+
+        optionSelected = i;
+
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .replace(R.id.frame_content, getFragmentForOption(optionSelected))
+                .commit();
+
+        getSupportActionBar().setTitle(R.string.tl_quotesbook);
+
+        mDrawerLayout.closeDrawers();
+
+    }
+
 
     private boolean checkPlayServices(){
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);

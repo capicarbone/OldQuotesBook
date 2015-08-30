@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import com.medic.quotesbook.R;
 import com.medic.quotesbook.tasks.GetQuotesTask;
 import com.medic.quotesbook.tasks.GetQuotesbookTask;
 import com.medic.quotesbook.tasks.GetSomeQuotesTask;
-import com.medic.quotesbook.utils.ChangeActivityRequestListener;
+import com.medic.quotesbook.utils.BaseActivityRequestListener;
 import com.medic.quotesbook.views.adapters.QuotesAdapter;
 
 /**
@@ -38,6 +39,9 @@ public class QuotesListFragment extends Fragment{
 
     private OnFragmentInteractionListener mListener;
 
+    View loaderLayout;
+    View quotesView;
+
     /**
      * The fragment's ListView/GridView.
      */
@@ -46,11 +50,10 @@ public class QuotesListFragment extends Fragment{
 
 
     // TODO: Rename and change types of parameters
-    public static QuotesListFragment newInstance(String param1, String param2) {
+    public static QuotesListFragment newInstance(boolean fromQuotesbook) {
         QuotesListFragment fragment = new QuotesListFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
+        args.putBoolean(ARG_FROM_QUOTESBOOK, fromQuotesbook);
         fragment.setArguments(args);
         return fragment;
     }
@@ -77,27 +80,36 @@ public class QuotesListFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_somequotes, container, false);
 
-        View loaderLayout = view.findViewById(R.id.loader_layout);
-        View quotesView = view.findViewById(R.id.quotes_list);
+        loaderLayout = view.findViewById(R.id.loader_layout);
+        quotesView = view.findViewById(R.id.quotes_list);
 
-        adapter = new QuotesAdapter(null, (ChangeActivityRequestListener) getActivity());
+        adapter = new QuotesAdapter(null, (BaseActivityRequestListener) getActivity());
 
         setupRecyclerView(view, adapter);
 
+        // Set OnItemClickListener so we can be notified on item clicks
+        //recyclerView.setOnItemClickListener(this);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d(TAG, "Se llama a OnResume");
+
         GetQuotesTask task;
+
+        if (adapter != null && adapter.quotes != null)
+            adapter.quotes.clear();
 
         if (!fromQuotesbook)
             task = new GetSomeQuotesTask(adapter, loaderLayout, quotesView);
         else
             task = new GetQuotesbookTask(adapter, loaderLayout, quotesView, getActivity());
 
-
         task.execute();
-
-        // Set OnItemClickListener so we can be notified on item clicks
-        //recyclerView.setOnItemClickListener(this);
-
-        return view;
     }
 
     private void setupRecyclerView(View view, QuotesAdapter adapter){
