@@ -2,6 +2,7 @@ package com.medic.quotesbook.views.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -97,19 +98,23 @@ public class QuotesListFragment extends Fragment{
     public void onResume() {
         super.onResume();
 
-        Log.d(TAG, "Se llama a OnResume");
+        setTitle();
 
-        GetQuotesTask task;
+        GetQuotesTask task = null;
 
-        if (adapter != null && adapter.quotes != null)
-            adapter.quotes.clear();
+        if (!fromQuotesbook){
+            if (adapter.quotes == null)
+                task = new GetSomeQuotesTask(adapter, loaderLayout, quotesView);
+        }else{
 
-        if (!fromQuotesbook)
-            task = new GetSomeQuotesTask(adapter, loaderLayout, quotesView);
-        else
+            if (adapter != null && adapter.quotes != null)
+                adapter.quotes.clear();
+
             task = new GetQuotesbookTask(adapter, loaderLayout, quotesView, getActivity());
+        }
 
-        task.execute();
+        if (task != null)
+            task.execute();
     }
 
     private void setupRecyclerView(View view, QuotesAdapter adapter){
@@ -134,15 +139,32 @@ public class QuotesListFragment extends Fragment{
 
                 int remainingItems = totalItemCount - pastVisiblesItems;
 
-                if (remainingItems <= 6 && (nextTask == null || !nextTask.isLoading()) ){
-                    nextTask = new GetSomeQuotesTask((QuotesAdapter) view.getAdapter());
-                    nextTask.execute();
+                if (remainingItems <= 6 ){
+
+                    if (nextTask == null || !nextTask.isLoading()){
+
+                        nextTask = new GetSomeQuotesTask((QuotesAdapter) view.getAdapter());
+                        nextTask.execute();
+
+                    }
+
                 }
 
                 //Log.d(TAG, "Visibles: " + Integer.toString(visibleItemCount) + ", totals: " + Integer.toString(totalItemCount) + ", past: " + Integer.toString(pastVisiblesItems) + ", remaining: " + Integer.toString(remainingItems));
             }
         });
 
+    }
+
+    void setTitle(){
+
+        ActionBarActivity activity = (ActionBarActivity) getActivity();
+
+        if (fromQuotesbook){
+            activity.getSupportActionBar().setTitle(R.string.tl_quotesbook);
+        }else{
+            activity.getSupportActionBar().setTitle(R.string.tl_home);
+        }
     }
 
     /*

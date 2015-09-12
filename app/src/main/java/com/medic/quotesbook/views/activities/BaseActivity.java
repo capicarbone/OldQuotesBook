@@ -65,13 +65,12 @@ public class BaseActivity extends ActionBarActivity implements BaseActivityReque
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                //getSupportActionBar().setTitle(getResources().getString(R.string.tl_home));
+
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                //getSupportActionBar().setTitle(R.string.app_name);
             }
         };
 

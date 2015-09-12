@@ -65,7 +65,7 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
 
         loading = false;
 
-        if (mAdapter.quotes == null ){
+        if (mAdapter.quotes == null || mAdapter.quotes.size() == 0 ){
             mAdapter.quotes = quotes;
 
             loaderLayout.setVisibility(View.GONE);
