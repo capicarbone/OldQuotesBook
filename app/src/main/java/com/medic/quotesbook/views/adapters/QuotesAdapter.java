@@ -63,7 +63,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
             Log.d("QuotesAdapter", "Click sobre " + authorNameView.getText() );
 
-            listener.showQuote(this.quote);
+            listener.showQuote(this.quote, false);
 
 
         }

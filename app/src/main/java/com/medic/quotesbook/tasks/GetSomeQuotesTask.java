@@ -36,8 +36,6 @@ public class GetSomeQuotesTask extends GetQuotesTask {
     protected ArrayList<Quote> doInBackground(Integer... limit) {
         super.doInBackground(limit);
 
-        loading = true;
-
         ArrayList<Quote> quotes = new ArrayList<Quote>();
 
         Quotesclient service = QuoteNetwork.getQuotesService();

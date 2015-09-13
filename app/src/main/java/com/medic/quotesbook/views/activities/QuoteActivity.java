@@ -21,9 +21,12 @@ import com.android.volley.toolbox.ImageLoader;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.utils.GAK;
 import com.medic.quotesbook.utils.QuotesStorage;
 import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
 
@@ -31,8 +34,11 @@ import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
 public class QuoteActivity extends ActionBarActivity {
 
     static final String TAG = "QuoteActivity";
+    static final String SCREEN_NAME = "Quote Details";
+    public static final String SCREEN_NAME_DAYQUOTE = "Day Quote";
 
     public static final String QUOTE_KEY = "quotesbook.quote";
+    public static final String DAYQUOTE_KEY = "quotesbook.day_quote"; // Indica si es la cita del día
 
     TextView quoteBodyView;
     TextView authorNameView;
@@ -41,19 +47,26 @@ public class QuoteActivity extends ActionBarActivity {
 
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-
     private Quote quote;
+
+    Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote);
 
+        tracker = ((AppController) getApplication()).getDefaultTracker();
+
+        quoteBodyView = (TextView) findViewById(R.id.quote_body);
+        authorNameView = (TextView) findViewById(R.id.author_name);
+        authorDescriptionView = (TextView) findViewById(R.id.author_description);
+        authorPictureView = (RoundedImageNetworkView) findViewById(R.id.author_picture);
+
         setupAd();
-        setupContent();
-        setupFAB();
 
     }
+
 
     public void setupAd(){
 
@@ -79,13 +92,6 @@ public class QuoteActivity extends ActionBarActivity {
     }
 
     public void setupContent(){
-
-        quoteBodyView = (TextView) findViewById(R.id.quote_body);
-        authorNameView = (TextView) findViewById(R.id.author_name);
-        authorDescriptionView = (TextView) findViewById(R.id.author_description);
-        authorPictureView = (RoundedImageNetworkView) findViewById(R.id.author_picture);
-
-        quote = this.getIntent().getParcelableExtra(QUOTE_KEY);
 
         quoteBodyView.setText(quote.getBody());
 
@@ -129,7 +135,7 @@ public class QuoteActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                Log.d(TAG, "Presionado");
+                HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
 
                 FloatingActionButton btn = (FloatingActionButton) view;
 
@@ -143,6 +149,11 @@ public class QuoteActivity extends ActionBarActivity {
 
                     setSavedIcon(btn);
 
+                    event.setCategory(GAK.CATEGORY_QUOTESBOOK);
+                    event.setAction(GAK.ACTION_QUOTE_SAVED);
+
+                    tracker.send(event.build());
+
                 }else{
 
                     qStorage.removeQuote(quote.getKey());
@@ -154,6 +165,11 @@ public class QuoteActivity extends ActionBarActivity {
                     btn.setImageResource(R.drawable.ic_star_border_white_24dp);
 
                     setUnsavedIcon(btn);
+
+                    event.setCategory(GAK.CATEGORY_QUOTESBOOK);
+                    event.setAction(GAK.ACTION_QUOTE_UNSAVED);
+
+                    tracker.send(event.build());
                 }
 
                 saved = !saved;
@@ -167,7 +183,20 @@ public class QuoteActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
+        quote = this.getIntent().getParcelableExtra(QUOTE_KEY);
+
+        setupContent();
+        setupFAB();
+
         getSupportActionBar().setTitle(quote.getAuthor().getFullName());
+
+        if (this.getIntent().getBooleanExtra(DAYQUOTE_KEY, false))
+            tracker.setScreenName(SCREEN_NAME_DAYQUOTE);
+        else
+            tracker.setScreenName(SCREEN_NAME);
+
+        tracker.send(new HitBuilders.EventBuilder().build());
+
     }
 
 

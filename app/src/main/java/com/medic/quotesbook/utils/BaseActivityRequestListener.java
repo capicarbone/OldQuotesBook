@@ -7,7 +7,7 @@ import com.medic.quotesbook.models.Quote;
  */
 public interface BaseActivityRequestListener {
 
-    public void showQuote(Quote quote);
+    public void showQuote(Quote quote, boolean dayquote);
     public void showOption(int i);
 
 

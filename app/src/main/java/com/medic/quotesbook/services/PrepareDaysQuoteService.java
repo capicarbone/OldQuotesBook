@@ -85,6 +85,7 @@ public class PrepareDaysQuoteService extends IntentService {
 
         Intent intent = new Intent(ctx, QuoteActivity.class);
         intent.putExtra(QuoteActivity.QUOTE_KEY, quote);
+        intent.putExtra(QuoteActivity.DAYQUOTE_KEY, true);
 
         /*
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(ctx);

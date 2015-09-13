@@ -10,12 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.tasks.GetQuotesTask;
 import com.medic.quotesbook.tasks.GetQuotesbookTask;
 import com.medic.quotesbook.tasks.GetSomeQuotesTask;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
+import com.medic.quotesbook.utils.GAK;
 import com.medic.quotesbook.views.adapters.QuotesAdapter;
 
 /**
@@ -30,7 +34,6 @@ import com.medic.quotesbook.views.adapters.QuotesAdapter;
 public class QuotesListFragment extends Fragment{
 
     private final String TAG = "QuotesListFragment";
-
 
     private static final String ARG_FROM_QUOTESBOOK = "QuotesFragment.FROM_QUOTESBOOK";
 
@@ -126,33 +129,7 @@ public class QuotesListFragment extends Fragment{
         recyclerView.setAdapter(adapter);
 
         if (!fromQuotesbook)
-            recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
-
-            GetSomeQuotesTask nextTask = null;
-
-            @Override
-            public void onScrolled( RecyclerView view, int dx, int dy){
-
-                int visibleItemCount = layoutManager.getChildCount();
-                int totalItemCount = layoutManager.getItemCount();
-                int pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
-
-                int remainingItems = totalItemCount - pastVisiblesItems;
-
-                if (remainingItems <= 6 ){
-
-                    if (nextTask == null || !nextTask.isLoading()){
-
-                        nextTask = new GetSomeQuotesTask((QuotesAdapter) view.getAdapter());
-                        nextTask.execute();
-
-                    }
-
-                }
-
-                //Log.d(TAG, "Visibles: " + Integer.toString(visibleItemCount) + ", totals: " + Integer.toString(totalItemCount) + ", past: " + Integer.toString(pastVisiblesItems) + ", remaining: " + Integer.toString(remainingItems));
-            }
-        });
+            setInfinityScroll(recyclerView, layoutManager);
 
     }
 
@@ -165,6 +142,58 @@ public class QuotesListFragment extends Fragment{
         }else{
             activity.getSupportActionBar().setTitle(R.string.tl_home);
         }
+    }
+
+    void setInfinityScroll(RecyclerView recycler, final LinearLayoutManager layoutManager){
+
+        final Tracker tracker = ( (AppController) this.getActivity().getApplication()).getDefaultTracker();
+
+        recycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            GetSomeQuotesTask nextTask = null;
+
+            final int PAGE_SIZE = 10;
+
+            int nextPageCount = PAGE_SIZE;
+
+            HitBuilders.EventBuilder event = new HitBuilders.EventBuilder(GAK.CATEGORY_SOMEQUOTES, GAK.ACTION_PAGE_PASSED);
+
+            @Override
+            public void onScrolled(RecyclerView view, int dx, int dy) {
+
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+
+                int remainingItems = totalItemCount - pastVisiblesItems;
+                int viewedItems = pastVisiblesItems + visibleItemCount;
+
+                if (remainingItems <= 6) {
+
+                    if (nextTask == null || !nextTask.isLoading()) {
+
+                        nextTask = new GetSomeQuotesTask((QuotesAdapter) view.getAdapter());
+                        nextTask.execute();
+
+                    }
+
+                }
+
+                if (viewedItems >= nextPageCount){
+
+                    event.setValue(viewedItems);
+
+                    tracker.send(event.build());
+
+                    nextPageCount = nextPageCount + PAGE_SIZE;
+
+                }
+
+
+
+                //Log.d(TAG, "Visibles: " + Integer.toString(visibleItemCount) + ", totals: " + Integer.toString(totalItemCount) + ", past: " + Integer.toString(pastVisiblesItems) + ", remaining: " + Integer.toString(remainingItems));
+            }
+        });
     }
 
     /*

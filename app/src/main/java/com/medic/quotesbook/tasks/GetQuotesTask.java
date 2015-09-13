@@ -28,6 +28,8 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
         mAdapter = a;
         this.loaderLayout = loaderLayout;
         this.mainLayout = mainLayout;
+
+        loading = true;
     }
 
     public GetQuotesTask(QuotesAdapter mAdapter, View loaderLayout, View mainLayout,  Context ctx) {
@@ -35,6 +37,8 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
         this.loaderLayout = loaderLayout;
         this.ctx = ctx;
         this.mainLayout = mainLayout;
+
+        loading = true;
     }
 
     public GetQuotesTask(QuotesAdapter mAdapter) {

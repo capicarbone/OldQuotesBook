@@ -9,6 +9,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appspot.quotesbookapp.quotesclient.Quotesclient;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
 import com.medic.quotesbook.utils.LruBitmapCache;
@@ -27,15 +29,36 @@ public class AppController extends Application{
 
     private static AppController mInstance;
 
+    public static GoogleAnalytics analytics;
+    private static Tracker tracker;
+
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+
+        //analytics = GoogleAnalytics.getInstance(this);
+        //analytics.setLocalDispatchPeriod(1800);
+
+        //tracker = analytics.newTracker("UA-66374922-2");
+        //tracker.enableExceptionReporting(true);
+        //tracker.enableAdvertisingIdCollection(true);
+        //tracker.enableAutoActivityTracking(true);
     }
 
     public static synchronized AppController getInstance(){
         return mInstance;
     }
+
+    synchronized public Tracker getDefaultTracker() {
+        if (tracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+            tracker = analytics.newTracker(R.xml.global_tracker);
+        }
+        return tracker;
+    }
+
 
     public RequestQueue getmRequestQueue(){
         if (mRequestQueue == null){

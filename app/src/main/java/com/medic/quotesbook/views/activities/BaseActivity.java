@@ -16,15 +16,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.receivers.OnBootReceiver;
 import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
+import com.medic.quotesbook.utils.GAK;
 import com.medic.quotesbook.utils.TodayQuoteManager;
 import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 import com.medic.quotesbook.views.fragments.QuotesListFragment;
@@ -32,6 +36,9 @@ import com.medic.quotesbook.views.fragments.QuotesListFragment;
 public class BaseActivity extends ActionBarActivity implements BaseActivityRequestListener {
 
     static final String TAG = "BaseActivity";
+    public static final String SCREEN_NAME_QUOTESBOOK = "Quotesbook";
+    public static final String SCREEN_NAME_SOMEQUOTES = "Some Quotes";
+
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     public static final String PROPERTY_REG_ID = "REGISTRATION_ID";
@@ -48,17 +55,19 @@ public class BaseActivity extends ActionBarActivity implements BaseActivityReque
 
     int optionSelected = 0;
 
+    Tracker tracker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
+        tracker = ( (AppController) getApplication()).getDefaultTracker();
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mDrawerOptionsView = (ListView) findViewById(R.id.drawer_options_view);
 //        mDrawerOptions = getResources().getStringArray(R.array.drawer_options);
-
-        getSupportActionBar().setTitle(R.string.tl_home);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_opened, R.string.drawer_closed){
 
@@ -119,6 +128,9 @@ public class BaseActivity extends ActionBarActivity implements BaseActivityReque
 
         }
 
+
+        tracker.send(new HitBuilders.EventBuilder().build());
+
         // For test QuoteDayService
 
         //Intent i = new Intent(this, PrepareDaysQuoteService.class);
@@ -131,8 +143,12 @@ public class BaseActivity extends ActionBarActivity implements BaseActivityReque
         Fragment optionView = null;
 
         switch (i){
-            case 0: optionView = QuotesListFragment.newInstance(false); break;
-            case 1: optionView = QuotesListFragment.newInstance(true); break;
+            case 0: optionView = QuotesListFragment.newInstance(false);
+                tracker.setScreenName(SCREEN_NAME_SOMEQUOTES);
+                break;
+            case 1: optionView = QuotesListFragment.newInstance(true);
+                tracker.setScreenName(SCREEN_NAME_QUOTESBOOK);
+                break;
         }
 
         return optionView;
@@ -182,11 +198,19 @@ public class BaseActivity extends ActionBarActivity implements BaseActivityReque
     }
 
     @Override
-    public void showQuote(Quote quote) {
+    public void showQuote(Quote quote, boolean dayquote) {
 
         Intent i = new Intent(this, QuoteActivity.class);
         i.putExtra(QuoteActivity.QUOTE_KEY, quote);
+        i.putExtra(QuoteActivity.DAYQUOTE_KEY, dayquote);
         startActivity(i);
+
+        HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
+        event.setCategory(GAK.CATEGORY_QUOTE)
+                .setAction(GAK.ACTION_QUOTE_SELECTED)
+                .setLabel(quote.getKey());
+
+        tracker.send(event.build());
     }
 
     @Override
@@ -201,10 +225,9 @@ public class BaseActivity extends ActionBarActivity implements BaseActivityReque
                 .replace(R.id.frame_content, getFragmentForOption(optionSelected))
                 .commit();
 
-        getSupportActionBar().setTitle(R.string.tl_quotesbook);
-
         mDrawerLayout.closeDrawers();
 
+        tracker.send(new HitBuilders.EventBuilder().build());
     }
 
 
@@ -216,6 +239,16 @@ public class BaseActivity extends ActionBarActivity implements BaseActivityReque
                 GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
             }else{
                 Log.i(TAG, "This device is not supported.");
+            }
+
+            if (resultCode == ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED){
+
+                HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
+                event.setCategory(GAK.CATEGORY_GPS)
+                        .setAction(GAK.ACTION_GPS_UPDATE_REQUIRED);
+
+                tracker.send(event.build());
+
             }
 
             return false;
@@ -241,7 +274,8 @@ public class BaseActivity extends ActionBarActivity implements BaseActivityReque
 
         Quote q = qManager.getTodayQuote();
 
-        showQuote(q);
+        showQuote(q, true);
+
     }
 
 }
