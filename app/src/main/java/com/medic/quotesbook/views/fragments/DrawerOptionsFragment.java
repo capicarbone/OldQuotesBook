@@ -20,6 +20,7 @@ import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
 import com.medic.quotesbook.utils.TodayQuoteManager;
+import com.medic.quotesbook.views.adapters.DrawerOptionsAdapter;
 import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
 
 /**
@@ -101,7 +102,9 @@ public class DrawerOptionsFragment extends Fragment {
 
         String[] mDrawerOptions = getResources().getStringArray(R.array.drawer_options);
 
-        mDrawerOptionsView.setAdapter(new ArrayAdapter<String>(ctx, android.R.layout.simple_list_item_1, mDrawerOptions));
+        DrawerOptionsAdapter adapter = new DrawerOptionsAdapter(getActivity(), mDrawerOptions);
+
+        mDrawerOptionsView.setAdapter(adapter);
 
         mDrawerOptionsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
