@@ -5,12 +5,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -95,6 +93,10 @@ public class DrawerOptionsFragment extends Fragment {
         ShowDayQuoteOnDrawer showQuoteTask = new ShowDayQuoteOnDrawer(authorName, authorPhotoView);
         showQuoteTask.execute();
 
+        //mDrawerOptionsView.setSelected(true);
+        //mDrawerOptionsView.setSelection(0);
+        mDrawerOptionsView.setItemChecked(0, true);
+
         return v;
     }
 
@@ -107,10 +109,26 @@ public class DrawerOptionsFragment extends Fragment {
         mDrawerOptionsView.setAdapter(adapter);
 
         mDrawerOptionsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            TextView lastOptionSelected = null;
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-            parentListener.showOption(position);
+                parentListener.showOption(position);
+
+                /*if (lastOptionSelected == null){
+
+                    DrawerOptionsAdapter drawerAdapter = (DrawerOptionsAdapter) adapterView.getAdapter();
+
+                    View selectedView = drawerAdapter.getView(0, null, null);
+                    lastOptionSelected = (TextView) selectedView.findViewById(R.id.option_label);
+                }
+
+                lastOptionSelected.setTextColor(getResources().getColor(R.color.accent));
+
+                lastOptionSelected = (TextView) view.findViewById(R.id.option_label);
+                lastOptionSelected.setTextColor(getResources().getColor(R.color.primary));*/
 
             }
         });
