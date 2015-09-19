@@ -1,8 +1,10 @@
 package com.medic.quotesbook;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -15,12 +17,17 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
 import com.medic.quotesbook.utils.LruBitmapCache;
 
+import java.util.Date;
+
 /**
  * Created by capi on 12/03/15.
  */
 public class AppController extends Application{
 
     public static final String TAG = AppController.class.getSimpleName();
+
+    public static final String FLAGS_FILE = "flags";
+    public static final String INSTALL_DATE_FLAG = "install_timestamp";
 
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
@@ -32,18 +39,16 @@ public class AppController extends Application{
     public static GoogleAnalytics analytics;
     private static Tracker tracker;
 
+    private Date installDate;
+    private int adsActive = -1; // -1 Sin definido, 1 true, false
+
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance = this;
 
-        //analytics = GoogleAnalytics.getInstance(this);
-        //analytics.setLocalDispatchPeriod(1800);
+        //isAdsActive();
 
-        //tracker = analytics.newTracker("UA-66374922-2");
-        //tracker.enableExceptionReporting(true);
-        //tracker.enableAdvertisingIdCollection(true);
-        //tracker.enableAutoActivityTracking(true);
     }
 
     public static synchronized AppController getInstance(){
@@ -57,6 +62,54 @@ public class AppController extends Application{
             tracker = analytics.newTracker(R.xml.global_tracker);
         }
         return tracker;
+    }
+
+    synchronized public boolean isAdsActive() {
+
+        if (installDate == null) {
+
+            SharedPreferences sp = this.getSharedPreferences(FLAGS_FILE, this.MODE_PRIVATE);
+            Long installTime = sp.getLong(INSTALL_DATE_FLAG, 0);
+
+            if (installTime == 0){
+
+                installDate = new Date();
+
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putLong(INSTALL_DATE_FLAG, installDate.getTime());
+                editor.commit();
+
+            }else{
+
+                installDate = new Date(installTime);
+
+            }
+        }
+
+        if (adsActive == 0){
+            Date today = new Date();
+            Date adsAvailableDay = new Date(installDate.getTime());
+
+            adsAvailableDay.setDate(installDate.getDay() + 1);
+
+            if( today.before(adsAvailableDay) ){
+                adsActive = 1;
+            }else{
+                adsActive = 0;
+            }
+        }
+
+
+        if (adsActive == 1){
+            Log.d(TAG, "Ads disponibles");
+            return true;
+        }
+        else{
+            Log.d(TAG, "Ads no disponibles");
+            return false;
+
+        }
+
     }
 
 

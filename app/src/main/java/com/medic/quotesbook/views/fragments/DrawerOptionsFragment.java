@@ -117,19 +117,6 @@ public class DrawerOptionsFragment extends Fragment {
 
                 parentListener.showOption(position);
 
-                /*if (lastOptionSelected == null){
-
-                    DrawerOptionsAdapter drawerAdapter = (DrawerOptionsAdapter) adapterView.getAdapter();
-
-                    View selectedView = drawerAdapter.getView(0, null, null);
-                    lastOptionSelected = (TextView) selectedView.findViewById(R.id.option_label);
-                }
-
-                lastOptionSelected.setTextColor(getResources().getColor(R.color.accent));
-
-                lastOptionSelected = (TextView) view.findViewById(R.id.option_label);
-                lastOptionSelected.setTextColor(getResources().getColor(R.color.primary));*/
-
             }
         });
     }

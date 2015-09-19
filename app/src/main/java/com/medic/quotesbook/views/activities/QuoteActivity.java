@@ -2,17 +2,21 @@ package com.medic.quotesbook.views.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnTouchListener;
@@ -20,6 +24,7 @@ import android.view.View.OnTouchListener;
 import com.android.volley.toolbox.ImageLoader;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -44,6 +49,7 @@ public class QuoteActivity extends ActionBarActivity {
     TextView authorNameView;
     RoundedImageNetworkView authorPictureView;
     TextView authorDescriptionView;
+    AdView adView;
 
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
@@ -51,26 +57,31 @@ public class QuoteActivity extends ActionBarActivity {
 
     Tracker tracker;
 
+    AppController app;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote);
 
-        tracker = ((AppController) getApplication()).getDefaultTracker();
+        app = (AppController) getApplication();
+
+        tracker = app.getDefaultTracker();
 
         quoteBodyView = (TextView) findViewById(R.id.quote_body);
         authorNameView = (TextView) findViewById(R.id.author_name);
         authorDescriptionView = (TextView) findViewById(R.id.author_description);
         authorPictureView = (RoundedImageNetworkView) findViewById(R.id.author_picture);
 
-        setupAd();
+        if (app.isAdsActive())
+            setupAd();
 
     }
 
 
     public void setupAd(){
 
-        AdView adView = (AdView) findViewById(R.id.ad_view);
+        adView = (AdView) findViewById(R.id.ad_view);
         final View adWrapper = findViewById(R.id.ad_wrapper);
 
         AdRequest adRequest = new AdRequest.Builder()
@@ -78,6 +89,7 @@ public class QuoteActivity extends ActionBarActivity {
                 .addTestDevice("95523B02E1B93A6E1B4B82DF09FCE7A5") // Logic X3
                 .build();
 
+        //adView.setAdSize(AdSize.SMART_BANNER);
         adView.loadAd(adRequest);
 
         adView.setAdListener(new AdListener() {
@@ -88,6 +100,7 @@ public class QuoteActivity extends ActionBarActivity {
                 adWrapper.setVisibility(View.VISIBLE);
             }
         });
+
 
     }
 
@@ -176,6 +189,23 @@ public class QuoteActivity extends ActionBarActivity {
 
             }
         });
+
+        // If no Ads
+
+        if (!app.isAdsActive()){
+
+            //// dp to px
+            Resources r = this.getResources();
+            int px = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    25,
+                    r.getDisplayMetrics()
+            );
+            ////
+
+            RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) fab.getLayoutParams();
+            lParams.bottomMargin = px;
+        }
 
     }
 
