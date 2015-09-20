@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.medic.quotesbook.utils.DevUtils;
 import com.medic.quotesbook.utils.TodayQuoteManager;
 
 /**

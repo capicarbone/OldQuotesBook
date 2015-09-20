@@ -26,6 +26,7 @@ import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.receivers.OnBootReceiver;
+import com.medic.quotesbook.services.PrepareDaysQuoteService;
 import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
 import com.medic.quotesbook.utils.GAK;

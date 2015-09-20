@@ -17,6 +17,8 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
 import com.medic.quotesbook.utils.LruBitmapCache;
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 /**
@@ -39,7 +41,7 @@ public class AppController extends Application{
     public static GoogleAnalytics analytics;
     private static Tracker tracker;
 
-    private Date installDate;
+    private DateTime installDate;
     private int adsActive = -1; // -1 Sin definido, 1 true, false
 
     @Override
@@ -73,26 +75,24 @@ public class AppController extends Application{
 
             if (installTime == 0){
 
-                installDate = new Date();
+                installDate = new DateTime();
 
                 SharedPreferences.Editor editor = sp.edit();
-                editor.putLong(INSTALL_DATE_FLAG, installDate.getTime());
+                editor.putLong(INSTALL_DATE_FLAG, installDate.getMillis());
                 editor.commit();
 
             }else{
 
-                installDate = new Date(installTime);
+                installDate = new DateTime(installTime);
 
             }
         }
 
         if (adsActive == 0){
-            Date today = new Date();
-            Date adsAvailableDay = new Date(installDate.getTime());
 
-            adsAvailableDay.setDate(installDate.getDay() + 1);
+            DateTime adsAvailableDay = installDate.plusDays(1);
 
-            if( today.before(adsAvailableDay) ){
+            if( adsAvailableDay.isAfterNow() ){
                 adsActive = 1;
             }else{
                 adsActive = 0;

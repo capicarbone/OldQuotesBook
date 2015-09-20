@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.medic.quotesbook.utils.DevUtils;
 
+import org.joda.time.DateTime;
+
 import java.util.Calendar;
 
 /**
@@ -42,12 +44,18 @@ public class OnBootReceiver extends BroadcastReceiver {
 
         PendingIntent quoteTimeIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
 
-        Calendar time = Calendar.getInstance();
-        time.setTimeInMillis(System.currentTimeMillis());
-        time.set(Calendar.HOUR_OF_DAY, 8);
-        time.set(Calendar.MINUTE, 30);
+        //Calendar time = Calendar.getInstance();
+        //time.setTimeInMillis(System.currentTimeMillis());
+        //time.set(Calendar.HOUR_OF_DAY, 8);
+        //time.set(Calendar.MINUTE, 30);
 
-        am.setInexactRepeating(AlarmManager.RTC, time.getTimeInMillis(), AlarmManager.INTERVAL_HALF_DAY, quoteTimeIntent);
+        DateTime nextAlarm = new DateTime(System.currentTimeMillis()).withHourOfDay(8);
+        nextAlarm = nextAlarm.withMinuteOfHour(30);
+
+        if (nextAlarm.isBeforeNow())
+            nextAlarm.plusDays(1);
+
+        am.setInexactRepeating(AlarmManager.RTC, nextAlarm.getMillis(), AlarmManager.INTERVAL_HALF_DAY, quoteTimeIntent);
 
 
     }
