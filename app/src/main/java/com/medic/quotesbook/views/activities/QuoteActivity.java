@@ -12,28 +12,27 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.ShareActionProvider;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View.OnTouchListener;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.utils.AdsKeys;
 import com.medic.quotesbook.utils.GAK;
 import com.medic.quotesbook.utils.QuotesStorage;
 import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
+import com.tappx.TAPPXAdBanner;
 
 
 public class QuoteActivity extends ActionBarActivity {
@@ -50,6 +49,9 @@ public class QuoteActivity extends ActionBarActivity {
     RoundedImageNetworkView authorPictureView;
     TextView authorDescriptionView;
     AdView adView;
+
+    PublisherAdView tappxAdBanner = null;
+    View adWrapper;
 
     private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
@@ -68,21 +70,38 @@ public class QuoteActivity extends ActionBarActivity {
 
         tracker = app.getDefaultTracker();
 
+        adWrapper = findViewById(R.id.ad_wrapper);
         quoteBodyView = (TextView) findViewById(R.id.quote_body);
         authorNameView = (TextView) findViewById(R.id.author_name);
         authorDescriptionView = (TextView) findViewById(R.id.author_description);
         authorPictureView = (RoundedImageNetworkView) findViewById(R.id.author_picture);
 
-        if (app.isAdsActive())
-            setupAd();
+        if (app.isAdsActive()){
+
+            if (isTappxTurn())
+                setupTappxAd();
+            else
+                setupAd();
+
+        }
 
     }
 
+    public boolean isTappxTurn(){
+
+        double n = Math.random()*10;
+
+        Log.d(TAG, "Turno: " + Double.toString(n));
+
+        if (n >= 8.5)
+            return true;
+        else
+            return false;
+    }
 
     public void setupAd(){
 
         adView = (AdView) findViewById(R.id.ad_view);
-        final View adWrapper = findViewById(R.id.ad_wrapper);
 
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("7DC08B2B34AC3B6CD04D5E05DF311803") // Nexus 5
@@ -99,7 +118,25 @@ public class QuoteActivity extends ActionBarActivity {
 
                 adWrapper.setVisibility(View.VISIBLE);
             }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                setupTappxAd();
+            }
         });
+
+
+    }
+
+    public void setupTappxAd(){
+
+        tappxAdBanner = TAPPXAdBanner.ConfigureAndShow(this,
+                tappxAdBanner, AdsKeys.TAPPX_QUOTEVIEW,
+                TAPPXAdBanner.AdPosition.POSITION_BOTTOM, false, new AdListener(){
+                    @Override public void onAdOpened() {
+                        adWrapper.setVisibility(View.VISIBLE);
+                    }
+                });
 
 
     }
@@ -227,6 +264,24 @@ public class QuoteActivity extends ActionBarActivity {
 
         tracker.send(new HitBuilders.EventBuilder().build());
 
+        if (tappxAdBanner != null)
+            tappxAdBanner.resume();
+
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        if (tappxAdBanner != null)
+            tappxAdBanner.destroy();
+    }
+
+    protected void onPause(){
+        super.onPause();
+
+        if (tappxAdBanner != null)
+            tappxAdBanner.pause();
     }
 
 

@@ -31,19 +31,19 @@ android {
 
 dependencies {
     compile 'com.google.http-client:google-http-client-gson:1.17.0-rc'
-    compile ([group: 'com.google.api-client', name: 'google-api-client-android', version: '1.19.0'])
-    compile project(path:':app:libs:quotesclient')
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile([group: 'com.google.api-client', name: 'google-api-client-android', version: '1.19.0'])
+    compile project(path: ':app:libs:quotesclient')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support:design:22.2.0'
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile 'com.android.support:cardview-v7:21.0.+'
     compile 'com.mcxiaoke.volley:library:1.0.+'
-    compile "com.google.android.gms:play-services-gcm:7.8.0"
-    compile "com.google.android.gms:play-services-ads:7.8.0"
-    compile "com.google.android.gms:play-services-analytics:7.8.0"
+    compile 'com.google.android.gms:play-services-gcm:7.8.0'
+    compile 'com.google.android.gms:play-services-ads:7.8.0'
+    compile 'com.google.android.gms:play-services-analytics:7.8.0'
     compile 'com.github.rahatarmanahmed:circularprogressview:2.3.2'
     compile 'joda-time:joda-time:2.8.2'
     //compile 'com.google.android.gms:play-services-ads:7.8.0'
-
+    compile files('libs/tappx-sdk-android-v2.2.09.jar')
 }
