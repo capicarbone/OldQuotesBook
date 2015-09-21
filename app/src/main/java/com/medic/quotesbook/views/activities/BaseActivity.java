@@ -34,7 +34,7 @@ import com.medic.quotesbook.utils.TodayQuoteManager;
 import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 import com.medic.quotesbook.views.fragments.QuotesListFragment;
 
-public class BaseActivity extends ActionBarActivity implements BaseActivityRequestListener {
+public class BaseActivity extends AdActivity implements BaseActivityRequestListener {
 
     static final String TAG = "BaseActivity";
     public static final String SCREEN_NAME_QUOTESBOOK = "Quotesbook";
@@ -63,6 +63,8 @@ public class BaseActivity extends ActionBarActivity implements BaseActivityReque
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+
+        initAds();
 
         tracker = ( (AppController) getApplication()).getDefaultTracker();
 

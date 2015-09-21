@@ -36,14 +36,14 @@ public class AdActivity extends ActionBarActivity {
         adWrapper = findViewById(R.id.ad_wrapper);
         adView = (AdView) findViewById(R.id.ad_view);
 
-        //if (app.isAdsActive()){
+        if (app.isAdsActive()){
 
         if (isTappxTurn())
             setupTappxAd();
         else
             setupAdMob();
 
-        //}
+        }
     }
 
     public boolean isTappxTurn(){
