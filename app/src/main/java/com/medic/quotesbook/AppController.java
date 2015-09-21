@@ -106,7 +106,7 @@ public class AppController extends Application{
         }
         else{
             Log.d(TAG, "Ads no disponibles");
-            return true;
+            return false;
 
         }
 
