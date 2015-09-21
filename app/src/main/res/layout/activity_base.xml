@@ -10,7 +10,7 @@
         >
 
     </FrameLayout>
-    
+
     <FrameLayout android:id="@+id/frame_drawer_options"
         android:layout_width="240dp"
         android:layout_height="match_parent"
