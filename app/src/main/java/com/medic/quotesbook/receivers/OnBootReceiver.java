@@ -48,14 +48,20 @@ public class OnBootReceiver extends BroadcastReceiver {
         //time.setTimeInMillis(System.currentTimeMillis());
         //time.set(Calendar.HOUR_OF_DAY, 8);
         //time.set(Calendar.MINUTE, 30);
-
+<
         DateTime nextAlarm = new DateTime(System.currentTimeMillis()).withHourOfDay(8);
         nextAlarm = nextAlarm.withMinuteOfHour(30);
 
         if (nextAlarm.isBeforeNow())
             nextAlarm.plusDays(1);
 
+        //DateTime testAlarm = new DateTime(System.currentTimeMillis());
+        //testAlarm.plusMinutes(1);
+
         am.setInexactRepeating(AlarmManager.RTC, nextAlarm.getMillis(), AlarmManager.INTERVAL_HALF_DAY, quoteTimeIntent);
+
+        //am.setInexactRepeating(AlarmManager.RTC, testAlarm.getMillis(), 18000L, quoteTimeIntent);
+
 
 
     }

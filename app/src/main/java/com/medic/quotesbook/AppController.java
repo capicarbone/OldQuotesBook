@@ -88,11 +88,11 @@ public class AppController extends Application{
             }
         }
 
-        if (adsActive == 0){
+        if (adsActive == -1){
 
             DateTime adsAvailableDay = installDate.plusDays(1);
 
-            if( adsAvailableDay.isAfterNow() ){
+            if( adsAvailableDay.isBeforeNow() ){
                 adsActive = 1;
             }else{
                 adsActive = 0;

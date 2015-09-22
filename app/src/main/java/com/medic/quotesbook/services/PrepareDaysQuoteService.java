@@ -101,7 +101,7 @@ public class PrepareDaysQuoteService extends IntentService {
         builder.setContentIntent(pendingIntent);
 
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+        Ringtone ringtone = RingtoneManager.getRingtone(getBaseContext(), notification);
 
         NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(5, builder.build());

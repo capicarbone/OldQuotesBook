@@ -47,7 +47,7 @@ public class TodayQuoteManager {
 
         Quote nextQuote = null;
 
-        if (quotes != null && quotes.length > 0){
+        if (quotes != null && quotes.length > 1){
 
             Quote[] newQueue = new Quote[quotes.length-1];
 
@@ -83,9 +83,10 @@ public class TodayQuoteManager {
 
         Quote[] newQuotes = gson.fromJson(fromServer, Quote[].class);
 
-        Quote todayQuote = quotes[0];
-
-        newQuotes[0] = todayQuote;
+        if (quotes != null & quotes.length > 0){
+            Quote todayQuote = quotes[0];
+            newQuotes[0] = todayQuote;
+        }
 
         quotes = newQuotes;
 
