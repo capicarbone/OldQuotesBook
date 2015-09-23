@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,21 +16,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
-import com.medic.quotesbook.utils.AdsKeys;
 import com.medic.quotesbook.utils.GAK;
 import com.medic.quotesbook.utils.QuotesStorage;
-import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
-import com.tappx.TAPPXAdBanner;
+import com.medic.quotesbook.views.widgets.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 
 public class QuoteActivity extends AdActivity {
@@ -46,11 +39,9 @@ public class QuoteActivity extends AdActivity {
 
     TextView quoteBodyView;
     TextView authorNameView;
-    RoundedImageNetworkView authorPictureView;
+    RoundedImageView authorPictureView;
     TextView authorDescriptionView;
 
-
-    private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
     private Quote quote;
 
@@ -68,7 +59,7 @@ public class QuoteActivity extends AdActivity {
         quoteBodyView = (TextView) findViewById(R.id.quote_body);
         authorNameView = (TextView) findViewById(R.id.author_name);
         authorDescriptionView = (TextView) findViewById(R.id.author_description);
-        authorPictureView = (RoundedImageNetworkView) findViewById(R.id.author_picture);
+        authorPictureView = (RoundedImageView) findViewById(R.id.author_picture);
 
     }
 
@@ -81,7 +72,9 @@ public class QuoteActivity extends AdActivity {
             authorDescriptionView.setText(quote.getAuthor().getShortDescription());
         }
 
-        authorPictureView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
+        Picasso.with(this).load(quote.getAuthor().getFullPictureURL()).into(authorPictureView);
+
+        //authorPictureView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
     }
 
     public void setSavedIcon(FloatingActionButton btn){

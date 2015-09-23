@@ -37,7 +37,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.medic.quotesbook.views.widgets.RoundedImageNetworkView android:id="@+id/author_picture"
+                        <com.medic.quotesbook.views.widgets.RoundedImageView
+                            android:id="@+id/author_picture"
                             android:layout_width="@dimen/author_picture_size"
                             android:layout_height="@dimen/author_picture_size"
                             app:sriv_left_bottom_corner_radius="@dimen/author_picture_borders"

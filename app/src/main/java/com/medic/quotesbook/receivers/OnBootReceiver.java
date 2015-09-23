@@ -48,7 +48,7 @@ public class OnBootReceiver extends BroadcastReceiver {
         //time.setTimeInMillis(System.currentTimeMillis());
         //time.set(Calendar.HOUR_OF_DAY, 8);
         //time.set(Calendar.MINUTE, 30);
-<
+
         DateTime nextAlarm = new DateTime(System.currentTimeMillis()).withHourOfDay(8);
         nextAlarm = nextAlarm.withMinuteOfHour(30);
 

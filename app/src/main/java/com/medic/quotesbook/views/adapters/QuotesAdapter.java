@@ -1,5 +1,6 @@
 package com.medic.quotesbook.views.adapters;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v7.widget.CardView;
@@ -11,12 +12,13 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
-import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
+import com.medic.quotesbook.views.widgets.RoundedImageView;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 
 import java.util.ArrayList;
@@ -29,12 +31,10 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     public ArrayList<Quote> quotes;
     private BaseActivityRequestListener listener;
 
-    private ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView bodyView;
-        public RoundedImageNetworkView authorPictureView;
+        public RoundedImageView authorPictureView;
         public TextView authorNameView;
 
         public Quote quote;
@@ -48,7 +48,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
             this.quote = quote;
 
             bodyView = (TextView) itemView.findViewById(R.id.quote_body);
-            authorPictureView = (RoundedImageNetworkView) itemView.findViewById(R.id.author_picture);
+            authorPictureView = (RoundedImageView) itemView.findViewById(R.id.author_picture);
             authorNameView = (TextView) itemView.findViewById(R.id.quote_author);
 
             CardView quotesCardView = (CardView) itemView.findViewById(R.id.quote_card_view);
@@ -92,17 +92,14 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
 
-        Quote quote = quotes.get(i);
+        final Quote quote = quotes.get(i);
 
         holder.bodyView.setText(quote.getBody());
         holder.authorPictureView.setImageBitmap(null);
         holder.authorNameView.setText("- " + quote.getAuthor().getFullName());
         holder.quote = quote;
 
-        //Log.d("QuotesAdapter", "BindViewHolder");
 
-        holder
-        .authorPictureView.setImageUrl("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureUrl(), imageLoader);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
             holder.authorPictureView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -110,33 +107,14 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
                 @Override
                 public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
 
-                    RoundedImageNetworkView imageView = (RoundedImageNetworkView) v;
+                    RoundedImageView imageView = (RoundedImageView) v;
 
-                    if (imageView != null && imageView.getDrawable() != null) {
-                        Bitmap bitmap = ((RoundedImageNetworkView.SelectableRoundedCornerDrawable) imageView.getDrawable()).getBitmap();
+                    Picasso.with((Context) listener)
+                            .load(quote.getAuthor().getFullPictureURL())
+                            .resize(imageView.getMeasuredWidth(), imageView.getMeasuredHeight())
+                            .centerCrop()
+                            .into(imageView);
 
-                        if (bitmap != null) {
-                            int diff = 0;
-
-                            if (imageView.getMeasuredHeight() > 0) {
-
-
-                                if (imageView.getMeasuredWidth() > bitmap.getWidth()) {
-
-                                    diff = imageView.getMeasuredWidth() - bitmap.getHeight();
-                                    bitmap = bitmap.createScaledBitmap(bitmap, imageView.getMeasuredWidth(), bitmap.getHeight() + diff, false);
-
-                                    imageView.setImageBitmap(bitmap);
-                                }
-
-                                diff = imageView.getMeasuredHeight() - bitmap.getWidth();
-
-                                if (diff > 0)
-                                    imageView.setImageBitmap(bitmap.createScaledBitmap(bitmap, bitmap.getWidth() + diff, imageView.getMeasuredHeight(), false));
-
-                            }
-                        }
-                    }
                 }
             });
         }else{
@@ -147,41 +125,17 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
             vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-                    RoundedImageNetworkView imageView = holder.authorPictureView;
+                    RoundedImageView imageView = holder.authorPictureView;
 
-                    if (imageView != null && imageView.getDrawable() != null) {
-                        Bitmap bitmap = ((RoundedImageNetworkView.SelectableRoundedCornerDrawable) imageView.getDrawable()).getBitmap();
-
-                        if (bitmap != null) {
-                            int diff = 0;
-
-                            if (imageView.getMeasuredHeight() > 0) {
-
-
-                                if (imageView.getMeasuredWidth() > bitmap.getWidth()) {
-
-                                    diff = imageView.getMeasuredWidth() - bitmap.getHeight();
-                                    bitmap = bitmap.createScaledBitmap(bitmap, imageView.getMeasuredWidth(), bitmap.getHeight() + diff, false);
-
-                                    imageView.setImageBitmap(bitmap);
-                                }
-
-                                diff = imageView.getMeasuredHeight() - bitmap.getWidth();
-
-                                if (diff > 0)
-                                    imageView.setImageBitmap(bitmap.createScaledBitmap(bitmap, bitmap.getWidth() + diff, imageView.getMeasuredHeight(), false));
-
-                            }
-                        }
-                    }
-
+                    Picasso.with((Context) listener)
+                            .load(quote.getAuthor().getFullPictureURL())
+                            .resize(imageView.getMeasuredWidth(), imageView.getMeasuredHeight())
+                            .centerCrop()
+                            .into(imageView);
 
                 }
             });
         }
-
-
-
 
     }
 

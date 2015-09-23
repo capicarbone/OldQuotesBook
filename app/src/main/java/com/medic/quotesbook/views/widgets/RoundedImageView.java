@@ -24,8 +24,8 @@ import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.ImageView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.medic.quotesbook.R;
 
 /**
@@ -34,10 +34,10 @@ import com.medic.quotesbook.R;
  *  Code from https://github.com/vinc3m1/RoundedImageView/blob/master/roundedimageview/src/main/java/com/makeramen/roundedimageview/RoundedImageView.java
  *
  */
-public class RoundedImageNetworkView extends NetworkImageView {
+public class RoundedImageView extends ImageView {
 
 
-    public static final String TAG = "SelectableRoundedImageView";
+    public static final String TAG = "RoundedImageView";
     private int mResource = 0;
     private static final ScaleType[] sScaleTypeArray = {
             ScaleType.MATRIX,
@@ -62,28 +62,28 @@ public class RoundedImageNetworkView extends NetworkImageView {
     private boolean isOval = false;
     private Drawable mDrawable;
     private float[] mRadii = new float[] { 0, 0, 0, 0, 0, 0, 0, 0 };
-    public RoundedImageNetworkView(Context context) {
+    public RoundedImageView(Context context) {
         super(context);
     }
-    public RoundedImageNetworkView(Context context, AttributeSet attrs) {
+    public RoundedImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
-    public RoundedImageNetworkView(Context context, AttributeSet attrs, int defStyle) {
+    public RoundedImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.RoundedImageNetworkView, defStyle, 0);
-        final int index = a.getInt(R.styleable.RoundedImageNetworkView_android_scaleType, -1);
+                R.styleable.RoundedImageView, defStyle, 0);
+        final int index = a.getInt(R.styleable.RoundedImageView_android_scaleType, -1);
         if (index >= 0) {
             setScaleType(sScaleTypeArray[index]);
         }
         mLeftTopCornerRadius = a.getDimensionPixelSize(
-                R.styleable.RoundedImageNetworkView_sriv_left_top_corner_radius, 0);
+                R.styleable.RoundedImageView_sriv_left_top_corner_radius, 0);
         mRightTopCornerRadius = a.getDimensionPixelSize(
-                R.styleable.RoundedImageNetworkView_sriv_right_top_corner_radius, 0);
+                R.styleable.RoundedImageView_sriv_right_top_corner_radius, 0);
         mLeftBottomCornerRadius = a.getDimensionPixelSize(
-                R.styleable.RoundedImageNetworkView_sriv_left_bottom_corner_radius, 0);
+                R.styleable.RoundedImageView_sriv_left_bottom_corner_radius, 0);
         mRightBottomCornerRadius = a.getDimensionPixelSize(
-                R.styleable.RoundedImageNetworkView_sriv_right_bottom_corner_radius, 0);
+                R.styleable.RoundedImageView_sriv_right_bottom_corner_radius, 0);
         if (mLeftTopCornerRadius < 0.0f || mRightTopCornerRadius < 0.0f
                 || mLeftBottomCornerRadius < 0.0f || mRightBottomCornerRadius < 0.0f) {
             throw new IllegalArgumentException("radius values cannot be negative.");
@@ -94,16 +94,16 @@ public class RoundedImageNetworkView extends NetworkImageView {
                 mRightBottomCornerRadius, mRightBottomCornerRadius,
                 mLeftBottomCornerRadius, mLeftBottomCornerRadius };
         mBorderWidth = a.getDimensionPixelSize(
-                R.styleable.RoundedImageNetworkView_sriv_border_width, 0);
+                R.styleable.RoundedImageView_sriv_border_width, 0);
         if (mBorderWidth < 0) {
             throw new IllegalArgumentException("border width cannot be negative.");
         }
         mBorderColor = a
-                .getColorStateList(R.styleable.RoundedImageNetworkView_sriv_border_color);
+                .getColorStateList(R.styleable.RoundedImageView_sriv_border_color);
         if (mBorderColor == null) {
             mBorderColor = ColorStateList.valueOf(DEFAULT_BORDER_COLOR);
         }
-        isOval = a.getBoolean(R.styleable.RoundedImageNetworkView_sriv_oval, false);
+        isOval = a.getBoolean(R.styleable.RoundedImageView_sriv_oval, false);
         a.recycle();
         updateDrawable();
     }

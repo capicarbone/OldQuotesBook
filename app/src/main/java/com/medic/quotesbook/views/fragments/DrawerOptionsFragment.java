@@ -12,14 +12,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
 import com.medic.quotesbook.utils.TodayQuoteManager;
 import com.medic.quotesbook.views.adapters.DrawerOptionsAdapter;
-import com.medic.quotesbook.views.widgets.RoundedImageNetworkView;
+import com.medic.quotesbook.views.widgets.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +39,7 @@ public class DrawerOptionsFragment extends Fragment {
 
     TextView authorName;
     ListView mDrawerOptionsView;
-    RoundedImageNetworkView authorPhotoView;
+    RoundedImageView authorPhotoView;
 
     private Context ctx;
     private BaseActivityRequestListener parentListener;
@@ -86,7 +86,7 @@ public class DrawerOptionsFragment extends Fragment {
 
         authorName = (TextView) v.findViewById(R.id.author_name);
         mDrawerOptionsView = (ListView) v.findViewById(R.id.drawer_options_view);
-        authorPhotoView = (RoundedImageNetworkView) v.findViewById(R.id.author_picture);
+        authorPhotoView = (RoundedImageView) v.findViewById(R.id.author_picture);
 
         setupDrawerOptions();
 
@@ -124,9 +124,9 @@ public class DrawerOptionsFragment extends Fragment {
     private class ShowDayQuoteOnDrawer extends AsyncTask<Void, Void, Quote>{
 
         TextView authorName;
-        RoundedImageNetworkView authorPhotoView;
+        RoundedImageView authorPhotoView;
 
-        public ShowDayQuoteOnDrawer(TextView authorName, RoundedImageNetworkView authorPhotoView){
+        public ShowDayQuoteOnDrawer(TextView authorName, RoundedImageView authorPhotoView){
 
             this.authorName = authorName;
             this.authorPhotoView = authorPhotoView;
@@ -159,12 +159,11 @@ public class DrawerOptionsFragment extends Fragment {
         @Override
         protected void onPostExecute(Quote quote) {
 
-            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-
             if (quote != null){
 
                 if (quote.getAuthor() != null){
-                    authorPhotoView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
+                    //authorPhotoView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
+                    Picasso.with(ctx).load(quote.getAuthor().getFullPictureURL()).into(authorPhotoView);
                     authorName.setText("Por " + quote.getAuthor().getFullName());
                 }else{
                     authorName.setText("Por Anónimo");

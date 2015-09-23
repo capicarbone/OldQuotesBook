@@ -27,7 +27,7 @@
             android:padding="0dp"
             >
 
-            <com.medic.quotesbook.views.widgets.RoundedImageNetworkView
+            <com.medic.quotesbook.views.widgets.RoundedImageView
                 android:id="@+id/author_picture"
                 android:layout_width="@dimen/image_author_small"
                 android:layout_height="match_parent"
