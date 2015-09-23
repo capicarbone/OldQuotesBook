@@ -34,6 +34,7 @@
                 android:scaleType="center"
                 android:layout_margin="0dp"
                 android:padding="0dp"
+                android:background="@color/gray_light"
                 card_view:sriv_left_bottom_corner_radius="@dimen/cards_borders"
                 card_view:sriv_left_top_corner_radius="@dimen/cards_borders"
                 />

@@ -9,12 +9,15 @@
     <string name="drawer_opened">Menú Abierto</string>
     <string name="drawer_closed">Menú Cerrado</string>
     <string name="title_activity_quote">QuoteActivity</string>
+    <string name="title_dayquote">Cita del día</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_authors">AuthorsActivity</string>
     <string name="text_loading_quotes">Consultando a sabios...</string>
 
     <string name="message_quote_saved">Cita guardada</string>
     <string name="message_quote_unsaved">Cita eliminada</string>
+
+    <string name="twitter_account">_qbook</string>
 
     <!-- Ids -->
 

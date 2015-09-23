@@ -181,9 +181,10 @@ public class QuoteActivity extends AdActivity {
 
         getSupportActionBar().setTitle(quote.getAuthor().getFullName());
 
-        if (this.getIntent().getBooleanExtra(DAYQUOTE_KEY, false))
+        if (this.getIntent().getBooleanExtra(DAYQUOTE_KEY, false)){
             tracker.setScreenName(SCREEN_NAME_DAYQUOTE);
-        else
+            getSupportActionBar().setTitle(getResources().getString(R.string.title_dayquote));
+        }else
             tracker.setScreenName(SCREEN_NAME);
 
         tracker.send(new HitBuilders.EventBuilder().build());
@@ -200,9 +201,16 @@ public class QuoteActivity extends AdActivity {
 
         ShareActionProvider actionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
 
+        String shareable = quote.getShareable();
+        String marketingTail = ", via @" + getResources().getString(R.string.twitter_account);
+
+        if (shareable.length() + marketingTail.length() <= 140)
+            shareable = shareable + marketingTail;
+
+
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, quote.getShareable());
+        intent.putExtra(Intent.EXTRA_TEXT, shareable);
         intent.setType("text/plain");
         Intent.createChooser(intent, "QuotesBook");
 
