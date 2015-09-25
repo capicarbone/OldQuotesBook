@@ -24,6 +24,8 @@ import java.util.Iterator;
  */
 public class GetSomeQuotesTask extends GetQuotesTask {
 
+    public static final int PAGE_SIZE = 12;
+
     public GetSomeQuotesTask(QuotesAdapter a, View loaderLayout, View mainLayout) {
         super(a, loaderLayout, mainLayout);
     }
@@ -43,7 +45,7 @@ public class GetSomeQuotesTask extends GetQuotesTask {
         ApiMessagesQuotesCollection response = null;
 
         try {
-            response = service.quotes().some().setLimit(12).execute();
+            response = service.quotes().some().setLimit(PAGE_SIZE).execute();
 
         } catch (IOException e) {
             e.printStackTrace();

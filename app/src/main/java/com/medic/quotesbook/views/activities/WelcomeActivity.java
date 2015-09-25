@@ -53,7 +53,7 @@ public class WelcomeActivity extends ActionBarActivity {
 
                 int currentItem = pager.getCurrentItem();
 
-                if (currentItem+1 == pager.getAdapter().getCount()){
+                if (currentItem+1 == pager.getAdapter().getCount()){ // Si es la última página
                     startQuotesBook();
                     finish();
                 }

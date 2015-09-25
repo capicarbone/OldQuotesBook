@@ -80,8 +80,6 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
             tracker = app.getDefaultTracker();
 
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        mDrawerOptionsView = (ListView) findViewById(R.id.drawer_options_view);
-//        mDrawerOptions = getResources().getStringArray(R.array.drawer_options);
 
             mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_opened, R.string.drawer_closed){
 

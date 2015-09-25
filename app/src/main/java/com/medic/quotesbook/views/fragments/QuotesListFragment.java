@@ -152,9 +152,11 @@ public class QuotesListFragment extends Fragment{
 
             GetSomeQuotesTask nextTask = null;
 
-            final int PAGE_SIZE = 10;
+            final int PAGE_SIZE = GetSomeQuotesTask.PAGE_SIZE;
+            final int MINIMUN_FOR_REQUEST = 6;
 
             int nextPageCount = PAGE_SIZE;
+            int totalItemsRequested = PAGE_SIZE;
 
             HitBuilders.EventBuilder event = new HitBuilders.EventBuilder(GAK.CATEGORY_SOMEQUOTES, GAK.ACTION_PAGE_PASSED);
 
@@ -171,14 +173,16 @@ public class QuotesListFragment extends Fragment{
 
                 //Log.d(TAG, "Quedan " + Integer.toString(remainingItems));
 
-                if (remainingItems <= 6) {
+                if (remainingItems <= MINIMUN_FOR_REQUEST && totalItemsRequested <= totalItemCount) {
 
                     if (nextTask == null || !nextTask.isLoading()) {
 
-                        //Log.d(TAG, "Se crea una nueva tarea y se ejecuta");
+                        //Log.d(TAG, "Se crea una nueva tarea y se ejecuta. remaining: " + Integer.toString(remainingItems));
 
                         nextTask = new GetSomeQuotesTask((QuotesAdapter) view.getAdapter());
                         nextTask.execute();
+
+                        totalItemsRequested = totalItemsRequested + PAGE_SIZE;
 
                     }
 
@@ -193,8 +197,6 @@ public class QuotesListFragment extends Fragment{
                     nextPageCount = nextPageCount + PAGE_SIZE;
 
                 }
-
-
 
                 //Log.d(TAG, "Visibles: " + Integer.toString(visibleItemCount) + ", totals: " + Integer.toString(totalItemCount) + ", past: " + Integer.toString(pastVisiblesItems) + ", remaining: " + Integer.toString(remainingItems));
             }
