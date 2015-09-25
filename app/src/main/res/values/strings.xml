@@ -22,5 +22,9 @@
     <!-- Ids -->
 
     <string name="adid_quote">ca-app-pub-3556838383179218/1569803684</string>
+    <string name="title_activity_welcome">Bienvenido</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

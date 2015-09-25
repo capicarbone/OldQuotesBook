@@ -64,11 +64,7 @@ public class AppController extends Application{
 
             if (installTime == 0){
 
-                installDate = new DateTime();
-
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putLong(INSTALL_DATE_FLAG, installDate.getMillis());
-                editor.commit();
+                setInstallDate();
 
             }else{
 
@@ -99,6 +95,36 @@ public class AppController extends Application{
 
         }
 
+    }
+
+    public void setInstallDate(){
+        installDate = new DateTime();
+        SharedPreferences sp = this.getSharedPreferences(FLAGS_FILE, this.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putLong(INSTALL_DATE_FLAG, installDate.getMillis());
+        editor.commit();
+    }
+
+    public boolean isFirstLaunch(){
+
+
+        if (installDate == null) {
+
+            SharedPreferences sp = this.getSharedPreferences(FLAGS_FILE, this.MODE_PRIVATE);
+            Long installTime = sp.getLong(INSTALL_DATE_FLAG, 0);
+
+            if (installTime == 0){
+                return true;
+
+            }else{
+
+                return false;
+
+            }
+        }
+
+        return false;
     }
 
     public Quotesclient getQuotesClient(){

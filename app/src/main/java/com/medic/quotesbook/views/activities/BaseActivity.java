@@ -3,6 +3,7 @@ package com.medic.quotesbook.views.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,6 +35,8 @@ import com.medic.quotesbook.utils.TodayQuoteManager;
 import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 import com.medic.quotesbook.views.fragments.QuotesListFragment;
 
+import android.os.Handler;
+
 public class BaseActivity extends AdActivity implements BaseActivityRequestListener {
 
     static final String TAG = "BaseActivity";
@@ -56,6 +59,8 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
 
     int optionSelected = 0;
 
+    AppController app;
+
     Tracker tracker;
 
 
@@ -64,75 +69,84 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
-        initAds();
+        app = (AppController) getApplication();
 
-        tracker = ( (AppController) getApplication()).getDefaultTracker();
+        if (app.isFirstLaunch()){
+            showWelcome();
+            finish();
+        }else{
+            initAds();
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            tracker = app.getDefaultTracker();
+
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mDrawerOptionsView = (ListView) findViewById(R.id.drawer_options_view);
 //        mDrawerOptions = getResources().getStringArray(R.array.drawer_options);
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_opened, R.string.drawer_closed){
+            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_opened, R.string.drawer_closed){
 
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
+                /** Called when a drawer has settled in a completely closed state. */
+                public void onDrawerClosed(View view) {
+                    super.onDrawerClosed(view);
 
-            }
+                }
 
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-        };
+                /** Called when a drawer has settled in a completely open state. */
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                }
+            };
 
 //        mDrawerOptionsView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mDrawerOptions));
 
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+            mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
 
-        // Setting the fragment
+            // Setting the fragment
 
-        FragmentManager fm = getSupportFragmentManager();
-
-
-        if (savedInstanceState != null){
-
-            optionSelected = savedInstanceState.getInt(DATA_OPTION_SELECTED);
-        }
-
-       Fragment initialView = getFragmentForOption(optionSelected);
-
-       fm.beginTransaction()
-               .replace(R.id.frame_content, initialView)
-               .add(R.id.frame_drawer_options, new DrawerOptionsFragment())
-               .commit();
+            FragmentManager fm = getSupportFragmentManager();
 
 
-        if (checkPlayServices()){
-            gcm = GoogleCloudMessaging.getInstance(this);
+            if (savedInstanceState != null){
 
-            String regid;
-
-            regid = getRegistrationId(this);
-
-            if (regid.isEmpty()){
-                Log.d(TAG, "Tenemos que registrarnos");
-
-                RegisterGCMAppTask register = new RegisterGCMAppTask(gcm);
-                register.execute(this);
-
-                // We set the alarm.
-                Intent i = new Intent(this, OnBootReceiver.class);
-                sendBroadcast(i);
+                optionSelected = savedInstanceState.getInt(DATA_OPTION_SELECTED);
             }
 
+            Fragment initialView = getFragmentForOption(optionSelected);
+
+            fm.beginTransaction()
+                    .replace(R.id.frame_content, initialView)
+                    .add(R.id.frame_drawer_options, new DrawerOptionsFragment())
+                    .commit();
+
+
+            if (checkPlayServices()){
+                gcm = GoogleCloudMessaging.getInstance(this);
+
+                String regid;
+
+                regid = getRegistrationId(this);
+
+                if (regid.isEmpty()){
+                    Log.d(TAG, "Tenemos que registrarnos");
+
+                    RegisterGCMAppTask register = new RegisterGCMAppTask(gcm);
+                    register.execute(this);
+
+                    // We set the alarm.
+                    Intent i = new Intent(this, OnBootReceiver.class);
+                    sendBroadcast(i);
+                }
+
+            }
+
+
+            tracker.send(new HitBuilders.EventBuilder().build());
         }
 
 
-        tracker.send(new HitBuilders.EventBuilder().build());
 
         // For test QuoteDayService
 
@@ -160,7 +174,9 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+
+        if (mDrawerToggle != null)
+            mDrawerToggle.syncState();
     }
 
     @Override
@@ -231,6 +247,25 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
         mDrawerLayout.closeDrawers();
 
         tracker.send(new HitBuilders.EventBuilder().build());
+    }
+
+    public void showWelcome(){
+
+        final Context activity = this;
+
+        Handler handler = new Handler(new Handler.Callback(){
+
+            @Override
+            public boolean handleMessage(Message message) {
+
+                Intent i = new Intent(activity, WelcomeActivity.class);
+                startActivity(i);
+
+                return false;
+            }
+        });
+
+        handler.sendEmptyMessageAtTime(1, 500L);
     }
 
 

@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.medic.quotesbook.views.activities.WelcomeActivity">
+
+    <android.support.v4.view.ViewPager android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    </android.support.v4.view.ViewPager>
+
+    <!--
+    <RelativeLayout android:id="@+id/botton_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/primary"
+        android:padding="@dimen/standard_padding"
+        >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Continuar"
+            android:layout_alignParentEnd="true"
+            />
+
+    </RelativeLayout>
+    -->
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_forward_black_24dp"
+        android:layout_marginBottom="45dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        app:backgroundTint="@color/white"
+        app:rippleColor="@color/accent"
+        app:fabSize="normal"
+        app:borderWidth="0dp"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,27 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.medic.quotesbook.views.fragments.PresentationFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        android:paddingTop="36dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Bienvenido a QuotesBook"
+            android:textSize="25dp"
+            android:layout_centerHorizontal="true"
+         />
+
+    </RelativeLayout>
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+</FrameLayout>

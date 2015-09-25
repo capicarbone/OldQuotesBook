@@ -165,12 +165,17 @@ public class QuotesListFragment extends Fragment{
                 int totalItemCount = layoutManager.getItemCount();
                 int pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
 
+
                 int remainingItems = totalItemCount - pastVisiblesItems;
                 int viewedItems = pastVisiblesItems + visibleItemCount;
+
+                //Log.d(TAG, "Quedan " + Integer.toString(remainingItems));
 
                 if (remainingItems <= 6) {
 
                     if (nextTask == null || !nextTask.isLoading()) {
+
+                        //Log.d(TAG, "Se crea una nueva tarea y se ejecuta");
 
                         nextTask = new GetSomeQuotesTask((QuotesAdapter) view.getAdapter());
                         nextTask.execute();

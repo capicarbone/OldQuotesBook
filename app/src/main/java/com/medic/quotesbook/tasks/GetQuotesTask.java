@@ -75,10 +75,12 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
             loaderLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.VISIBLE);
 
-            mAdapter.notifyDataSetChanged();
         }else{
             mAdapter.quotes.addAll(quotes);
+
         }
+
+        mAdapter.notifyDataSetChanged();
 
     }
 }
