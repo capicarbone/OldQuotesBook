@@ -39,12 +39,14 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         public Quote quote;
 
-        BaseActivityRequestListener listener;
+        private BaseActivityRequestListener listener;
+        private Context ctx;
 
         public ViewHolder(View itemView, Quote quote, BaseActivityRequestListener listener) {
             super(itemView);
 
             this.listener = listener;
+            this.ctx = (Context) listener;
             this.quote = quote;
 
             bodyView = (TextView) itemView.findViewById(R.id.quote_body);
@@ -55,6 +57,21 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
             quotesCardView.setPreventCornerOverlap(false);
 
             itemView.setOnClickListener(this);
+
+            // TODO: Next to Author Class
+
+            int[] authorsColors = new int[8];
+            authorsColors[0] = R.color.author_background_1;
+            authorsColors[1] = R.color.author_background_2;
+            authorsColors[2] = R.color.author_background_3;
+            authorsColors[3] = R.color.author_background_4;
+            authorsColors[4] = R.color.author_background_5;
+            authorsColors[5] = R.color.author_background_6;
+            authorsColors[6] = R.color.author_background_7;
+            authorsColors[7] = R.color.author_background_8;
+
+            int colorPos = (int) ((Math.random()*10) % 8);
+            authorPictureView.setBackgroundColor(ctx.getResources().getColor(authorsColors[colorPos]));
 
         }
 
@@ -96,9 +113,9 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         holder.bodyView.setText(quote.getBody());
         holder.authorPictureView.setImageBitmap(null);
+
         holder.authorNameView.setText("- " + quote.getAuthor().getFullName());
         holder.quote = quote;
-
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){

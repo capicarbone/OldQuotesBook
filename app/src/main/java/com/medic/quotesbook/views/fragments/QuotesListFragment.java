@@ -5,10 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -45,6 +45,9 @@ public class QuotesListFragment extends Fragment{
 
     View loaderLayout;
     View quotesView;
+    View exceptionLayout;
+
+    private Button reloadButton;
 
     /**
      * The fragment's ListView/GridView.
@@ -86,13 +89,19 @@ public class QuotesListFragment extends Fragment{
 
         loaderLayout = view.findViewById(R.id.loader_layout);
         quotesView = view.findViewById(R.id.quotes_list);
+        exceptionLayout = view.findViewById(R.id.exception_layout);
+        reloadButton = (Button) view.findViewById(R.id.reload_button);
 
         adapter = new QuotesAdapter(null, (BaseActivityRequestListener) getActivity());
 
         setupRecyclerView(view, adapter);
 
-        // Set OnItemClickListener so we can be notified on item clicks
-        //recyclerView.setOnItemClickListener(this);
+        reloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getQuotes();
+            }
+        });
 
         return view;
     }
@@ -103,17 +112,22 @@ public class QuotesListFragment extends Fragment{
 
         setTitle();
 
+        getQuotes();
+    }
+
+    private void getQuotes(){
+
         GetQuotesTask task = null;
 
         if (!fromQuotesbook){
             if (adapter.quotes == null)
-                task = new GetSomeQuotesTask(adapter, loaderLayout, quotesView);
+                task = new GetSomeQuotesTask(adapter, loaderLayout, quotesView, exceptionLayout);
         }else{
 
             if (adapter != null && adapter.quotes != null)
                 adapter.quotes.clear();
 
-            task = new GetQuotesbookTask(adapter, loaderLayout, quotesView, getActivity());
+            task = new GetQuotesbookTask(adapter, loaderLayout, quotesView, exceptionLayout, getActivity());
         }
 
         if (task != null)
@@ -172,6 +186,10 @@ public class QuotesListFragment extends Fragment{
                 int viewedItems = pastVisiblesItems + visibleItemCount;
 
                 //Log.d(TAG, "Quedan " + Integer.toString(remainingItems));
+
+                if (nextTask != null && nextTask.failedRequest()){
+                    totalItemsRequested = totalItemsRequested - PAGE_SIZE;
+                }
 
                 if (remainingItems <= MINIMUN_FOR_REQUEST && totalItemsRequested <= totalItemCount) {
 

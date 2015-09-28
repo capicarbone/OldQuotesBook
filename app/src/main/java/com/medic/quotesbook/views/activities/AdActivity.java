@@ -78,7 +78,9 @@ public class AdActivity extends ActionBarActivity {
 
             @Override
             public void onAdFailedToLoad(int errorCode) {
-                setupTappxAd();
+
+                if (errorCode != AdRequest.ERROR_CODE_NETWORK_ERROR)
+                    setupTappxAd();
             }
         });
 
@@ -97,7 +99,9 @@ public class AdActivity extends ActionBarActivity {
 
                     @Override
                     public void onAdFailedToLoad(int errorCode) {
-                        setupAdMob();
+
+                        if (errorCode != AdRequest.ERROR_CODE_NETWORK_ERROR)
+                            setupAdMob();
                     }
                 });
 

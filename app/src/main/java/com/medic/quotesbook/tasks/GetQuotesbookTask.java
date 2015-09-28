@@ -16,8 +16,8 @@ import java.util.Arrays;
  */
 public class GetQuotesbookTask extends GetQuotesTask {
 
-    public GetQuotesbookTask(QuotesAdapter mAdapter, View loaderLayout, View mainLayout, Context ctx) {
-        super(mAdapter, loaderLayout, mainLayout, ctx);
+    public GetQuotesbookTask(QuotesAdapter mAdapter, View loaderLayout, View mainLayout, View exceptionLayout, Context ctx) {
+        super(mAdapter, loaderLayout, mainLayout, exceptionLayout, ctx );
     }
 
     @Override
@@ -30,6 +30,11 @@ public class GetQuotesbookTask extends GetQuotesTask {
         quotes = new ArrayList<Quote>(Arrays.asList(qStorage.getQuotes()));
 
         return quotes;
+
+    }
+
+    @Override
+    protected void notifyException(int exceptionCode) {
 
     }
 }

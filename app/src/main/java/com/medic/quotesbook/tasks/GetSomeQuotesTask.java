@@ -1,21 +1,21 @@
 package com.medic.quotesbook.tasks;
 
-import android.os.AsyncTask;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.appspot.quotesbookapp.quotesclient.Quotesclient;
 import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuoteMsg;
 import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesQuotesCollection;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.json.gson.GsonFactory;
-import com.google.gson.Gson;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
+import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.QuoteNetwork;
 import com.medic.quotesbook.views.adapters.QuotesAdapter;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -26,8 +26,16 @@ public class GetSomeQuotesTask extends GetQuotesTask {
 
     public static final int PAGE_SIZE = 12;
 
-    public GetSomeQuotesTask(QuotesAdapter a, View loaderLayout, View mainLayout) {
-        super(a, loaderLayout, mainLayout);
+    public static final int CONNECTION_DISABLED = 1;
+    public static final int CONNECTION_BACKEND_ERROR = 2;
+
+    public GetSomeQuotesTask(QuotesAdapter a, View loaderLayout, View mainLayout, View exceptionLayout) {
+        super(a, loaderLayout, mainLayout, exceptionLayout);
+
+        if (a != null || a.quotes != null || a.quotes.size() == 0){
+            showLoader();
+        }
+
     }
 
     public GetSomeQuotesTask(QuotesAdapter a) {
@@ -47,7 +55,19 @@ public class GetSomeQuotesTask extends GetQuotesTask {
         try {
             response = service.quotes().some().setLimit(PAGE_SIZE).execute();
 
-        } catch (IOException e) {
+        }
+        catch (UnknownHostException e){
+            setException(CONNECTION_DISABLED);
+
+            Log.d("TAG", "No hay conexión" );
+        }
+        catch (GoogleJsonResponseException e){
+            setException(CONNECTION_BACKEND_ERROR);
+
+            Log.d("TAG", "Error en el backend");
+        }
+        catch (IOException e) {
+            setException(-1);
             e.printStackTrace();
         }
 
@@ -67,6 +87,36 @@ public class GetSomeQuotesTask extends GetQuotesTask {
         }
 
         return quotes;
+    }
+
+    @Override
+    protected void notifyException(int exceptionCode){
+
+        QuotesAdapter adapter = getAdapter();
+
+        if (adapter == null || adapter.quotes == null || adapter.quotes.size() == 0){
+
+            showException();
+
+            TextView exceptionText = (TextView) getExceptionLayout().findViewById(R.id.exception_text);
+            ImageView exceptionIcon = (ImageView) getExceptionLayout().findViewById(R.id.exception_icon);
+
+            switch (exceptionCode){
+
+                case CONNECTION_DISABLED:
+                    exceptionText.setText(R.string.message_quotes_connection_error);
+                    exceptionIcon.setImageResource(R.drawable.ic_signal_wifi_off_black_36dp);
+                    break;
+                case CONNECTION_BACKEND_ERROR:
+                default:
+                    exceptionIcon.setImageResource(R.drawable.ic_cloud_off_black_36dp);
+                    exceptionText.setText(R.string.message_quotes_backend_error);
+            }
+
+            ///// TODO: Put messages and icon
+
+        }
+
     }
 
 }

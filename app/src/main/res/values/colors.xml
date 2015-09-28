@@ -14,4 +14,15 @@
     <color name="gray_light">#dddddd</color>
     <color name="divider">#B6B6B6</color>
     <color name="bg">#ececec</color>
+
+    <!-- Authors background color -->
+
+    <color name="author_background_1">#E8D791</color>
+    <color name="author_background_2">#BB8F5E</color>
+    <color name="author_background_3">#402943</color>
+    <color name="author_background_4">#3D213A</color>
+    <color name="author_background_5">#AA8E80</color>
+    <color name="author_background_6">#873D4E</color>
+    <color name="author_background_7">#7FA492</color>
+    <color name="author_background_8">#c65243</color>
 </resources>

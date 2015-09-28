@@ -14,31 +14,37 @@ import java.util.ArrayList;
  */
 public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote>> {
 
-    QuotesAdapter mAdapter;
-    View loaderLayout;
-    View mainLayout;
-    Context ctx;
+    private QuotesAdapter mAdapter;
+    private View loaderLayout;
+    private View mainLayout;
+    private View exceptionLayout;
+    private Context ctx;
 
     boolean loading;
+
+    private int exceptionCode = 0;
 
     ArrayList<Quote> quotes = new ArrayList<Quote>();
 
 
-    public GetQuotesTask(QuotesAdapter a, View loaderLayout, View mainLayout) {
+    public GetQuotesTask(QuotesAdapter a, View loaderLayout, View mainLayout, View exceptionLayout) {
         mAdapter = a;
         this.loaderLayout = loaderLayout;
         this.mainLayout = mainLayout;
+        this.exceptionLayout = exceptionLayout;
 
         loading = true;
     }
 
-    public GetQuotesTask(QuotesAdapter mAdapter, View loaderLayout, View mainLayout,  Context ctx) {
+    public GetQuotesTask(QuotesAdapter mAdapter, View loaderLayout, View mainLayout, View exceptionLayout, Context ctx) {
         this.mAdapter = mAdapter;
         this.loaderLayout = loaderLayout;
         this.ctx = ctx;
         this.mainLayout = mainLayout;
+        this.exceptionLayout = exceptionLayout;
 
         loading = true;
+
     }
 
     public GetQuotesTask(QuotesAdapter mAdapter) {
@@ -57,6 +63,26 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
         return loading;
     }
 
+    public void setException(int connectionState){
+        this.exceptionCode = connectionState;
+    }
+
+    public View getLoaderLayout() {
+        return loaderLayout;
+    }
+
+    public View getMainLayout() {
+        return mainLayout;
+    }
+
+    public View getExceptionLayout() {
+        return exceptionLayout;
+    }
+
+    public boolean failedRequest(){
+        return exceptionCode != 0;
+    }
+
     @Override
     protected ArrayList<Quote> doInBackground(Integer... limit) {
         loading = true;
@@ -69,18 +95,44 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
 
         loading = false;
 
-        if (mAdapter.quotes == null || mAdapter.quotes.size() == 0 ){
-            mAdapter.quotes = quotes;
+        if (exceptionCode == 0){
+            if (mAdapter.quotes == null || mAdapter.quotes.size() == 0 ){
+                mAdapter.quotes = quotes;
 
-            loaderLayout.setVisibility(View.GONE);
-            mainLayout.setVisibility(View.VISIBLE);
+               showQuotesList();
+
+            }else{
+                mAdapter.quotes.addAll(quotes);
+
+            }
+
+            mAdapter.notifyDataSetChanged();
 
         }else{
-            mAdapter.quotes.addAll(quotes);
-
+            notifyException(exceptionCode);
         }
 
-        mAdapter.notifyDataSetChanged();
-
     }
+
+    protected void showLoader(){
+        loaderLayout.setVisibility(View.VISIBLE);
+        mainLayout.setVisibility(View.GONE);
+        exceptionLayout.setVisibility(View.GONE);
+    }
+
+    protected void showQuotesList(){
+        loaderLayout.setVisibility(View.GONE);
+        mainLayout.setVisibility(View.VISIBLE);
+        exceptionLayout.setVisibility(View.GONE);
+    }
+
+    protected void showException(){
+        loaderLayout.setVisibility(View.GONE);
+        mainLayout.setVisibility(View.GONE);
+        exceptionLayout.setVisibility(View.VISIBLE);
+    }
+
+    abstract protected void notifyException(int exceptionCode);
+
+
 }
