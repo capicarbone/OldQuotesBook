@@ -31,7 +31,6 @@
                 android:id="@+id/author_picture"
                 android:layout_width="@dimen/image_author_small"
                 android:layout_height="match_parent"
-                android:scaleType="center"
                 android:layout_margin="0dp"
                 android:padding="0dp"
                 android:background="@color/gray_light"

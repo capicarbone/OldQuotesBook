@@ -17,10 +17,13 @@ import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
 import com.medic.quotesbook.views.widgets.RoundedImageView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -60,6 +63,12 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
             // TODO: Next to Author Class
 
+
+            authorPictureView.setBackgroundColor(ctx.getResources().getColor(getAuthorBackgroundColor()));
+
+        }
+
+        public int getAuthorBackgroundColor(){
             int[] authorsColors = new int[8];
             authorsColors[0] = R.color.author_background_1;
             authorsColors[1] = R.color.author_background_2;
@@ -71,14 +80,14 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
             authorsColors[7] = R.color.author_background_8;
 
             int colorPos = (int) ((Math.random()*10) % 8);
-            authorPictureView.setBackgroundColor(ctx.getResources().getColor(authorsColors[colorPos]));
 
+            return authorsColors[colorPos];
         }
 
         @Override
         public void onClick(View v) {
 
-            Log.d("QuotesAdapter", "Click sobre " + authorNameView.getText() );
+            //Log.d("QuotesAdapter", "Click sobre " + authorNameView.getText() );
 
             listener.showQuote(this.quote, false);
 
@@ -123,13 +132,29 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
                 @Override
                 public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
 
-                    RoundedImageView imageView = (RoundedImageView) v;
+                    final RoundedImageView imageView = (RoundedImageView) v;
 
                     Picasso.with((Context) listener)
                             .load(quote.getAuthor().getFullPictureURL())
-                            .resize(imageView.getMeasuredWidth(), imageView.getMeasuredHeight())
+                            .noPlaceholder()
+                            .fit()
                             .centerCrop()
-                            .into(imageView);
+                            .into(imageView, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError() {
+
+                                    Picasso.with((Context) listener)
+                                            .load(R.drawable.anonymous_author)
+                                            .fit()
+                                            .centerCrop()
+                                            .into(imageView);
+                                }
+                            });
 
                 }
             });

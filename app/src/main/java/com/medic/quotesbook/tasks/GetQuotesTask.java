@@ -96,17 +96,23 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
         loading = false;
 
         if (exceptionCode == 0){
+
+            int insertionPosition = 0;
+
             if (mAdapter.quotes == null || mAdapter.quotes.size() == 0 ){
                 mAdapter.quotes = quotes;
 
                showQuotesList();
 
             }else{
+
+                insertionPosition = mAdapter.quotes.size();
+
                 mAdapter.quotes.addAll(quotes);
 
             }
 
-            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyItemRangeInserted(insertionPosition, quotes.size());
 
         }else{
             notifyException(exceptionCode);
