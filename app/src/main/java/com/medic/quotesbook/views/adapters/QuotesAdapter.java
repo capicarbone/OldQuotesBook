@@ -2,6 +2,7 @@ package com.medic.quotesbook.views.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -42,6 +43,8 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         public Quote quote;
 
+        public Drawable backgroundColor;
+
         private BaseActivityRequestListener listener;
         private Context ctx;
 
@@ -61,25 +64,26 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
             itemView.setOnClickListener(this);
 
-            // TODO: Next to Author Class
-
-
-            authorPictureView.setBackgroundColor(ctx.getResources().getColor(getAuthorBackgroundColor()));
+            backgroundColor = ctx.getResources().getDrawable(getAuthorBackgroundColor());
 
         }
 
         public int getAuthorBackgroundColor(){
-            int[] authorsColors = new int[8];
-            authorsColors[0] = R.color.author_background_1;
-            authorsColors[1] = R.color.author_background_2;
-            authorsColors[2] = R.color.author_background_3;
-            authorsColors[3] = R.color.author_background_4;
-            authorsColors[4] = R.color.author_background_5;
-            authorsColors[5] = R.color.author_background_6;
-            authorsColors[6] = R.color.author_background_7;
-            authorsColors[7] = R.color.author_background_8;
 
-            int colorPos = (int) ((Math.random()*10) % 8);
+            int N_COLORS = 9;
+
+            int[] authorsColors = new int[N_COLORS];
+            authorsColors[0] = R.drawable.author_background_1;
+            authorsColors[1] = R.drawable.author_background_2;
+            authorsColors[2] = R.drawable.author_background_3;
+            authorsColors[3] = R.drawable.author_background_4;
+            authorsColors[4] = R.drawable.author_background_5;
+            authorsColors[5] = R.drawable.author_background_6;
+            authorsColors[6] = R.drawable.author_background_7;
+            authorsColors[7] = R.drawable.author_background_8;
+            authorsColors[8] = R.drawable.author_background_9;
+
+            int colorPos = (int) ((Math.random()*10) % N_COLORS);
 
             return authorsColors[colorPos];
         }
@@ -125,7 +129,6 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         holder.authorNameView.setText("- " + quote.getAuthor().getFullName());
         holder.quote = quote;
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
             holder.authorPictureView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
 
@@ -134,27 +137,16 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
                     final RoundedImageView imageView = (RoundedImageView) v;
 
+
                     Picasso.with((Context) listener)
                             .load(quote.getAuthor().getFullPictureURL())
-                            .noPlaceholder()
+                            .placeholder(holder.backgroundColor)
                             .fit()
                             .centerCrop()
-                            .into(imageView, new Callback() {
-                                @Override
-                                public void onSuccess() {
+                            .into(imageView);
 
-                                }
-
-                                @Override
-                                public void onError() {
-
-                                    Picasso.with((Context) listener)
-                                            .load(R.drawable.anonymous_author)
-                                            .fit()
-                                            .centerCrop()
-                                            .into(imageView);
-                                }
-                            });
+                    // TODO: Usar .error() para colocar la silueta previamnte resize. Se podría
+                    // guardar el resize en el holder para evitar calcularlo cada llamada
 
                 }
             });

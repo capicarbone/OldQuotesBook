@@ -25,4 +25,6 @@
     <color name="author_background_6">#873D4E</color>
     <color name="author_background_7">#7FA492</color>
     <color name="author_background_8">#c65243</color>
+
+    <color name="transparent">#00ffffff</color>
 </resources>

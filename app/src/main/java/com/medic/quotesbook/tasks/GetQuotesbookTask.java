@@ -2,6 +2,7 @@ package com.medic.quotesbook.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 
 import com.medic.quotesbook.models.Quote;
@@ -16,6 +17,8 @@ import java.util.Arrays;
  */
 public class GetQuotesbookTask extends GetQuotesTask {
 
+    public static final int EXCEPTION_NO_QUOTES = 1;
+
     public GetQuotesbookTask(QuotesAdapter mAdapter, View loaderLayout, View mainLayout, View exceptionLayout, Context ctx) {
         super(mAdapter, loaderLayout, mainLayout, exceptionLayout, ctx );
     }
@@ -29,6 +32,9 @@ public class GetQuotesbookTask extends GetQuotesTask {
 
         quotes = new ArrayList<Quote>(Arrays.asList(qStorage.getQuotes()));
 
+        if (quotes.size() == 0)
+            setException(EXCEPTION_NO_QUOTES);
+
         return quotes;
 
     }
@@ -36,5 +42,6 @@ public class GetQuotesbookTask extends GetQuotesTask {
     @Override
     protected void notifyException(int exceptionCode) {
 
+        Log.d("QuotesbookTask", "No hay citas");
     }
 }

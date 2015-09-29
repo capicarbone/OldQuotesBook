@@ -29,6 +29,7 @@
 
             <com.medic.quotesbook.views.widgets.RoundedImageView
                 android:id="@+id/author_picture"
+                android:scaleType="center"
                 android:layout_width="@dimen/image_author_small"
                 android:layout_height="match_parent"
                 android:layout_margin="0dp"
