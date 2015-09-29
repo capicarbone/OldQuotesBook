@@ -145,7 +145,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
                             .centerCrop()
                             .into(imageView);
 
-                    // TODO: Usar .error() para colocar la silueta previamnte resize. Se podría
+                    // TODO: Usar .error() para colocar la silueta previamente resize. Se podría
                     // guardar el resize en el holder para evitar calcularlo cada llamada
 
                 }
