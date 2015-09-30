@@ -113,7 +113,6 @@ public class GetSomeQuotesTask extends GetQuotesTask {
                     exceptionText.setText(R.string.message_quotes_backend_error);
             }
 
-            ///// TODO: Put messages and icon
 
         }
 

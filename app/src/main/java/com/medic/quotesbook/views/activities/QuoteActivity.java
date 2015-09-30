@@ -72,9 +72,12 @@ public class QuoteActivity extends AdActivity {
             authorDescriptionView.setText(quote.getAuthor().getShortDescription());
         }
 
-        Picasso.with(this).load(quote.getAuthor().getFullPictureURL()).into(authorPictureView);
+        Picasso.with(this)
+                .load(quote.getAuthor().getFullPictureURL())
+                .placeholder(R.drawable.author_background_9)
+                .error(R.drawable.anonymous_author_1)
+                .into(authorPictureView);
 
-        //authorPictureView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
     }
 
     public void setSavedIcon(FloatingActionButton btn){
