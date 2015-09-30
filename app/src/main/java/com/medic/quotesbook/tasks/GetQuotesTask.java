@@ -126,7 +126,7 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
         exceptionLayout.setVisibility(View.GONE);
     }
 
-    protected void showQuotesList(){
+    public void showQuotesList(){
         loaderLayout.setVisibility(View.GONE);
         mainLayout.setVisibility(View.VISIBLE);
         exceptionLayout.setVisibility(View.GONE);

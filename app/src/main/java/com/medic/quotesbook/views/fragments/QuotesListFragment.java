@@ -1,10 +1,12 @@
 package com.medic.quotesbook.views.fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +17,16 @@ import com.google.android.gms.analytics.Tracker;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 
+import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.tasks.GetQuotesTask;
 import com.medic.quotesbook.tasks.GetQuotesbookTask;
 import com.medic.quotesbook.tasks.GetSomeQuotesTask;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
 import com.medic.quotesbook.utils.GAK;
 import com.medic.quotesbook.views.adapters.QuotesAdapter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A fragment representing a list of Items.
@@ -36,6 +42,8 @@ public class QuotesListFragment extends Fragment{
     private final String TAG = "QuotesListFragment";
 
     private static final String ARG_FROM_QUOTESBOOK = "QuotesFragment.FROM_QUOTESBOOK";
+
+    private static final String STATE_QUOTES = "quotes";
 
 
     // TODO: Rename and change types of parameters
@@ -54,6 +62,8 @@ public class QuotesListFragment extends Fragment{
      */
     private RecyclerView recyclerView;
     QuotesAdapter adapter;
+
+    GetQuotesTask loadTask = null;
 
 
     // TODO: Rename and change types of parameters
@@ -94,7 +104,18 @@ public class QuotesListFragment extends Fragment{
 
         adapter = new QuotesAdapter(null, (BaseActivityRequestListener) getActivity());
 
+        Quote[] quotes = null;
+
+        if (savedInstanceState != null)
+            quotes = (Quote[]) savedInstanceState.getParcelableArray(STATE_QUOTES);
+
         setupRecyclerView(view, adapter);
+
+        if (quotes != null && quotes.length > 0){
+            adapter.quotes = new ArrayList<Quote>();
+            adapter.quotes.addAll(Arrays.asList(quotes));
+            adapter.notifyItemRangeInserted(0, quotes.length);
+        }
 
         reloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +128,24 @@ public class QuotesListFragment extends Fragment{
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (adapter.quotes != null){
+
+            Quote[] quotes = new Quote[adapter.quotes.size()];
+
+            for (int i = 0; i < adapter.quotes.size() ; i++) {
+                quotes[i] = adapter.quotes.get(i);
+            }
+
+            //Parcelable[] quotesPacelable = (Parcelable[]) quotes;
+            outState.putParcelableArray(STATE_QUOTES, quotes);
+
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -115,23 +154,39 @@ public class QuotesListFragment extends Fragment{
         getQuotes();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (loadTask != null)
+            loadTask.cancel(true);
+    }
+
     private void getQuotes(){
 
-        GetQuotesTask task = null;
-
         if (!fromQuotesbook){
-            if (adapter.quotes == null)
-                task = new GetSomeQuotesTask(adapter, loaderLayout, quotesView, exceptionLayout);
+            loadTask = new GetSomeQuotesTask(adapter, loaderLayout, quotesView, exceptionLayout);
+
+            if (adapter.quotes == null) // No nos estamos recuperado de un estado anterior
+                loadTask.execute();
+            else
+                loadTask.showQuotesList();
         }else{
 
-            if (adapter != null && adapter.quotes != null)
-                adapter.quotes.clear();
+            if (adapter != null && adapter.quotes != null){
 
-            task = new GetQuotesbookTask(adapter, loaderLayout, quotesView, exceptionLayout, getActivity());
+                int itemsCount = adapter.quotes.size();
+
+                adapter.quotes.clear();
+                adapter.notifyItemRangeRemoved(0, itemsCount);
+            }
+
+
+            loadTask = new GetQuotesbookTask(adapter, loaderLayout, quotesView, exceptionLayout, getActivity());
+            loadTask.execute();
         }
 
-        if (task != null)
-            task.execute();
+
     }
 
     private void setupRecyclerView(View view, QuotesAdapter adapter){
@@ -187,7 +242,7 @@ public class QuotesListFragment extends Fragment{
 
                 //Log.d(TAG, "Quedan " + Integer.toString(remainingItems));
 
-                if (nextTask != null && nextTask.failedRequest()){
+                if (nextTask != null && nextTask.failedRequest()) {
                     totalItemsRequested = totalItemsRequested - PAGE_SIZE;
                 }
 
@@ -206,7 +261,7 @@ public class QuotesListFragment extends Fragment{
 
                 }
 
-                if (viewedItems >= nextPageCount){
+                if (viewedItems >= nextPageCount) {
 
                     event.setValue(viewedItems);
 

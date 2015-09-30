@@ -107,17 +107,15 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
             FragmentManager fm = getSupportFragmentManager();
 
 
-            if (savedInstanceState != null){
+            if (savedInstanceState == null){
 
-                optionSelected = savedInstanceState.getInt(DATA_OPTION_SELECTED);
+                Fragment initialFragment = getFragmentForOption(optionSelected);
+
+                fm.beginTransaction()
+                        .replace(R.id.frame_content, initialFragment)
+                        .add(R.id.frame_drawer_options, new DrawerOptionsFragment())
+                        .commit();
             }
-
-            Fragment initialView = getFragmentForOption(optionSelected);
-
-            fm.beginTransaction()
-                    .replace(R.id.frame_content, initialView)
-                    .add(R.id.frame_drawer_options, new DrawerOptionsFragment())
-                    .commit();
 
 
             if (checkPlayServices()){
@@ -238,6 +236,7 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
         optionSelected = i;
 
         FragmentManager fm = getSupportFragmentManager();
+
         fm.beginTransaction()
                 .replace(R.id.frame_content, getFragmentForOption(optionSelected))
                 .commit();
