@@ -4,7 +4,11 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.QuotesStorage;
 import com.medic.quotesbook.views.adapters.QuotesAdapter;
@@ -42,6 +46,16 @@ public class GetQuotesbookTask extends GetQuotesTask {
     @Override
     protected void notifyException(int exceptionCode) {
 
-        Log.d("QuotesbookTask", "No hay citas");
+        showException();
+
+        TextView exceptionText = (TextView) getExceptionLayout().findViewById(R.id.exception_text);
+        ImageView exceptionIcon = (ImageView) getExceptionLayout().findViewById(R.id.exception_icon);
+        Button reloadButton = (Button) getExceptionLayout().findViewById(R.id.reload_button);
+
+        reloadButton.setVisibility(View.GONE);
+
+        exceptionText.setText(R.string.message_quotesbook_empty);
+        exceptionIcon.setImageResource(R.drawable.ic_star_border_black_36dp);
+
     }
 }

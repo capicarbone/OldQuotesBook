@@ -19,6 +19,7 @@
 
     <string name="message_quotes_connection_error">Sucede que necesitamos conexión a internet para lograr consultar a los sabios.</string>
     <string name="message_quotes_backend_error">Disculpas, algo no ha salido bien contactando a los sabios. Por que no intentas mas tarde.</string>
+    <string name="message_quotesbook_empty">Puede usar el botón con la estrella para guardar sus citas favoritas. Las encontrará en este apartado.</string>
 
     <string name="twitter_account">_qbook</string>
 
