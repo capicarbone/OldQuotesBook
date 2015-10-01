@@ -55,8 +55,8 @@ public class OnBootReceiver extends BroadcastReceiver {
         if (nextAlarm.isBeforeNow())
             nextAlarm.plusDays(1);
 
-        //DateTime testAlarm = new DateTime(System.currentTimeMillis());
-        //testAlarm.plusMinutes(1);
+        DateTime testAlarm = new DateTime(System.currentTimeMillis());
+        testAlarm.plusMinutes(1);
 
         am.setInexactRepeating(AlarmManager.RTC, nextAlarm.getMillis(), AlarmManager.INTERVAL_HALF_DAY, quoteTimeIntent);
 

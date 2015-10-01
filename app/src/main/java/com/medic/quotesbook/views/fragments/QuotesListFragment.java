@@ -1,6 +1,7 @@
 package com.medic.quotesbook.views.fragments;
 
 import android.os.Bundle;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -106,15 +107,25 @@ public class QuotesListFragment extends Fragment{
 
         Quote[] quotes = null;
 
-        if (savedInstanceState != null)
-            quotes = (Quote[]) savedInstanceState.getParcelableArray(STATE_QUOTES);
+        if (savedInstanceState != null){
+            Parcelable[] parcels = savedInstanceState.getParcelableArray(STATE_QUOTES);
+
+            quotes = new Quote[parcels.length];
+
+            for (int i = 0; i < parcels.length; i++) {
+                quotes[i] = (Quote) parcels[i];
+            }
+
+        }
+
 
         setupRecyclerView(view, adapter);
 
         if (quotes != null && quotes.length > 0){
             adapter.quotes = new ArrayList<Quote>();
             adapter.quotes.addAll(Arrays.asList(quotes));
-            adapter.notifyItemRangeInserted(0, quotes.length);
+            //adapter.notifyItemRangeInserted(0, quotes.length);
+            adapter.notifyDataSetChanged();
         }
 
         reloadButton.setOnClickListener(new View.OnClickListener() {
@@ -165,13 +176,17 @@ public class QuotesListFragment extends Fragment{
     private void getQuotes(){
 
         if (!fromQuotesbook){
+
+            Log.d(TAG, "No es quotesbook");
             loadTask = new GetSomeQuotesTask(adapter, loaderLayout, quotesView, exceptionLayout);
 
-            if (adapter.quotes == null) // No nos estamos recuperado de un estado anterior
+            if (adapter.quotes == null || adapter.quotes.size() == 0 ) // No nos estamos recuperado de un estado anterior
                 loadTask.execute();
             else
                 loadTask.showQuotesList();
         }else{
+
+            Log.d(TAG, "Es quotesbook");
 
             if (adapter != null && adapter.quotes != null){
 
@@ -202,7 +217,7 @@ public class QuotesListFragment extends Fragment{
 
     }
 
-    void setTitle(){
+    private void setTitle(){
 
         ActionBarActivity activity = (ActionBarActivity) getActivity();
 
@@ -274,6 +289,10 @@ public class QuotesListFragment extends Fragment{
                 //Log.d(TAG, "Visibles: " + Integer.toString(visibleItemCount) + ", totals: " + Integer.toString(totalItemCount) + ", past: " + Integer.toString(pastVisiblesItems) + ", remaining: " + Integer.toString(remainingItems));
             }
         });
+    }
+
+    public boolean isQuotesBook(){
+        return fromQuotesbook;
     }
 
     /*

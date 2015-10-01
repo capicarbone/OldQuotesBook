@@ -63,6 +63,8 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
 
     Tracker tracker;
 
+    Fragment.SavedState someQuotesFragmentState;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +108,6 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
 
             FragmentManager fm = getSupportFragmentManager();
 
-
             if (savedInstanceState == null){
 
                 Fragment initialFragment = getFragmentForOption(optionSelected);
@@ -116,7 +117,6 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
                         .add(R.id.frame_drawer_options, new DrawerOptionsFragment())
                         .commit();
             }
-
 
             if (checkPlayServices()){
                 gcm = GoogleCloudMessaging.getInstance(this);
@@ -142,12 +142,7 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
             tracker.send(new HitBuilders.EventBuilder().build());
         }
 
-
-
-        // For test QuoteDayService
-
-        //Intent i = new Intent(this, PrepareDaysQuoteService.class);
-        //this.startService(i);
+        //someTests();
 
     }
 
@@ -229,16 +224,24 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
     }
 
     @Override
-    public void showOption(int i) {
+    public void showOption(int optionSelected) {
 
         Fragment optionView = null;
 
-        optionSelected = i;
-
         FragmentManager fm = getSupportFragmentManager();
 
+        Fragment nextFragment = getFragmentForOption(optionSelected);
+        QuotesListFragment actualFragment = (QuotesListFragment) fm.findFragmentById(R.id.frame_content);
+
+        if (optionSelected == 0 && someQuotesFragmentState != null)
+            nextFragment.setInitialSavedState(someQuotesFragmentState);
+
+        if ( !actualFragment.isQuotesBook()){ // Es someQuotes
+            someQuotesFragmentState = fm.saveFragmentInstanceState(actualFragment);
+        }
+
         fm.beginTransaction()
-                .replace(R.id.frame_content, getFragmentForOption(optionSelected))
+                .replace(R.id.frame_content, nextFragment)
                 .commit();
 
         mDrawerLayout.closeDrawers();
@@ -311,6 +314,19 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
 
         showQuote(q, true);
 
+    }
+
+    private void someTests(){
+
+        // For test QuoteDayService
+
+//        Intent i = new Intent(this, PrepareDaysQuoteService.class);
+//        this.startService(i);
+
+        // For test TodayQuoteManager
+
+//        TodayQuoteManager qm = new TodayQuoteManager(this);
+//        qm.getTodayQuote();
     }
 
 }
