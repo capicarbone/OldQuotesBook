@@ -49,11 +49,20 @@ public class OnBootReceiver extends BroadcastReceiver {
         //time.set(Calendar.HOUR_OF_DAY, 8);
         //time.set(Calendar.MINUTE, 30);
 
-        DateTime nextAlarm = new DateTime(System.currentTimeMillis()).withHourOfDay(8);
-        nextAlarm = nextAlarm.withMinuteOfHour(30);
+        DateTime nextAlarm = new DateTime();
+
+        Log.d(TAG, nextAlarm.toString());
+
+        nextAlarm = nextAlarm.withHourOfDay(9)
+                        .withMinuteOfHour(30)
+                        .withSecondOfMinute(0);
+
+        Log.d(TAG, nextAlarm.toString());
 
         if (nextAlarm.isBeforeNow())
-            nextAlarm.plusDays(1);
+            nextAlarm = nextAlarm.plusDays(1);
+
+        Log.d(TAG, nextAlarm.toString());
 
         DateTime testAlarm = new DateTime(System.currentTimeMillis());
         testAlarm.plusMinutes(1);

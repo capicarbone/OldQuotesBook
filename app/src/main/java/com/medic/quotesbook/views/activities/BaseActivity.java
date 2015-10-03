@@ -27,6 +27,7 @@ import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.receivers.OnBootReceiver;
+import com.medic.quotesbook.receivers.QuoteTimeReceiver;
 import com.medic.quotesbook.services.PrepareDaysQuoteService;
 import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
@@ -317,6 +318,12 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
     }
 
     private void someTests(){
+
+        // For test QuoteTimeRecever
+
+        Intent intent = new Intent(this, OnBootReceiver.class);
+        this.sendBroadcast(intent);
+
 
         // For test QuoteDayService
 
