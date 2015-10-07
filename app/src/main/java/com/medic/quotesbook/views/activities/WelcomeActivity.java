@@ -16,6 +16,8 @@ import android.view.View;
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.views.fragments.PresentationFragment;
+import com.medic.quotesbook.views.fragments.slides.FindQuotesSlideFragment;
+import com.medic.quotesbook.views.fragments.slides.SaveAndShareSlideFragment;
 
 public class WelcomeActivity extends ActionBarActivity {
 
@@ -91,8 +93,13 @@ public class WelcomeActivity extends ActionBarActivity {
         @Override
         public Fragment getItem(int position) {
 
-            Fragment f = PresentationFragment.newInstance();
-            return f;
+            switch (position){
+                case 0: return FindQuotesSlideFragment.newInstance();
+                case 1: return SaveAndShareSlideFragment.newInstance();
+                default:
+                    return PresentationFragment.newInstance();
+            }
+
         }
 
         @Override

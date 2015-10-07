@@ -73,7 +73,7 @@ public class PrepareDaysQuoteService extends IntentService {
 
         builder.setContentText("Un mensaje de " + quote.getAuthor().getFullName())
                 .setContentTitle("Alguien tiene algo que decirte")
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setAutoCancel(true);
 
 

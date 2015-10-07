@@ -321,14 +321,14 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
 
         // For test QuoteTimeRecever
 
-        Intent intent = new Intent(this, OnBootReceiver.class);
-        this.sendBroadcast(intent);
+        // Intent intent = new Intent(this, OnBootReceiver.class);
+        // this.sendBroadcast(intent);
 
 
         // For test QuoteDayService
 
-//        Intent i = new Intent(this, PrepareDaysQuoteService.class);
-//        this.startService(i);
+        Intent i = new Intent(this, PrepareDaysQuoteService.class);
+        this.startService(i);
 
         // For test TodayQuoteManager
 

@@ -23,6 +23,13 @@
 
     <string name="twitter_account">_qbook</string>
 
+    <!-- Welcome texts -->
+
+    <string name="title_find_quotes">De líderes para líderes</string>
+    <string name="message_find_quotes">Descubre pensamiento de grandes útiles para el día a día.</string>
+
+    <string name="example_quote_aristoteles">Somos lo que hacemos día a día. De modo que la excelencia no es un acto sino un hábito.</string>
+
     <!-- Ids -->
 
     <string name="adid_quote">ca-app-pub-3556838383179218/1569803684</string>
