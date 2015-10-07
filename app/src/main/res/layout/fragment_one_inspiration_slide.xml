@@ -1,9 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.medic.quotesbook.views.fragments.slides.FindQuotesSlideFragment">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    tools:context="com.medic.quotesbook.views.fragments.slides.OneInspirationSlideFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         <TextView android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_find_quotes"
+            android:text="@string/title_day_quotes"
             android:textColor="@color/white"
             android:textSize="@dimen/slide_title"
             android:layout_marginBottom="@dimen/slide_title_margin_bottom"
@@ -25,7 +24,7 @@
         <TextView android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/message_find_quotes"
+            android:text="@string/message_day_quotes"
             android:textColor="@color/white"
             android:textSize="@dimen/slide_description"
             android:layout_below="@id/title"
@@ -82,13 +81,13 @@
                             android:layout_height="match_parent"
                             android:textColor="#000"
                             android:textSize="14dp"
-                            android:text="@string/example_quote_aristoteles"
+                            android:text="@string/example_quote_sinek"
                             />
 
                         <TextView android:id="@+id/quote_author"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/example_author_aristoteles"
+                            android:text="@string/example_author_sinek"
                             android:textSize="12dp"
                             android:textColor="@color/less"
                             android:paddingTop="@dimen/standard_padding"
@@ -107,8 +106,5 @@
         </LinearLayout>
 
     </RelativeLayout>
-
-
-
 
 </FrameLayout>

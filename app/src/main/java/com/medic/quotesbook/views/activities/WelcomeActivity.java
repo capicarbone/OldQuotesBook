@@ -17,7 +17,9 @@ import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.views.fragments.PresentationFragment;
 import com.medic.quotesbook.views.fragments.slides.FindQuotesSlideFragment;
+import com.medic.quotesbook.views.fragments.slides.OneInspirationSlideFragment;
 import com.medic.quotesbook.views.fragments.slides.SaveAndShareSlideFragment;
+import com.medic.quotesbook.views.fragments.slides.SupportUsSlideFragment;
 
 public class WelcomeActivity extends ActionBarActivity {
 
@@ -96,6 +98,8 @@ public class WelcomeActivity extends ActionBarActivity {
             switch (position){
                 case 0: return FindQuotesSlideFragment.newInstance();
                 case 1: return SaveAndShareSlideFragment.newInstance();
+                case 2: return OneInspirationSlideFragment.newInstance();
+                case 3: return SupportUsSlideFragment.newInstance();
                 default:
                     return PresentationFragment.newInstance();
             }
@@ -104,7 +108,7 @@ public class WelcomeActivity extends ActionBarActivity {
 
         @Override
         public int getCount() {
-            return 5;
+            return 4;
         }
     }
 

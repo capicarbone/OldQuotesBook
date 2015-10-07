@@ -1,0 +1,121 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    tools:context="com.medic.quotesbook.views.fragments.slides.SupportUsSlideFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        android:paddingTop="@dimen/slide_padding_top"
+        android:paddingLeft="@dimen/slide_padding_lateral"
+        android:paddingRight="@dimen/slide_padding_lateral"
+        >
+        <TextView android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_support_us"
+            android:textColor="@color/white"
+            android:textSize="@dimen/slide_title"
+            android:layout_marginBottom="@dimen/slide_title_margin_bottom"
+            />
+
+        <TextView android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/message_support_us"
+            android:textColor="@color/white"
+            android:textSize="@dimen/slide_description"
+            android:layout_below="@id/title"
+            android:layout_marginBottom="50dp"
+            />
+
+        <android.support.v7.widget.CardView android:id="@+id/quote_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            card_view:cardCornerRadius="@dimen/cards_borders"
+            card_view:cardElevation="@dimen/presentation_card_elevation"
+            card_view:cardUseCompatPadding="true"
+            android:layout_margin="0dp"
+            android:layout_below="@id/description"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                >
+
+                <ImageView android:id="@+id/ic_launcher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_launcher_presentation"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ic_launcher"
+                    android:paddingLeft="10dp"
+                    >
+
+                    <ImageView
+                        android:layout_width="@dimen/stars_separation"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star_yellow"
+                        />
+
+                    <ImageView
+                        android:layout_width="@dimen/stars_separation"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star_yellow"
+                        />
+
+                    <ImageView
+                        android:layout_width="@dimen/stars_separation"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star_yellow"
+                        />
+                    <ImageView
+                        android:layout_width="@dimen/stars_separation"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star_yellow"
+                        />
+                    <ImageView
+                        android:layout_width="@dimen/stars_separation"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star_yellow"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+
+
+
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/description"
+            android:paddingTop="@dimen/slide_title_margin_bottom"
+            >
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</FrameLayout>
