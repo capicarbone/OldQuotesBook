@@ -46,6 +46,7 @@
                 card_view:cardCornerRadius="@dimen/cards_borders"
                 card_view:cardElevation="@dimen/presentation_card_elevation"
                 card_view:cardUseCompatPadding="true"
+                card_view:cardPreventCornerOverlap="false"
                 android:layout_margin="0dp"
                 >
 

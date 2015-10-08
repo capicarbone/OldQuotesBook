@@ -42,7 +42,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         app:backgroundTint="@color/white"
-        app:rippleColor="@color/primary"
+        app:rippleColor="@color/gray_light"
         app:fabSize="normal"
         app:borderWidth="0dp"
         />
