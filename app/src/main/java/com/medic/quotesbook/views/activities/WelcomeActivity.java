@@ -82,6 +82,14 @@ public class WelcomeActivity extends ActionBarActivity {
                             window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_2));
                             window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_2));
                             break;
+                        case 2:
+                            window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_3));
+                            window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_3));
+                            break;
+                        case 3:
+                            window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_4));
+                            window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_4));
+                            break;
                     }
                 }
 

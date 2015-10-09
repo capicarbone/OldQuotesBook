@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_day_quotes"
-            android:textColor="@color/white"
+            android:textColor="@color/slide_text_3"
             android:textSize="@dimen/slide_title"
             android:layout_marginBottom="@dimen/slide_title_margin_bottom"
             />
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/message_day_quotes"
-            android:textColor="@color/white"
+            android:textColor="@color/slide_text_3"
             android:textSize="@dimen/slide_description"
             android:layout_below="@id/title"
             />
@@ -64,7 +64,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="0dp"
                         android:padding="0dp"
-                        android:background="@color/primary"
+                        android:background="@color/slide_background_3"
                         card_view:sriv_left_bottom_corner_radius="@dimen/cards_borders"
                         card_view:sriv_left_top_corner_radius="@dimen/cards_borders"
                         />

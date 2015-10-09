@@ -101,6 +101,8 @@
 
         <activity
             android:name=".views.activities.WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_welcome" >
         </activity>
     </application>
