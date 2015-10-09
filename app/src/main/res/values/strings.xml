@@ -28,13 +28,13 @@
     <string name="title_find_quotes">De líderes para líderes</string>
     <string name="message_find_quotes">Descubre pensamiento de grandes útiles para el día a día.</string>
 
-    <string name="title_share_quotes">Guarde y comparte</string>
+    <string name="title_share_quotes">Guarda y comparte</string>
     <string name="message_share_quotes">Guarda tus citas favoritas en tu móvil y/o compártelas.</string>
 
     <string name="title_day_quotes">Una inspiración cada mañana</string>
     <string name="message_day_quotes">Todas tus mañana te regalarémos un pensamiento para comenzar tu día.</string>
 
-    <string name="title_support_us">Cuéntanos que tal es QuotesBook</string>
+    <string name="title_support_us">Cuéntanos tu opinión</string>
     <string name="message_support_us">Si QuotesBook es de tu agrado recuerda apoyarnos con una opinión, nos motivará a mejorar :)</string>
 
     <!-- Examples Quotes -->
@@ -42,8 +42,8 @@
     <string name="example_quote_aristoteles">Somos lo que hacemos día a día. De modo que la excelencia no es un acto sino un hábito.</string>
     <string name="example_author_aristoteles">- Aristóteles</string>
 
-    <string name="example_quote_sinek">Pasar demasiado tiempo centrado en las fortalezas de otros, nos hace sentirnos débiles. Centrarnos en nuestras propias fortalezas, de hecho, nos hace fuertes.</string>
-    <string name="example_author_sinek">- Simon Sinek</string>
+    <string name="example_quote_shakespeare">En nuestros locos intentos, renunciamos a lo que somos por lo que esperamos ser.</string>
+    <string name="example_author_shakespeare">- William Shakespeare</string>
 
 
 

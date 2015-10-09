@@ -1,10 +1,13 @@
 package com.medic.quotesbook.views.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -12,6 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
@@ -46,6 +51,47 @@ public class WelcomeActivity extends ActionBarActivity {
         pager.setAdapter(pagerAdapter);
 
         setupFab();
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            final Window window = this.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+            window.setStatusBarColor(this.getResources().getColor(R.color.slide_background_1));
+            window.setNavigationBarColor(this.getResources().getColor(R.color.slide_background_1));
+
+            final Context ctx = this;
+
+
+            pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+
+                    switch (position){
+                        case 0:
+                            window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_1));
+                            window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_1));
+                            break;
+                        case 1:
+                            window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_2));
+                            window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_2));
+                            break;
+                    }
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+        }
+
 
     }
 

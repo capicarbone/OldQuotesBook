@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primary"
+        android:background="@color/accent"
         android:paddingTop="@dimen/slide_padding_top"
         android:paddingLeft="@dimen/slide_padding_lateral"
         android:paddingRight="@dimen/slide_padding_lateral"
@@ -45,6 +45,7 @@
                 card_view:cardCornerRadius="@dimen/cards_borders"
                 card_view:cardElevation="@dimen/presentation_card_elevation"
                 card_view:cardUseCompatPadding="true"
+                card_view:cardPreventCornerOverlap="false"
                 android:layout_margin="0dp"
                 >
 
@@ -63,7 +64,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="0dp"
                         android:padding="0dp"
-                        android:background="@color/gray_light"
+                        android:background="@color/primary"
                         card_view:sriv_left_bottom_corner_radius="@dimen/cards_borders"
                         card_view:sriv_left_top_corner_radius="@dimen/cards_borders"
                         />
@@ -79,15 +80,15 @@
                         <TextView android:id="@+id/quote_body"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:textColor="#000"
+                            android:textColor="@color/primary_text"
                             android:textSize="14dp"
-                            android:text="@string/example_quote_sinek"
+                            android:text="@string/example_quote_shakespeare"
                             />
 
                         <TextView android:id="@+id/quote_author"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/example_author_sinek"
+                            android:text="@string/example_author_shakespeare"
                             android:textSize="12dp"
                             android:textColor="@color/less"
                             android:paddingTop="@dimen/standard_padding"

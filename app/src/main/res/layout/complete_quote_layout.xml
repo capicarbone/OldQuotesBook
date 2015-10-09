@@ -50,7 +50,7 @@
                 <TextView android:id="@+id/quote_body"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="#000"
+                    android:textColor="@color/primary_text"
                     android:textSize="18dp"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. "

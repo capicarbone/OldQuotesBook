@@ -119,7 +119,7 @@ public class AppController extends Application{
 
             }else{
 
-                return false;
+                return true;
 
             }
         }
