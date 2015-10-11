@@ -32,7 +32,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 
         setQuoteTimeAlarm();
 
-        DevUtils.showNotification("Alarma colocada", ctx);
+        //DevUtils.showNotification("Alarma colocada", ctx);
     }
 
 
@@ -67,7 +67,7 @@ public class OnBootReceiver extends BroadcastReceiver {
         DateTime testAlarm = new DateTime(System.currentTimeMillis());
         testAlarm.plusMinutes(1);
 
-        am.setInexactRepeating(AlarmManager.RTC, nextAlarm.getMillis(), AlarmManager.INTERVAL_HALF_DAY, quoteTimeIntent);
+        am.setInexactRepeating(AlarmManager.RTC, nextAlarm.getMillis(), AlarmManager.INTERVAL_DAY, quoteTimeIntent);
 
         //am.setInexactRepeating(AlarmManager.RTC, testAlarm.getMillis(), 18000L, quoteTimeIntent);
 
