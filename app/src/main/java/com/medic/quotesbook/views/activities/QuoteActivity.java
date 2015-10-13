@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.GAK;
@@ -31,7 +30,7 @@ public class QuoteActivity extends AdActivity {
 
     final String TAG = this.getClass().getSimpleName();
 
-    static final String SCREEN_NAME = "Quote Details";
+    static final String SCREEN_NAME_QUOTE_DETAILS = "Quote Details";
     public static final String SCREEN_NAME_DAYQUOTE = "Day Quote";
 
     public static final String QUOTE_KEY = "quotesbook.quote";
@@ -188,9 +187,9 @@ public class QuoteActivity extends AdActivity {
             tracker.setScreenName(SCREEN_NAME_DAYQUOTE);
             getSupportActionBar().setTitle(getResources().getString(R.string.title_dayquote));
         }else
-            tracker.setScreenName(SCREEN_NAME);
+            tracker.setScreenName(SCREEN_NAME_QUOTE_DETAILS);
 
-        tracker.send(new HitBuilders.EventBuilder().build());
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
     }
 

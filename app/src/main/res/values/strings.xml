@@ -26,13 +26,13 @@
     <!-- Welcome texts -->
 
     <string name="title_find_quotes">De líderes para líderes</string>
-    <string name="message_find_quotes">Descubre pensamiento de grandes útiles para el día a día.</string>
+    <string name="message_find_quotes">Descubre pensamientos de grandes, útiles para el día a día.</string>
 
     <string name="title_share_quotes">Guarda y comparte</string>
     <string name="message_share_quotes">Guarda tus citas favoritas en tu móvil y/o compártelas.</string>
 
     <string name="title_day_quotes">Una inspiración cada mañana</string>
-    <string name="message_day_quotes">Todas tus mañana te regalarémos un pensamiento para comenzar tu día.</string>
+    <string name="message_day_quotes">Todas tus mañanas te regalarémos un pensamiento para comenzar tu día.</string>
 
     <string name="title_support_us">Cuéntanos tu opinión</string>
     <string name="message_support_us">Si QuotesBook es de tu agrado recuerda apoyarnos con una opinión, nos motivará a mejorar :)</string>

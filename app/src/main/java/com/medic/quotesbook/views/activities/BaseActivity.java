@@ -139,12 +139,17 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
 
             }
 
-
-            tracker.send(new HitBuilders.EventBuilder().build());
         }
 
         //someTests();
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private Fragment getFragmentForOption(int i){
@@ -221,7 +226,9 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
                 .setAction(GAK.ACTION_QUOTE_SELECTED)
                 .setLabel(quote.getKey());
 
-        tracker.send(event.build());
+        tracker.send(event.build()); // TODO: Maybe unnecessary
+
+
     }
 
     @Override
@@ -247,7 +254,7 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
 
         mDrawerLayout.closeDrawers();
 
-        tracker.send(new HitBuilders.EventBuilder().build());
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     public void showWelcome(){

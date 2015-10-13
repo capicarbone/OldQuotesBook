@@ -53,8 +53,8 @@ public class OnBootReceiver extends BroadcastReceiver {
 
         Log.d(TAG, nextAlarm.toString());
 
-        nextAlarm = nextAlarm.withHourOfDay(9)
-                        .withMinuteOfHour(30)
+        nextAlarm = nextAlarm.withHourOfDay(8)
+                        .withMinuteOfHour(00)
                         .withSecondOfMinute(0);
 
         Log.d(TAG, nextAlarm.toString());
@@ -64,8 +64,8 @@ public class OnBootReceiver extends BroadcastReceiver {
 
         Log.d(TAG, nextAlarm.toString());
 
-        DateTime testAlarm = new DateTime(System.currentTimeMillis());
-        testAlarm.plusMinutes(1);
+//        DateTime testAlarm = new DateTime(System.currentTimeMillis());
+//        testAlarm.plusMinutes(1);
 
         am.setInexactRepeating(AlarmManager.RTC, nextAlarm.getMillis(), AlarmManager.INTERVAL_DAY, quoteTimeIntent);
 

@@ -163,7 +163,11 @@ public class DrawerOptionsFragment extends Fragment {
 
                 if (quote.getAuthor() != null){
                     //authorPhotoView.setImageUrl(quote.getAuthor().getFullPictureURL(), imageLoader);
-                    Picasso.with(ctx).load(quote.getAuthor().getFullPictureURL()).into(authorPhotoView);
+                    Picasso.with(ctx)
+                            .load(quote.getAuthor().getFullPictureURL())
+                            .error(R.drawable.author_background_7)
+                            .placeholder(R.drawable.author_background_7)
+                            .into(authorPhotoView);
                     authorName.setText("Por " + quote.getAuthor().getFullName());
                 }else{
                     authorName.setText("Por Anónimo");
