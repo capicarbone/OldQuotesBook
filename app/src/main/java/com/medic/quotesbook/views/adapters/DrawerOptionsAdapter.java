@@ -1,6 +1,7 @@
 package com.medic.quotesbook.views.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,13 +34,19 @@ public class DrawerOptionsAdapter extends ArrayAdapter<String> {
 
         optionLabelView.setText(getItem(position));
 
+        Drawable icon = null;
+
         switch (position){
             case 0:
-                optionIconView.setImageResource(R.drawable.ic_format_quote_black_24dp);
+                icon = getContext().getResources().getDrawable(R.drawable.ic_quote_selector);
                 break;
             case 1:
-                optionIconView.setImageResource(R.drawable.ic_book_black_24dp); break;
+                // TODO: Colocar if para diferentes versiones.
+                icon = getContext().getResources().getDrawable(R.drawable.ic_book_selector);
+                break;
         }
+
+        optionIconView.setBackgroundDrawable(icon);
 
         return optionView;
 

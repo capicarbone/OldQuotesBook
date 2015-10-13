@@ -103,7 +103,7 @@
             android:layout_centerHorizontal="true"
             ads:adSize="SMART_BANNER"
             ads:adUnitId="@string/adid_quote">
-        </com.google.android.gms.ads.AdView>
+        </com.google.android.gms.ads.AdView>z
 
 
     </RelativeLayout>

@@ -18,6 +18,9 @@ import com.tappx.TAPPXAdBanner;
  */
 public class AdActivity extends ActionBarActivity {
 
+    public static final double ADMOB_PROBABILITY = 8.5;
+    //public static final double ADMOB_PROBABILITY = 0;
+
     private AppController app;
 
     private View adWrapper;
@@ -50,7 +53,7 @@ public class AdActivity extends ActionBarActivity {
 
         double n = Math.random()*10;
 
-        if (n >= 8.7)
+        if (n >= ADMOB_PROBABILITY)
             return true;
         else
             return false;

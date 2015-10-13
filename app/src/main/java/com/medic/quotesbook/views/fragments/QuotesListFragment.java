@@ -177,7 +177,6 @@ public class QuotesListFragment extends Fragment{
 
         if (!fromQuotesbook){
 
-            Log.d(TAG, "No es quotesbook");
             loadTask = new GetSomeQuotesTask(adapter, loaderLayout, quotesView, exceptionLayout);
 
             if (adapter.quotes == null || adapter.quotes.size() == 0 ) // No nos estamos recuperado de un estado anterior
@@ -185,8 +184,6 @@ public class QuotesListFragment extends Fragment{
             else
                 loadTask.showQuotesList();
         }else{
-
-            Log.d(TAG, "Es quotesbook");
 
             if (adapter != null && adapter.quotes != null){
 
