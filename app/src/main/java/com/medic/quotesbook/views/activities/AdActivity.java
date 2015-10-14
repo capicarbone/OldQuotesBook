@@ -96,7 +96,9 @@ public class AdActivity extends ActionBarActivity {
                 tappxAdBanner, AdsKeys.TAPPX_QUOTEVIEW,
                 TAPPXAdBanner.AdPosition.POSITION_BOTTOM, false, new AdListener() {
                     @Override
-                    public void onAdOpened() {
+                    public void onAdLoaded() {
+                        super.onAdLoaded();
+
                         adWrapper.setVisibility(View.VISIBLE);
                     }
 
