@@ -32,8 +32,15 @@ import java.util.ArrayList;
  */
 public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder>{
 
+    private static final String TAG = "QuotesAdapter";
+
+    private static final int VIEW_TYPE_FOOTER = 10;
+    private static final int VIEW_TYPE_QUOTE = 0;
+
     public ArrayList<Quote> quotes;
     private BaseActivityRequestListener listener;
+
+    private boolean infiniteScroll = false;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -47,6 +54,10 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         private BaseActivityRequestListener listener;
         private Context ctx;
+
+        public ViewHolder(View itemView){
+            super(itemView);
+        }
 
         public ViewHolder(View itemView, Quote quote, BaseActivityRequestListener listener) {
             super(itemView);
@@ -102,6 +113,10 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         this.quotes = quotes;
     }
 
+    public void setInfiniteScroll(boolean infiniteScroll) {
+        this.infiniteScroll = infiniteScroll;
+    }
+
     public QuotesAdapter(ArrayList<Quote> quotes, BaseActivityRequestListener listener) {
         this.quotes = quotes;
         this.listener = listener;
@@ -110,46 +125,71 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
 
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.complete_quote_layout, parent, false);
+        View v = null;
+        ViewHolder vh = null;
 
-        ViewHolder vh = new ViewHolder(v, quotes.get(i), listener);
+        if (i == VIEW_TYPE_QUOTE){
+            v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.complete_quote_layout, parent, false);
+
+            vh = new ViewHolder(v, quotes.get(i), listener);
+        }else{
+            v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.somequotes_footer, parent, false);
+
+            vh = new ViewHolder(v);
+        }
+
 
         return vh;
     }
 
     @Override
+    public int getItemViewType(int position){
+
+        if (position < quotes.size())
+            return VIEW_TYPE_QUOTE;
+        else
+            return VIEW_TYPE_FOOTER;
+    }
+
+    @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
 
-        final Quote quote = quotes.get(i);
+        if (i < quotes.size()){
 
-        holder.bodyView.setText(quote.getBody());
-        holder.authorPictureView.setImageBitmap(null);
+            final Quote quote = quotes.get(i);
 
-        holder.authorNameView.setText("- " + quote.getAuthor().getFullName());
-        holder.quote = quote;
+            holder.bodyView.setText(quote.getBody());
+            holder.authorPictureView.setImageBitmap(null);
 
-
-        holder.authorPictureView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-
-                final RoundedImageView imageView = (RoundedImageView) v;
+            holder.authorNameView.setText("- " + quote.getAuthor().getFullName());
+            holder.quote = quote;
 
 
-                Picasso.with((Context) listener)
-                        .load(quote.getAuthor().getFullPictureURL())
-                        .placeholder(holder.backgroundColor)
-                        .fit()
-                        .centerCrop()
-                        .into(imageView);
+            holder.authorPictureView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
 
-                // TODO: Usar .error() para colocar la silueta previamente resize. Se podría
-                // guardar el resize en el holder para evitar calcularlo cada llamada
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
 
-            }
-        });
+                    final RoundedImageView imageView = (RoundedImageView) v;
+
+
+                    Picasso.with((Context) listener)
+                            .load(quote.getAuthor().getFullPictureURL())
+                            .placeholder(holder.backgroundColor)
+                            .fit()
+                            .centerCrop()
+                            .into(imageView);
+
+                    // TODO: Usar .error() para colocar la silueta previamente resize. Se podría
+                    // guardar el resize en el holder para evitar calcularlo cada llamada
+
+                }
+            });
+        }
+
+
 
 
     }
@@ -157,7 +197,10 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     @Override
     public int getItemCount() {
         if (quotes != null)
-            return quotes.size();
+            if (infiniteScroll)
+                return quotes.size() + 1;
+            else
+                return quotes.size();
         else
             return 0;
     }

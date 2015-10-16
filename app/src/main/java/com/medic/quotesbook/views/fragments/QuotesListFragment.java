@@ -105,6 +105,10 @@ public class QuotesListFragment extends Fragment{
 
         adapter = new QuotesAdapter(null, (BaseActivityRequestListener) getActivity());
 
+        if (!fromQuotesbook){
+            adapter.setInfiniteScroll(true);
+        }
+
         Quote[] quotes = null;
 
         if (savedInstanceState != null){
