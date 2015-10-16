@@ -129,46 +129,28 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         holder.authorNameView.setText("- " + quote.getAuthor().getFullName());
         holder.quote = quote;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
-            holder.authorPictureView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
 
-                @Override
-                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        holder.authorPictureView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
 
-                    final RoundedImageView imageView = (RoundedImageView) v;
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+
+                final RoundedImageView imageView = (RoundedImageView) v;
 
 
-                    Picasso.with((Context) listener)
-                            .load(quote.getAuthor().getFullPictureURL())
-                            .placeholder(holder.backgroundColor)
-                            .fit()
-                            .centerCrop()
-                            .into(imageView);
+                Picasso.with((Context) listener)
+                        .load(quote.getAuthor().getFullPictureURL())
+                        .placeholder(holder.backgroundColor)
+                        .fit()
+                        .centerCrop()
+                        .into(imageView);
 
-                    // TODO: Usar .error() para colocar la silueta previamente resize. Se podría
-                    // guardar el resize en el holder para evitar calcularlo cada llamada
+                // TODO: Usar .error() para colocar la silueta previamente resize. Se podría
+                // guardar el resize en el holder para evitar calcularlo cada llamada
 
-                }
-            });
-        }else{
+            }
+        });
 
-            // TODO: Quizás debería quitar esto.
-
-            ViewTreeObserver vto = holder.authorPictureView.getViewTreeObserver();
-            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    RoundedImageView imageView = holder.authorPictureView;
-
-                    Picasso.with((Context) listener)
-                            .load(quote.getAuthor().getFullPictureURL())
-                            .resize(imageView.getMeasuredWidth(), imageView.getMeasuredHeight())
-                            .centerCrop()
-                            .into(imageView);
-
-                }
-            });
-        }
 
     }
 

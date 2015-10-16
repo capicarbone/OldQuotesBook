@@ -83,14 +83,19 @@ public class DrawerOptionsFragment extends Fragment {
 
         setupDrawerOptions();
 
-        ShowDayQuoteOnDrawer showQuoteTask = new ShowDayQuoteOnDrawer(authorName, authorPhotoView);
-        showQuoteTask.execute();
-
         //mDrawerOptionsView.setSelected(true);
         //mDrawerOptionsView.setSelection(0);
         mDrawerOptionsView.setItemChecked(0, true);
 
         return v;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        ShowDayQuoteOnDrawer showQuoteTask = new ShowDayQuoteOnDrawer(authorName, authorPhotoView);
+        showQuoteTask.execute();
     }
 
     public void setupDrawerOptions(){

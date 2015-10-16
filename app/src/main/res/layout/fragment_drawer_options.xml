@@ -11,22 +11,33 @@
         android:orientation="vertical"
         android:background="#fff"
         >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/bg_landscape_1"
+                android:scaleType="centerCrop"
+                />
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:background="@color/primary"
+                android:layout_height="match_parent"
                 android:paddingTop="20dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:onClick="showTodayQuote"
-                >
+                android:onClick="showTodayQuote">
 
                 <TextView android:id="@+id/days_quote_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/title_dayquote"
                     android:textSize="22dp"
+                    android:textColor="@color/white"
                     android:textStyle="normal"
                     android:layout_alignParentLeft="true"
                     />
@@ -35,6 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12dp"
+                    android:textColor="@color/white"
                     android:text="Por Anónimo"
                     android:layout_below="@+id/days_quote_title"
                     android:layout_alignParentLeft="true" />
@@ -51,6 +63,9 @@
                     />
 
             </RelativeLayout>
+
+        </FrameLayout>
+
 
             <ListView android:id="@+id/drawer_options_view"
                 android:layout_width="match_parent"
