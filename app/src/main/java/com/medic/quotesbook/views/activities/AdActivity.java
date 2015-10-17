@@ -65,7 +65,7 @@ public class AdActivity extends ActionBarActivity {
 
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("7DC08B2B34AC3B6CD04D5E05DF311803") // Nexus 5
-                .addTestDevice("95523B02E1B93A6E1B4B82DF09FCE7A5") // Logic X3
+                //.addTestDevice("95523B02E1B93A6E1B4B82DF09FCE7A5") // Logic X3
                 .build();
 
         //adView.setAdSize(AdSize.SMART_BANNER);

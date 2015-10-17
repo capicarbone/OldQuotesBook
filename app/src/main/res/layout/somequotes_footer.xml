@@ -13,7 +13,7 @@
         app:cpv_animAutostart="true"
         app:cpv_indeterminate="true"
         app:cpv_color="@color/primary"
-        app:cpv_animDuration="3000"
+        app:cpv_animDuration="5000"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 

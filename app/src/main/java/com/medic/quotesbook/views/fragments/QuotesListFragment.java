@@ -114,11 +114,14 @@ public class QuotesListFragment extends Fragment{
         if (savedInstanceState != null){
             Parcelable[] parcels = savedInstanceState.getParcelableArray(STATE_QUOTES);
 
-            quotes = new Quote[parcels.length];
+            if (parcels != null){
+                quotes = new Quote[parcels.length];
 
-            for (int i = 0; i < parcels.length; i++) {
-                quotes[i] = (Quote) parcels[i];
+                for (int i = 0; i < parcels.length; i++) {
+                    quotes[i] = (Quote) parcels[i];
+                }
             }
+
 
         }
 
