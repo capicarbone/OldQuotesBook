@@ -41,7 +41,7 @@ public class OneInspirationSlideFragment extends Fragment {
         ImageView authorView = (ImageView) v.findViewById(R.id.author_picture);
 
         Picasso.with((Context) getActivity())
-                .load(R.drawable.shakespeare)
+                .load(R.drawable.aristoteles)
                 .fit()
                 .centerCrop()
                 .into(authorView);

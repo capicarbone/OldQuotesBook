@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/accent"
+        android:background="@color/slide_background_3"
         android:paddingTop="@dimen/slide_padding_top"
         android:paddingLeft="@dimen/slide_padding_lateral"
         android:paddingRight="@dimen/slide_padding_lateral"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_day_quotes"
-            android:textColor="@color/slide_text_3"
+            android:textColor="@color/white"
             android:textSize="@dimen/slide_title"
             android:layout_marginBottom="@dimen/slide_title_margin_bottom"
             />
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/message_day_quotes"
-            android:textColor="@color/slide_text_3"
+            android:textColor="@color/white"
             android:textSize="@dimen/slide_description"
             android:layout_below="@id/title"
             />
@@ -82,13 +82,13 @@
                             android:layout_height="match_parent"
                             android:textColor="@color/primary_text"
                             android:textSize="14dp"
-                            android:text="@string/example_quote_shakespeare"
+                            android:text="@string/example_quote_aristoteles"
                             />
 
                         <TextView android:id="@+id/quote_author"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/example_author_shakespeare"
+                            android:text="@string/example_author_aristoteles"
                             android:textSize="12dp"
                             android:textColor="@color/less"
                             android:paddingTop="@dimen/standard_padding"

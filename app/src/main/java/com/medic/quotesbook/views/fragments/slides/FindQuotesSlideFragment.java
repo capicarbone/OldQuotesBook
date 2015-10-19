@@ -42,7 +42,7 @@ public class FindQuotesSlideFragment extends Fragment {
         ImageView authorView = (ImageView) v.findViewById(R.id.author_picture);
 
         Picasso.with((Context) getActivity())
-                .load(R.drawable.aristoteles)
+                .load(R.drawable.shakespeare)
                 .fit()
                 .centerCrop()
                 .into(authorView);

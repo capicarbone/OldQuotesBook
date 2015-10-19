@@ -83,13 +83,13 @@
                             android:layout_height="match_parent"
                             android:textColor="@color/primary_text"
                             android:textSize="14dp"
-                            android:text="@string/example_quote_aristoteles"
+                            android:text="@string/example_quote_shakespeare"
                             />
 
                         <TextView android:id="@+id/quote_author"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/example_author_aristoteles"
+                            android:text="@string/example_author_shakespeare"
                             android:textSize="12dp"
                             android:textColor="@color/less"
                             android:paddingTop="@dimen/standard_padding"
