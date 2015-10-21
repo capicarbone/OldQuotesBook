@@ -1,8 +1,10 @@
 package com.medic.quotesbook.tasks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.appspot.quotesbookapp.quotesclient.Quotesclient;
@@ -16,6 +18,7 @@ import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.services.GlueQuotesService;
 import com.medic.quotesbook.views.activities.BaseActivity;
+import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 
 import java.io.IOException;
 
@@ -89,5 +92,14 @@ public class RegisterGCMAppTask extends AsyncTask<Context, Void, Boolean> {
         }
 
         return true;
+    }
+
+    @Override
+    protected void onPostExecute(Boolean aBoolean) {
+        super.onPostExecute(aBoolean);
+
+        Intent i = new Intent(DrawerOptionsFragment.DayQuoteAvailableReceiver.INTENT_EVENT);
+
+        LocalBroadcastManager.getInstance(ctx).sendBroadcast(i);
     }
 }

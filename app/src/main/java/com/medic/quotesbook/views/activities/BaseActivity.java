@@ -1,6 +1,8 @@
 package com.medic.quotesbook.views.activities;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Message;
@@ -33,6 +35,7 @@ import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
 import com.medic.quotesbook.utils.GAK;
 import com.medic.quotesbook.utils.TodayQuoteManager;
+import com.medic.quotesbook.views.dialogs.NoQuoteDayDialog;
 import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 import com.medic.quotesbook.views.fragments.QuotesListFragment;
 
@@ -281,8 +284,21 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 
         if (resultCode != ConnectionResult.SUCCESS){
+
+
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)){
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+
+                Dialog dialog = GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST);
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+
+                        new NoQuoteDayDialog().show(getSupportFragmentManager(), "TAG");
+                    }
+                });
+
+                dialog.show();
+
             }else{
                 Log.i(TAG, "This device is not supported.");
             }
@@ -320,7 +336,8 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
 
         Quote q = qManager.getTodayQuote();
 
-        showQuote(q, true);
+        if (q != null)
+            showQuote(q, true);
 
     }
 

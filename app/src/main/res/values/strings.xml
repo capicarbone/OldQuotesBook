@@ -21,6 +21,8 @@
     <string name="message_quotes_backend_error">Disculpas, algo no ha salido bien contactando a los sabios. Por que no intentas mas tarde.</string>
     <string name="message_quotesbook_empty">Puede usar el botón con la estrella para guardar sus citas favoritas. Las encontrará en este apartado.</string>
 
+    <string name="no_dayquote_available">Lo sentimos, sin la actualización de Play Services no podremos entregarte la cita del día cada mañana. En cuanto puedas actualizar, vuelve y podrás recibir la cita del día.</string>
+
     <string name="twitter_account">_qbook</string>
 
     <!-- Welcome texts -->
