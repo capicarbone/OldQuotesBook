@@ -40,11 +40,15 @@ public class QuoteActivity extends AdActivity {
     TextView authorNameView;
     RoundedImageView authorPictureView;
     TextView authorDescriptionView;
-
+    FloatingActionButton fab;
 
     private Quote quote;
 
     Tracker tracker;
+
+    boolean savedIcon;
+
+    QuotesStorage qStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,8 @@ public class QuoteActivity extends AdActivity {
         initAds();
 
         tracker = getAppCtrl().getDefaultTracker();
+
+        qStorage = new QuotesStorage(QuotesStorage.QUOTESBOOK_FILE, this);
 
         quoteBodyView = (TextView) findViewById(R.id.quote_body);
         authorNameView = (TextView) findViewById(R.id.author_name);
@@ -79,76 +85,38 @@ public class QuoteActivity extends AdActivity {
 
     }
 
-    public void setSavedIcon(FloatingActionButton btn){
-        btn.setImageResource(R.drawable.ic_star_white_24dp);
+    public void setSavedIcon(MenuItem item){
+
+        item.setIcon(R.drawable.ic_star_white_36dp);
     }
 
-    public void setUnsavedIcon(FloatingActionButton btn){
-        btn.setImageResource(R.drawable.ic_star_border_white_24dp);
+    public void setUnsavedIcon(MenuItem item){
+        item.setIcon(R.drawable.ic_star_border_white_36dp);
     }
 
     public void setupFAB(){
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         final Context ctx = this;
-        final boolean savedIcon;
-
-        final QuotesStorage qStorage = new QuotesStorage(QuotesStorage.QUOTESBOOK_FILE, this);
-
-        if (qStorage.findQuote(quote.getKey()) != -1 ){
-            savedIcon = true;
-            setSavedIcon(fab);
-        }else{
-            savedIcon= false;
-        }
-
 
         fab.setOnClickListener(new OnClickListener(){
-
-            private boolean saved = savedIcon;
 
             @Override
             public void onClick(View view) {
 
-                HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
 
-                FloatingActionButton btn = (FloatingActionButton) view;
+                String shareable = quote.getShareable();
+                String marketingTail = ", via @" + getResources().getString(R.string.twitter_account);
 
-                if (saved == false){
+                if (shareable.length() + marketingTail.length() <= 140)
+                    shareable = shareable + marketingTail;
 
-                    qStorage.addQuoteTop(quote);
-                    qStorage.commit();
+                i.putExtra(Intent.EXTRA_TEXT, shareable);
 
-                    Toast toast = Toast.makeText(ctx, R.string.message_quote_saved, Toast.LENGTH_SHORT);
-                    toast.show();
-
-                    setSavedIcon(btn);
-
-                    event.setCategory(GAK.CATEGORY_QUOTESBOOK);
-                    event.setAction(GAK.ACTION_QUOTE_SAVED);
-
-                    tracker.send(event.build());
-
-                }else{
-
-                    qStorage.removeQuote(quote.getKey());
-                    qStorage.commit();
-
-                    Toast toast = Toast.makeText(ctx, R.string.message_quote_unsaved, Toast.LENGTH_SHORT);
-                    toast.show();
-
-                    btn.setImageResource(R.drawable.ic_star_border_white_24dp);
-
-                    setUnsavedIcon(btn);
-
-                    event.setCategory(GAK.CATEGORY_QUOTESBOOK);
-                    event.setAction(GAK.ACTION_QUOTE_UNSAVED);
-
-                    tracker.send(event.build());
-                }
-
-                saved = !saved;
+                startActivity(Intent.createChooser(i, getResources().getString(R.string.title_share_in)));
 
             }
         });
@@ -199,31 +167,16 @@ public class QuoteActivity extends AdActivity {
 
         getMenuInflater().inflate(R.menu.menu_quote, menu);
 
-        MenuItem item = menu.findItem(R.id.action_share);
-
-        ShareActionProvider actionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-
-        String shareable = quote.getShareable();
-        String marketingTail = ", via @" + getResources().getString(R.string.twitter_account);
-
-        if (shareable.length() + marketingTail.length() <= 140)
-            shareable = shareable + marketingTail;
-
-
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, shareable);
-        intent.setType("text/plain");
-        Intent.createChooser(intent, "QuotesBook");
-
-        actionProvider.setShareIntent(intent);
+        if (qStorage.findQuote(quote.getKey()) != -1 ){
+            savedIcon = true;
+            setSavedIcon(menu.findItem(R.id.action_save_quote));
+        }else{
+            savedIcon= false;
+        }
 
         return true;
     }
 
-
-
-    /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -232,12 +185,47 @@ public class QuoteActivity extends AdActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_save_quote) {
+
+            HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
+
+            if (savedIcon == false){
+
+                qStorage.addQuoteTop(quote);
+                qStorage.commit();
+
+                Toast toast = Toast.makeText(this, R.string.message_quote_saved, Toast.LENGTH_SHORT);
+                toast.show();
+
+                setSavedIcon(item);
+
+                event.setCategory(GAK.CATEGORY_QUOTESBOOK);
+                event.setAction(GAK.ACTION_QUOTE_SAVED);
+
+                tracker.send(event.build());
+
+            }else{
+
+                qStorage.removeQuote(quote.getKey());
+                qStorage.commit();
+
+                Toast toast = Toast.makeText(this, R.string.message_quote_unsaved, Toast.LENGTH_SHORT);
+                toast.show();
+
+                setUnsavedIcon(item);
+
+                event.setCategory(GAK.CATEGORY_QUOTESBOOK);
+                event.setAction(GAK.ACTION_QUOTE_UNSAVED);
+
+                tracker.send(event.build());
+            }
+
+            savedIcon = !savedIcon;
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    */
 }

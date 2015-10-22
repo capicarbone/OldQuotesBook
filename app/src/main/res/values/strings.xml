@@ -14,6 +14,8 @@
     <string name="title_activity_authors">AuthorsActivity</string>
     <string name="text_loading_quotes">Consultando a sabios...</string>
 
+    <string name="title_share_in">Compartir en...</string>
+
     <string name="message_quote_saved">Cita guardada</string>
     <string name="message_quote_unsaved">Cita eliminada</string>
 
