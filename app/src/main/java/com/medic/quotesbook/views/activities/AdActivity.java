@@ -18,8 +18,9 @@ import com.tappx.TAPPXAdBanner;
  */
 public class AdActivity extends ActionBarActivity {
 
-    public static final double ADMOB_PROBABILITY = 8.5;
+    //public static final double ADMOB_PROBABILITY = 8.5;
     //public static final double ADMOB_PROBABILITY = 0;
+    public static final double ADMOB_PROBABILITY = 5.0;
 
     private AppController app;
 
