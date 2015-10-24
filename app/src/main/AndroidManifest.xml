@@ -58,12 +58,6 @@
 
     <uses-permission android:name="com.medic.quotesbook.permission.C2D_MESSAGE" />
 
-    <!--
-    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    -->
-
     <application
         android:name=".AppController"
         android:allowBackup="true"
@@ -153,7 +147,10 @@
             android:label="@string/title_activity_welcome"
             android:screenOrientation="portrait" >
         </activity>
-
+        <activity android:name=".views.activities.QuoteImageEditorActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            >
+        </activity>
     </application>
 
 </manifest>

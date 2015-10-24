@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/primary_text"
+    tools:context="com.medic.quotesbook.views.activities.QuoteImageEditorActivity">
+    
+    <FrameLayout android:id="@+id/image_quote_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        >
+
+        <com.medic.quotesbook.views.widgets.SquareImageView android:id="@+id/quote_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bg_quote_share_1"
+            android:scaleType="centerCrop"
+            />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_semi_transparent"
+            >
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/quote_image_padding"
+            >
+
+            <com.medic.quotesbook.views.widgets.RoundedImageView
+                android:id="@+id/author_picture"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/quote_image_author_picture_size"
+                app:sriv_left_bottom_corner_radius="@dimen/author_picture_borders"
+                app:sriv_left_top_corner_radius="@dimen/author_picture_borders"
+                app:sriv_right_bottom_corner_radius="@dimen/author_picture_borders"
+                app:sriv_right_top_corner_radius="@dimen/author_picture_borders"
+                android:layout_marginBottom="@dimen/quote_image_author_picture_margin"
+
+                />
+
+            <TextView android:id="@id/quote_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/quote_image_text_size"
+                android:lineSpacingExtra="3dp"
+                android:paddingLeft="@dimen/quote_image_text_padding"
+                android:paddingRight="@dimen/quote_image_text_padding"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentRight="true"
+                    android:paddingRight="@dimen/quote_image_padding"
+                    android:paddingTop="@dimen/quote_image_padding"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textSize="@dimen/quote_image_text_size"
+                        />
+
+                    <TextView android:id="@+id/author_first_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/text_space_size"
+                        android:textSize="@dimen/quote_image_text_size"
+                        />
+                    <TextView android:id="@+id/author_last_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:paddingLeft="@dimen/text_space_size"
+                        android:textSize="@dimen/quote_image_text_size"
+
+                        />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+</RelativeLayout>

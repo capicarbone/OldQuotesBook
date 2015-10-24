@@ -105,7 +105,7 @@ public class QuoteActivity extends AdActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(Intent.ACTION_SEND);
+               /* Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
 
                 String shareable = quote.getShareable();
@@ -116,7 +116,11 @@ public class QuoteActivity extends AdActivity {
 
                 i.putExtra(Intent.EXTRA_TEXT, shareable);
 
-                startActivity(Intent.createChooser(i, getResources().getString(R.string.title_share_in)));
+                startActivity(Intent.createChooser(i, getResources().getString(R.string.title_share_in)));*/
+
+                Intent shareIntent = new Intent(ctx, QuoteImageEditorActivity.class);
+                shareIntent.putExtra(QuoteImageEditorActivity.QUOTE_KEY, quote);
+                startActivity(shareIntent);
 
             }
         });
