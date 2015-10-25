@@ -1,21 +1,25 @@
 package com.medic.quotesbook.views.activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.MenuItemCompat;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.ShareActionProvider;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.animation.OvershootInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.medic.quotesbook.R;
@@ -40,7 +44,10 @@ public class QuoteActivity extends AdActivity {
     TextView authorNameView;
     RoundedImageView authorPictureView;
     TextView authorDescriptionView;
-    FloatingActionButton fab;
+
+    FloatingActionMenu fabMenu;
+    FloatingActionButton fabShareText;
+    FloatingActionButton fabShareImage;
 
     private Quote quote;
 
@@ -66,7 +73,13 @@ public class QuoteActivity extends AdActivity {
         authorDescriptionView = (TextView) findViewById(R.id.author_description);
         authorPictureView = (RoundedImageView) findViewById(R.id.author_picture);
 
+        fabMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
+        fabShareText = (FloatingActionButton) findViewById(R.id.fab_button_share_text);
+        fabShareImage = (FloatingActionButton) findViewById(R.id.fab_button_share_image);
+
     }
+
+
 
     public void setupContent(){
 
@@ -96,16 +109,24 @@ public class QuoteActivity extends AdActivity {
 
     public void setupFAB(){
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fabMenu.hideMenuButton(false);
 
-        final Context ctx = this;
+        Handler mUiHandler = new Handler();
 
-        fab.setOnClickListener(new OnClickListener(){
+        mUiHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fabMenu.showMenuButton(true);
+            }
+        }, 300);
 
+        createCustomAnimation(fabMenu);
+        fabMenu.setClosedOnTouchOutside(true);
+
+        fabShareText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-               /* Intent i = new Intent(Intent.ACTION_SEND);
+                Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
 
                 String shareable = quote.getShareable();
@@ -116,12 +137,18 @@ public class QuoteActivity extends AdActivity {
 
                 i.putExtra(Intent.EXTRA_TEXT, shareable);
 
-                startActivity(Intent.createChooser(i, getResources().getString(R.string.title_share_in)));*/
+                startActivity(Intent.createChooser(i, getResources().getString(R.string.title_share_in)));
+            }
+        });
 
+        final Context ctx = this;
+
+        fabShareImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent shareIntent = new Intent(ctx, QuoteImageEditorActivity.class);
                 shareIntent.putExtra(QuoteImageEditorActivity.QUOTE_KEY, quote);
                 startActivity(shareIntent);
-
             }
         });
 
@@ -138,7 +165,7 @@ public class QuoteActivity extends AdActivity {
             );
             ////
 
-            RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) fab.getLayoutParams();
+            RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) fabMenu.getLayoutParams();
             lParams.bottomMargin = px;
         }
 
@@ -153,6 +180,9 @@ public class QuoteActivity extends AdActivity {
         setupContent();
         setupFAB();
 
+        fabMenu.close(false);
+        fabMenu.getMenuIconView().setImageResource(R.drawable.ic_share_white_24dp);
+
         getSupportActionBar().setTitle(quote.getAuthor().getFullName());
 
         if (this.getIntent().getBooleanExtra(DAYQUOTE_KEY, false)){
@@ -164,6 +194,7 @@ public class QuoteActivity extends AdActivity {
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
     }
+
 
 
     @Override
@@ -230,6 +261,40 @@ public class QuoteActivity extends AdActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /////// Utils
+
+    private void createCustomAnimation(FloatingActionMenu fabMenu) {
+
+        final FloatingActionMenu fab = fabMenu;
+
+        AnimatorSet set = new AnimatorSet();
+
+        ObjectAnimator scaleOutX = ObjectAnimator.ofFloat(fabMenu.getMenuIconView(), "scaleX", 1.0f, 0.2f);
+        ObjectAnimator scaleOutY = ObjectAnimator.ofFloat(fabMenu.getMenuIconView(), "scaleY", 1.0f, 0.2f);
+
+        ObjectAnimator scaleInX = ObjectAnimator.ofFloat(fabMenu.getMenuIconView(), "scaleX", 0.2f, 1.0f);
+        ObjectAnimator scaleInY = ObjectAnimator.ofFloat(fabMenu.getMenuIconView(), "scaleY", 0.2f, 1.0f);
+
+        scaleOutX.setDuration(50);
+        scaleOutY.setDuration(50);
+
+        scaleInX.setDuration(150);
+        scaleInY.setDuration(150);
+
+        scaleInX.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                fab.getMenuIconView().setImageResource(fab.isOpened() ? R.drawable.ic_close_white_24dp : R.drawable.ic_share_white_24dp);
+            }
+        });
+
+        set.play(scaleOutX).with(scaleOutY);
+        set.play(scaleInX).with(scaleInY).after(scaleOutX);
+        set.setInterpolator(new OvershootInterpolator(2));
+
+        fabMenu.setIconToggleAnimatorSet(set);
     }
 
 }

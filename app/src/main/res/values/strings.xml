@@ -25,6 +25,9 @@
 
     <string name="no_dayquote_available">Lo sentimos, sin la actualización de Play Services no podremos entregarte la cita del día cada mañana. En cuanto puedas actualizar, vuelve y podrás recibir la cita del día.</string>
 
+    <string name="label_share_image">Imagen</string>
+    <string name="label_share_text">Texto</string>
+
     <string name="twitter_account">_qbook</string>
 
     <!-- Welcome texts -->
