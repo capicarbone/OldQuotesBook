@@ -18,7 +18,7 @@ android {
         applicationId "com.medic.quotesbook"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 13
+        versionCode 14
         versionName "0.5.1"
     }
     buildTypes {

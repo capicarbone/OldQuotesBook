@@ -86,12 +86,10 @@ public class AppController extends Application{
 
 
         if (adsActive == 1){
-            Log.d(TAG, "Ads disponibles");
-            return true;
+            return true; // Ads availables
         }
         else{
-            Log.d(TAG, "Ads no disponibles");
-            return true;
+            return false; // Ads no availables
 
         }
 
