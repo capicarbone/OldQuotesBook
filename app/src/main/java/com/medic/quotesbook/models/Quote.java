@@ -65,7 +65,7 @@ public class Quote implements MessageBasedModelInterface, Parcelable {
 
     public String getShareable(){
 
-        String sQuote = "\"" + body + "\" - ";
+        String sQuote = getWithQuotes() + " - ";
 
         if (author != null){
 
@@ -75,6 +75,16 @@ public class Quote implements MessageBasedModelInterface, Parcelable {
         }
 
         return sQuote;
+    }
+
+    public String getWithQuotes(){
+
+        if (body.charAt(body.length() - 1) == '.'){
+
+            return "\"" + body.substring(0, body.length()-1) + "\".";
+        }else
+            return "\"" + body + "\".";
+
     }
 
     @Override

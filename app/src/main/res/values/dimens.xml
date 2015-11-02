@@ -28,6 +28,7 @@
     <dimen name="presentation_card_elevation">3dp</dimen>
 
     <dimen name="quote_image_padding">25dp</dimen>
+    <dimen name="quote_image_author_name_padding">15dp</dimen>
     <dimen name="quote_image_author_picture_margin">20dp</dimen>
     <dimen name="quote_image_author_picture_size">112dp</dimen>
     <dimen name="quote_image_text_padding">20dp</dimen>

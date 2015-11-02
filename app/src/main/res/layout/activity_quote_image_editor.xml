@@ -20,7 +20,7 @@
         <com.medic.quotesbook.views.widgets.SquareImageView android:id="@+id/quote_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/bg_quote_share_1"
+            android:src="@drawable/bg_quote_share_2"
             android:scaleType="centerCrop"
             />
 
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/quote_image_text_size"
-                android:lineSpacingExtra="3dp"
+                android:lineSpacingExtra="0dp"
                 android:paddingLeft="@dimen/quote_image_text_padding"
                 android:paddingRight="@dimen/quote_image_text_padding"
                 />
@@ -71,7 +71,7 @@
                     android:orientation="horizontal"
                     android:layout_alignParentRight="true"
                     android:paddingRight="@dimen/quote_image_padding"
-                    android:paddingTop="@dimen/quote_image_padding"
+                    android:paddingTop="@dimen/quote_image_author_name_padding"
                     >
 
                     <TextView
@@ -102,6 +102,20 @@
         </LinearLayout>
 
     </FrameLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_done_white_24dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:fabSize="normal"
+        app:borderWidth="0dp"
+        app:backgroundTint="@color/primary"
+        app:rippleColor="@color/primary_dark"
+        />
 
 
 </RelativeLayout>
