@@ -33,6 +33,7 @@
     <dimen name="quote_image_author_picture_size">112dp</dimen>
     <dimen name="quote_image_text_padding">20dp</dimen>
     <dimen name="quote_image_text_size">18dp</dimen>
+    <dimen name="quote_image_text_size_small">14dp</dimen>
 
     <dimen name="text_space_size">5dp</dimen>
 

@@ -33,6 +33,8 @@ public class QuoteImageEditorActivity extends AppCompatActivity {
 
     public static final String QUOTE_KEY = "quotesbook.quote";
 
+    public static final int LIMIT_SMALL_QUOTE = 80;
+
     ImageView quoteBackgroundView;
     ImageView authorPictureView;
     TextView quoteBodyView;
@@ -78,7 +80,15 @@ public class QuoteImageEditorActivity extends AppCompatActivity {
 
         // TODO: Si no hay red avisar de que no se puede obtener la imagen del autor
 
+        String shareableQuote = quote.getWithQuotes();
+
+        if (shareableQuote.length() > LIMIT_SMALL_QUOTE){
+            quoteBodyView.setTextSize(getResources().getDimension(R.dimen.quote_image_text_size_small));
+            quoteBodyView.setTextSize();
+        }
+
         quoteBodyView.setText(quote.getWithQuotes());
+        quoteBodyView.setText("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
 
         Picasso.with(this)
                 .load(quote.getAuthor().getFullPictureURL())
@@ -163,12 +173,12 @@ public class QuoteImageEditorActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 
-        if (imageFileUrl != null){
+        /*if (imageFileUrl != null){
 
             File f = new File(imageFileUrl);
             f.delete();
 
             imageFileUrl = null;
-        }
+        }*/
     }
 }
