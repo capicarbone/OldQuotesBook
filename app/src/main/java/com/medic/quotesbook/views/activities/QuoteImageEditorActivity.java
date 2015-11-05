@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -33,7 +34,8 @@ public class QuoteImageEditorActivity extends AppCompatActivity {
 
     public static final String QUOTE_KEY = "quotesbook.quote";
 
-    public static final int LIMIT_SMALL_QUOTE = 80;
+    public static final int LIMIT_SMALL_QUOTE = 130;
+    public static final int LIMIT_MEDIUM_QUOTE = 200;
 
     ImageView quoteBackgroundView;
     ImageView authorPictureView;
@@ -83,12 +85,14 @@ public class QuoteImageEditorActivity extends AppCompatActivity {
         String shareableQuote = quote.getWithQuotes();
 
         if (shareableQuote.length() > LIMIT_SMALL_QUOTE){
-            quoteBodyView.setTextSize(getResources().getDimension(R.dimen.quote_image_text_size_small));
-            quoteBodyView.setTextSize();
+            quoteBodyView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         }
 
-        quoteBodyView.setText(quote.getWithQuotes());
-        quoteBodyView.setText("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+        if (shareableQuote.length() > LIMIT_MEDIUM_QUOTE){
+            quoteBodyView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        }
+
+        quoteBodyView.setText(shareableQuote);
 
         Picasso.with(this)
                 .load(quote.getAuthor().getFullPictureURL())

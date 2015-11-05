@@ -149,6 +149,8 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity android:name=".views.activities.QuoteImageEditorActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             >
         </activity>
