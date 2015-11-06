@@ -20,16 +20,15 @@
         <com.medic.quotesbook.views.widgets.SquareImageView android:id="@+id/quote_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/bg_quote_share_2"
             android:scaleType="centerCrop"
             />
 
-        <FrameLayout
+<!--        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/black_semi_transparent"
             >
-        </FrameLayout>
+        </FrameLayout>-->
 
 
         <LinearLayout

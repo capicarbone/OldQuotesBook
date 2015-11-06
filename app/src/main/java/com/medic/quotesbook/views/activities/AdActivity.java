@@ -2,6 +2,7 @@ package com.medic.quotesbook.views.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.google.android.gms.ads.AdListener;
@@ -16,7 +17,7 @@ import com.tappx.TAPPXAdBanner;
 /**
  * Created by capi on 20/09/15.
  */
-public class AdActivity extends ActionBarActivity {
+public class AdActivity extends AppCompatActivity {
 
     //public static final double ADMOB_PROBABILITY = 8.5;
     //public static final double ADMOB_PROBABILITY = 0;

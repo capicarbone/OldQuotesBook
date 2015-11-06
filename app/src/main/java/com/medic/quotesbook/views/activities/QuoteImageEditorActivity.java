@@ -19,8 +19,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.utils.GAK;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -28,14 +31,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class QuoteImageEditorActivity extends AppCompatActivity {
+public class QuoteImageEditorActivity extends AdActivity {
 
     private final String TAG = this.getClass().getSimpleName();
+
+    private static final String SCREEN_NAME_IMAGE_QUOTE_EDITOR = "image quote editor";
 
     public static final String QUOTE_KEY = "quotesbook.quote";
 
     public static final int LIMIT_SMALL_QUOTE = 130;
-    public static final int LIMIT_MEDIUM_QUOTE = 200;
+    public static final int LIMIT_MEDIUM_QUOTE = 190;
+
+    public static final int N_QUOTE_BACKGROUND = 9;
 
     ImageView quoteBackgroundView;
     ImageView authorPictureView;
@@ -43,10 +50,10 @@ public class QuoteImageEditorActivity extends AppCompatActivity {
 
     TextView authorFirstNameView;
     TextView authorLastNameView;
-
     View quoteImageRoot;
-
     FloatingActionButton fab;
+
+    Tracker tracker;
 
     String imageFileUrl;
 
@@ -56,6 +63,8 @@ public class QuoteImageEditorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote_image_editor);
+
+        tracker  = getAppCtrl().getDefaultTracker();
 
         quote = getIntent().getParcelableExtra(QUOTE_KEY);
 
@@ -107,6 +116,11 @@ public class QuoteImageEditorActivity extends AppCompatActivity {
             authorFirstNameView.setText(quote.getAuthor().getFirstName());
         }
 
+        int nBackground = (int) (Math.random() * 10) % N_QUOTE_BACKGROUND ;
+
+        quoteBackgroundView.setImageResource(getBackgroundQuoteResource(nBackground));
+
+
     }
 
     private void setupFab(){
@@ -138,6 +152,14 @@ public class QuoteImageEditorActivity extends AppCompatActivity {
                 sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + imageFileUrl));
 
                 startActivity(Intent.createChooser(sharingIntent, "Compartir via"));
+
+                HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
+
+                event.setCategory(GAK.CATEGORY_SHARE);
+                event.setAction(GAK.ACTION_QUOTE_IMAGE_SHARED);
+                event.setLabel(quote.getKey());
+
+                tracker.send(event.build());
 
             }
         });
@@ -177,6 +199,9 @@ public class QuoteImageEditorActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 
+        tracker.setScreenName(SCREEN_NAME_IMAGE_QUOTE_EDITOR);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         /*if (imageFileUrl != null){
 
             File f = new File(imageFileUrl);
@@ -184,5 +209,23 @@ public class QuoteImageEditorActivity extends AppCompatActivity {
 
             imageFileUrl = null;
         }*/
+    }
+
+    private int getBackgroundQuoteResource(int i){
+
+        switch (i){
+            case 0: return R.drawable.bg_quote_share_1;
+            case 1: return R.drawable.bg_quote_share_2;
+            case 2: return R.drawable.bg_quote_share_3;
+            case 3: return R.drawable.bg_quote_share_4;
+            case 4: return R.drawable.bg_quote_share_5;
+            case 5: return R.drawable.bg_quote_share_6;
+            case 6: return R.drawable.bg_quote_share_7;
+            case 7: return R.drawable.bg_quote_share_8;
+            case 8: return R.drawable.bg_quote_share_9;
+
+        }
+
+        return 0;
     }
 }

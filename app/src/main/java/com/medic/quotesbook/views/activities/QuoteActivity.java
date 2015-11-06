@@ -126,6 +126,15 @@ public class QuoteActivity extends AdActivity {
         fabShareText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
+
+                event.setCategory(GAK.CATEGORY_SHARE);
+                event.setAction(GAK.ACTION_QUOTE_TEXT_SHARED);
+                event.setLabel(quote.getKey());
+
+                tracker.send(event.build());
+
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
 
@@ -138,6 +147,7 @@ public class QuoteActivity extends AdActivity {
                 i.putExtra(Intent.EXTRA_TEXT, shareable);
 
                 startActivity(Intent.createChooser(i, getResources().getString(R.string.title_share_in)));
+
             }
         });
 
