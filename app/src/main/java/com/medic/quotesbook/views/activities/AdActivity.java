@@ -28,6 +28,8 @@ public class AdActivity extends AppCompatActivity {
     private View adWrapper;
     private AdView adView;
 
+    private TAPPXAdBanner.AdPosition adPosition = TAPPXAdBanner.AdPosition.POSITION_BOTTOM;
+
     private PublisherAdView tappxAdBanner = null;
 
     protected void onCreate(Bundle savedInstanceState){
@@ -51,7 +53,12 @@ public class AdActivity extends AppCompatActivity {
         }
     }
 
-    public boolean isTappxTurn(){
+    public void setTopAd(){
+        adPosition = TAPPXAdBanner.AdPosition.POSITION_TOP;
+
+    }
+
+    private boolean isTappxTurn(){
 
         double n = Math.random()*10;
 
@@ -96,7 +103,7 @@ public class AdActivity extends AppCompatActivity {
 
         tappxAdBanner = TAPPXAdBanner.ConfigureAndShow(this,
                 tappxAdBanner, AdsKeys.TAPPX_QUOTEVIEW,
-                TAPPXAdBanner.AdPosition.POSITION_BOTTOM, false, new AdListener() {
+                adPosition, false, new AdListener() {
                     @Override
                     public void onAdLoaded() {
                         super.onAdLoaded();

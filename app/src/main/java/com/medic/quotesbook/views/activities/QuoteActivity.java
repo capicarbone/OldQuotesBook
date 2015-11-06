@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.GAK;
 import com.medic.quotesbook.utils.QuotesStorage;
 import com.medic.quotesbook.views.widgets.RoundedImageView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 

@@ -24,6 +24,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.GAK;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -52,6 +53,7 @@ public class QuoteImageEditorActivity extends AdActivity {
     TextView authorLastNameView;
     View quoteImageRoot;
     FloatingActionButton fab;
+    View progessBar;
 
     Tracker tracker;
 
@@ -79,11 +81,13 @@ public class QuoteImageEditorActivity extends AdActivity {
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
+        progessBar = findViewById(R.id.progressBar);
+
+        setTopAd();
+        initAds();
+
         setContent();
         setupFab();
-
-        Typeface font = Typeface.createFromAsset(getAssets(), "RobotoSlab-Regular.ttf");
-        quoteBodyView.setTypeface(font);
 
     }
 
@@ -107,7 +111,19 @@ public class QuoteImageEditorActivity extends AdActivity {
                 .load(quote.getAuthor().getFullPictureURL())
                 .placeholder(R.drawable.author_background_9)
                 .error(R.drawable.anonymous_author_1)
-                .into(authorPictureView);
+                .into(authorPictureView, new Callback(){
+
+                    @Override
+                    public void onSuccess() {
+                        progessBar.setVisibility(View.GONE);
+                        fab.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
 
         if (quote.getAuthor().getLastName().equals("")){
             authorLastNameView.setText(quote.getAuthor().getFirstName());
@@ -119,6 +135,9 @@ public class QuoteImageEditorActivity extends AdActivity {
         int nBackground = (int) (Math.random() * 10) % N_QUOTE_BACKGROUND ;
 
         quoteBackgroundView.setImageResource(getBackgroundQuoteResource(nBackground));
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "RobotoSlab-Regular.ttf");
+        quoteBodyView.setTypeface(font);
 
 
     }
