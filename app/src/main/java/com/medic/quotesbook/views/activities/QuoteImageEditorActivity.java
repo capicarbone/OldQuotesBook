@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.medic.quotesbook.R;
@@ -116,7 +116,7 @@ public class QuoteImageEditorActivity extends AdActivity {
                     @Override
                     public void onSuccess() {
                         progessBar.setVisibility(View.GONE);
-                        fab.setVisibility(View.VISIBLE);
+                        fab.show(true);
                     }
 
                     @Override
@@ -143,6 +143,7 @@ public class QuoteImageEditorActivity extends AdActivity {
     }
 
     private void setupFab(){
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,9 +243,10 @@ public class QuoteImageEditorActivity extends AdActivity {
             case 6: return R.drawable.bg_quote_share_7;
             case 7: return R.drawable.bg_quote_share_8;
             case 8: return R.drawable.bg_quote_share_9;
+            default:
+                return R.drawable.bg_quote_share_2;
 
         }
 
-        return 0;
     }
 }
