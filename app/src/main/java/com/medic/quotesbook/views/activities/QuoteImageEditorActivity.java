@@ -87,8 +87,8 @@ public class QuoteImageEditorActivity extends AdActivity {
         setTopAd();
         initAds();
 
-        setContent();
         setupFab();
+        setContent();
 
     }
 
@@ -149,6 +149,7 @@ public class QuoteImageEditorActivity extends AdActivity {
 
     private void setupFab(){
 
+        fab.hide(false);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
