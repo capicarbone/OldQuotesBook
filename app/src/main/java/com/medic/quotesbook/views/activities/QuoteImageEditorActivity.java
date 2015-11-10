@@ -40,8 +40,9 @@ public class QuoteImageEditorActivity extends AdActivity {
 
     public static final String QUOTE_KEY = "quotesbook.quote";
 
+    public static final int LIMIT_SHORT_QUOTE = 80;
     public static final int LIMIT_SMALL_QUOTE = 130;
-    public static final int LIMIT_MEDIUM_QUOTE = 190;
+    public static final int LIMIT_MEDIUM_QUOTE = 180;
 
     public static final int N_QUOTE_BACKGROUND = 9;
 
@@ -97,6 +98,10 @@ public class QuoteImageEditorActivity extends AdActivity {
 
         String shareableQuote = quote.getWithQuotes();
 
+        if (shareableQuote.length() < LIMIT_SHORT_QUOTE){
+            quoteBodyView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22);
+        }
+
         if (shareableQuote.length() > LIMIT_SMALL_QUOTE){
             quoteBodyView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         }
@@ -134,7 +139,7 @@ public class QuoteImageEditorActivity extends AdActivity {
 
         int nBackground = (int) (Math.random() * 10) % N_QUOTE_BACKGROUND ;
 
-        quoteBackgroundView.setImageResource(getBackgroundQuoteResource(nBackground));
+        //quoteBackgroundView.setImageResource(getBackgroundQuoteResource(nBackground));
 
         Typeface font = Typeface.createFromAsset(getAssets(), "RobotoSlab-Regular.ttf");
         quoteBodyView.setTypeface(font);
@@ -148,6 +153,9 @@ public class QuoteImageEditorActivity extends AdActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                fab.setShowProgressBackground(true);
+                fab.setIndeterminate(true);
 
                 Bitmap image = getBitmapFromView(quoteImageRoot);
 
@@ -221,6 +229,8 @@ public class QuoteImageEditorActivity extends AdActivity {
 
         tracker.setScreenName(SCREEN_NAME_IMAGE_QUOTE_EDITOR);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+        fab.hideProgress();
 
         /*if (imageFileUrl != null){
 

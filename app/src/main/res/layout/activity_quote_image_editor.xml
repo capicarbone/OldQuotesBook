@@ -26,7 +26,7 @@
             android:layout_centerHorizontal="true"
             ads:adSize="SMART_BANNER"
             ads:adUnitId="@string/adid_quote">
-        </com.google.android.gms.ads.AdView>z
+        </com.google.android.gms.ads.AdView>
 
 
     </RelativeLayout>
@@ -36,13 +36,14 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/white"
+        android:background="@color/primary"
         >
 
         <com.medic.quotesbook.views.widgets.SquareImageView android:id="@+id/quote_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
+            android:src="@drawable/bg_quote_share_4"
             />
 
 <!--        <FrameLayout
@@ -149,6 +150,7 @@
         android:layout_marginBottom="10dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"
         app:fab_colorNormal="@color/primary"
         fab:fab_colorPressed="@color/primary_dark"
         app:fab_shadowRadius="2dp"
