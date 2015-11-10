@@ -139,7 +139,7 @@ public class QuoteImageEditorActivity extends AdActivity {
 
         int nBackground = (int) (Math.random() * 10) % N_QUOTE_BACKGROUND ;
 
-        //quoteBackgroundView.setImageResource(getBackgroundQuoteResource(nBackground));
+        quoteBackgroundView.setImageResource(getBackgroundQuoteResource(nBackground));
 
         Typeface font = Typeface.createFromAsset(getAssets(), "RobotoSlab-Regular.ttf");
         quoteBodyView.setTypeface(font);
