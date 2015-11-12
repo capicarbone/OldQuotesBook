@@ -2,26 +2,47 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.medic.quotesbook"
     android:versionCode="3"
-    android:versionName="0.5"
-    >
+    android:versionName="0.5" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="21" />
 
     <compatible-screens>
+
         <!-- all small size screens -->
-        <screen android:screenSize="small" android:screenDensity="ldpi" />
-        <screen android:screenSize="small" android:screenDensity="mdpi" />
-        <screen android:screenSize="small" android:screenDensity="hdpi" />
-        <screen android:screenSize="small" android:screenDensity="xhdpi" />
+        <screen
+            android:screenDensity="ldpi"
+            android:screenSize="small" />
+        <screen
+            android:screenDensity="mdpi"
+            android:screenSize="small" />
+        <screen
+            android:screenDensity="hdpi"
+            android:screenSize="small" />
+        <screen
+            android:screenDensity="xhdpi"
+            android:screenSize="small" />
         <!-- all normal size screens -->
-        <screen android:screenSize="normal" android:screenDensity="ldpi" />
-        <screen android:screenSize="normal" android:screenDensity="mdpi" />
-        <screen android:screenSize="normal" android:screenDensity="hdpi" />
-        <screen android:screenSize="normal" android:screenDensity="xhdpi" />
-        <screen android:screenSize="normal" android:screenDensity="480" />
-        <screen android:screenSize="normal" android:screenDensity="560" />
+        <screen
+            android:screenDensity="ldpi"
+            android:screenSize="normal" />
+        <screen
+            android:screenDensity="mdpi"
+            android:screenSize="normal" />
+        <screen
+            android:screenDensity="hdpi"
+            android:screenSize="normal" />
+        <screen
+            android:screenDensity="xhdpi"
+            android:screenSize="normal" />
+        <screen
+            android:screenDensity="480"
+            android:screenSize="normal" />
+        <screen
+            android:screenDensity="560"
+            android:screenSize="normal" />
     </compatible-screens>
-
-
-    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="21"></uses-sdk>
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -30,6 +51,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <permission
         android:name="com.medic.quotesbook.permission.C2D_MESSAGE"
@@ -98,7 +120,7 @@
         <service android:name=".services.PrepareDaysQuoteService" />
 
         <receiver
-            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
+            android:name=".receivers.InstallReferrerReceiver"
             android:exported="true" >
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
@@ -122,9 +144,15 @@
 
         <activity
             android:name=".views.activities.WelcomeActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/title_activity_welcome" >
+            android:label="@string/title_activity_welcome"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".views.activities.QuoteImageEditorActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            >
         </activity>
     </application>
 

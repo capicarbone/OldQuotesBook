@@ -14,6 +14,8 @@
     <string name="title_activity_authors">AuthorsActivity</string>
     <string name="text_loading_quotes">Consultando a sabios...</string>
 
+    <string name="title_share_in">Compartir en...</string>
+
     <string name="message_quote_saved">Cita guardada</string>
     <string name="message_quote_unsaved">Cita eliminada</string>
 
@@ -22,6 +24,9 @@
     <string name="message_quotesbook_empty">Puede usar el botón con la estrella para guardar sus citas favoritas. Las encontrará en este apartado.</string>
 
     <string name="no_dayquote_available">Lo sentimos, sin la actualización de Play Services no podremos entregarte la cita del día cada mañana. En cuanto puedas actualizar, vuelve y podrás recibir la cita del día.</string>
+
+    <string name="label_share_image">Imagen</string>
+    <string name="label_share_text">Texto</string>
 
     <string name="twitter_account">_qbook</string>
 
