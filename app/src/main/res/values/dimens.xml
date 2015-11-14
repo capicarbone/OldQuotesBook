@@ -10,11 +10,13 @@
 
     <dimen name="cards_borders">4dp</dimen>
 
-    <dimen name="author_picture_size">180dp</dimen>
+    <dimen name="author_picture_size">135dp</dimen>
     <dimen name="author_picture_tiny_size">60dp</dimen>
     <dimen name="author_picture_borders">90dp</dimen>
 
-    <dimen name="quote_text_size">20dp</dimen>
+    <dimen name="quote_text_size">17dp</dimen>
+    <dimen name="quote_author_name_text_size">14dp</dimen>
+    <dimen name="quote_author_description_text_size">10dp</dimen>
 
     <dimen name="slide_padding_top">40dp</dimen>
     <dimen name="slide_padding_lateral">30dp</dimen>

@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -144,7 +145,7 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
 
         }
 
-        //someTests();
+        someTests();
 
     }
 
@@ -351,13 +352,18 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
 
         // For test QuoteDayService
 
-        Intent i = new Intent(this, PrepareDaysQuoteService.class);
-        this.startService(i);
+        //Intent i = new Intent(this, PrepareDaysQuoteService.class);
+        //this.startService(i);
 
         // For test TodayQuoteManager
 
 //        TodayQuoteManager qm = new TodayQuoteManager(this);
 //        qm.getTodayQuote();
+
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+
+        Log.d(TAG, "Density " + Float.toString(dpWidth));
     }
 
 }
