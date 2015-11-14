@@ -23,7 +23,8 @@ public class SquareImageView extends ImageView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        setMinimumHeight(getMeasuredWidth());
+        if (getMeasuredHeight() < getMeasuredWidth())
+            setMinimumHeight(getMeasuredWidth());
     }
 
 }
