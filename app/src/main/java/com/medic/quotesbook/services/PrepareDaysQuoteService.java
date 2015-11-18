@@ -14,6 +14,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
+import com.medic.quotesbook.receivers.QuoteTimeReceiver;
 import com.medic.quotesbook.utils.TodayQuoteManager;
 import com.medic.quotesbook.views.activities.QuoteActivity;
 
@@ -40,6 +41,8 @@ public class PrepareDaysQuoteService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+
+        QuoteTimeReceiver.setQuoteTimeAlarm(this.getBaseContext());
 
         TodayQuoteManager quotesManager = new TodayQuoteManager(this.getBaseContext());
 

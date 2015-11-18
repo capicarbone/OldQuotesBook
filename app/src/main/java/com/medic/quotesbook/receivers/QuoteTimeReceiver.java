@@ -36,7 +36,7 @@ public class QuoteTimeReceiver extends BroadcastReceiver {
         Intent i = new Intent(context, PrepareDaysQuoteService.class);
         context.startService(i);
 
-        setQuoteTimeAlarm(context);
+        //setQuoteTimeAlarm(context);
     }
 
     public static void setQuoteTimeAlarm(Context ctx){
