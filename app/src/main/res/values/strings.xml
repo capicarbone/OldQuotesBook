@@ -58,6 +58,7 @@
 
     <string name="adid_quote">ca-app-pub-3556838383179218/1569803684</string>
     <string name="adid_somequotes">ca-app-pub-3556838383179218/5865450880</string>
+    <string name="adid_quoteeditor">ca-app-pub-3556838383179218/2020016080</string>
 
 
     <string name="title_activity_welcome">Bienvenido</string>
