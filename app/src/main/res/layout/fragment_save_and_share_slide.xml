@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/description"
             android:scaleType="center"
-            android:src="@drawable/quote_save_example"
+            android:src="@drawable/quote_image_example"
             />
 
     </RelativeLayout>

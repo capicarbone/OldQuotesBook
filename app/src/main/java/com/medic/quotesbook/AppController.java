@@ -31,7 +31,7 @@ public class AppController extends Application{
     private static Tracker tracker;
 
     private DateTime installDate;
-    private int adsActive = -1; // -1 Sin definido, 1 true, false
+    private int adsActive = -1; // -1 Sin definidr, 1 true, false
 
     @Override
     public void onCreate() {
