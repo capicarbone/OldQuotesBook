@@ -42,7 +42,7 @@ public class PrepareDaysQuoteService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        QuoteTimeReceiver.setQuoteTimeAlarm(this.getBaseContext());
+        //QuoteTimeReceiver.setQuoteTimeAlarm(this.getBaseContext());
 
         TodayQuoteManager quotesManager = new TodayQuoteManager(this.getBaseContext());
 
