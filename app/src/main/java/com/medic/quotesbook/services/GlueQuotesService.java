@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.medic.quotesbook.receivers.QuoteTimeReceiver;
 import com.medic.quotesbook.utils.DevUtils;
 import com.medic.quotesbook.utils.TodayQuoteManager;
 
@@ -41,6 +42,9 @@ public class GlueQuotesService extends IntentService{
             Log.d(TAG, "Se actualizó el listado de citas.");
 
         }
+
+        // TODO: Test for remove
+        QuoteTimeReceiver.setQuoteTimeAlarm(getBaseContext());
 
     }
 
