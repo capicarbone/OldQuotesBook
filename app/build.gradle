@@ -18,8 +18,8 @@ android {
         applicationId "com.medic.quotesbook"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 13
-        versionName "0.5.1"
+        versionCode 22
+        versionName "0.6"
     }
     buildTypes {
         release {
@@ -44,5 +44,6 @@ dependencies {
     compile 'com.github.rahatarmanahmed:circularprogressview:2.3.2'
     compile 'joda-time:joda-time:2.8.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.clans:fab:1.6.1'
     compile files('libs/tappx-sdk-android-v2.2.09.jar')
 }
