@@ -14,6 +14,8 @@
     <string name="title_activity_authors">AuthorsActivity</string>
     <string name="text_loading_quotes">Consultando a sabios...</string>
 
+    <string name="title_share_in">Compartir en...</string>
+
     <string name="message_quote_saved">Cita guardada</string>
     <string name="message_quote_unsaved">Cita eliminada</string>
 
@@ -23,6 +25,9 @@
 
     <string name="no_dayquote_available">Lo sentimos, sin la actualización de Play Services no podremos entregarte la cita del día cada mañana. En cuanto puedas actualizar, vuelve y podrás recibir la cita del día.</string>
 
+    <string name="label_share_image">Imagen</string>
+    <string name="label_share_text">Texto</string>
+
     <string name="twitter_account">_qbook</string>
 
     <!-- Welcome texts -->
@@ -31,7 +36,7 @@
     <string name="message_find_quotes">Descubre pensamientos de grandes, útiles para el día a día.</string>
 
     <string name="title_share_quotes">Guarda y comparte</string>
-    <string name="message_share_quotes">Guarda tus citas favoritas en tu móvil y compártelas.</string>
+    <string name="message_share_quotes">Guarda tus citas favoritas en tu móvil y compártelas como texto o imágenes.</string>
 
     <string name="title_day_quotes">Una inspiración cada mañana</string>
     <string name="message_day_quotes">Todas tus mañanas te regalarémos un pensamiento para comenzar tu día.</string>
@@ -53,6 +58,7 @@
 
     <string name="adid_quote">ca-app-pub-3556838383179218/1569803684</string>
     <string name="adid_somequotes">ca-app-pub-3556838383179218/5865450880</string>
+    <string name="adid_quoteeditor">ca-app-pub-3556838383179218/2020016080</string>
 
 
     <string name="title_activity_welcome">Bienvenido</string>

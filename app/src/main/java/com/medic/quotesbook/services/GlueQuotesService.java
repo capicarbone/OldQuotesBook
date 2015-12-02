@@ -3,6 +3,7 @@ package com.medic.quotesbook.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.medic.quotesbook.utils.DevUtils;
 import com.medic.quotesbook.utils.TodayQuoteManager;
@@ -26,6 +27,8 @@ public class GlueQuotesService extends IntentService{
 
         //DevUtils.showNotification("Llegaron citas", this.getBaseContext());
 
+        Log.d(TAG, "Se activa el servicio de recepción de citas.");
+
         Bundle extras = intent.getExtras();
 
         String rawQuotes = extras.getString("quotes");
@@ -34,6 +37,8 @@ public class GlueQuotesService extends IntentService{
 
             TodayQuoteManager qManager = new TodayQuoteManager(getBaseContext());
             qManager.changeQuotesList(rawQuotes);
+
+            Log.d(TAG, "Se actualizó el listado de citas.");
 
         }
 

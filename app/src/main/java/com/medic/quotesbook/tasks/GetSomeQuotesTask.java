@@ -52,6 +52,7 @@ public class GetSomeQuotesTask extends GetQuotesTask {
 
         ApiMessagesQuotesCollection response = null;
 
+
         try {
             response = service.quotes().some().setLimit(PAGE_SIZE).execute();
 

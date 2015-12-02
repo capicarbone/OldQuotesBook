@@ -33,6 +33,8 @@ public class QuoteTimeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        //Log.d(TAG, "Se indica cita del día");
+
         Intent i = new Intent(context, PrepareDaysQuoteService.class);
         context.startService(i);
 
@@ -45,7 +47,7 @@ public class QuoteTimeReceiver extends BroadcastReceiver {
 
         Intent intent = new Intent(ctx, QuoteTimeReceiver.class);
 
-        PendingIntent quoteTimeIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
+        PendingIntent quoteTimeIntent = PendingIntent.getBroadcast(ctx, 1576872, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         //Calendar time = Calendar.getInstance();
         //time.setTimeInMillis(System.currentTimeMillis());
@@ -65,14 +67,14 @@ public class QuoteTimeReceiver extends BroadcastReceiver {
 
         am.set(AlarmManager.RTC, nextAlarm.getMillis(), quoteTimeIntent);
 
-        // DateTime testAlarm = new DateTime(System.currentTimeMillis());
-        //testAlarm = testAlarm.plusMinutes(1);
+        //DateTime testAlarm = new DateTime(System.currentTimeMillis());
+        //testAlarm = testAlarm.plusHours(6);
 
         //am.set(AlarmManager.RTC, testAlarm.getMillis(), quoteTimeIntent);
 
         //am.setInexactRepeating(AlarmManager.RTC, testAlarm.getMillis(), 18000L, quoteTimeIntent);
 
-
+        //Log.d(TAG, "Próxima alarma colocada");
 
     }
 

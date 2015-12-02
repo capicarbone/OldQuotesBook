@@ -31,7 +31,7 @@ public class AppController extends Application{
     private static Tracker tracker;
 
     private DateTime installDate;
-    private int adsActive = -1; // -1 Sin definido, 1 true, false
+    private int adsActive = -1; // -1 Sin definidr, 1 true, false
 
     @Override
     public void onCreate() {
@@ -86,12 +86,10 @@ public class AppController extends Application{
 
 
         if (adsActive == 1){
-            Log.d(TAG, "Ads disponibles");
-            return true;
+            return true; // Ads availables
         }
         else{
-            Log.d(TAG, "Ads no disponibles");
-            return true;
+            return false; // Ads no availables
 
         }
 

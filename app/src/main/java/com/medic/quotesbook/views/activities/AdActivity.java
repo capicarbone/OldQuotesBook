@@ -2,6 +2,7 @@ package com.medic.quotesbook.views.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.google.android.gms.ads.AdListener;
@@ -16,7 +17,7 @@ import com.tappx.TAPPXAdBanner;
 /**
  * Created by capi on 20/09/15.
  */
-public class AdActivity extends ActionBarActivity {
+public class AdActivity extends AppCompatActivity {
 
     //public static final double ADMOB_PROBABILITY = 8.5;
     //public static final double ADMOB_PROBABILITY = 0;
@@ -26,6 +27,8 @@ public class AdActivity extends ActionBarActivity {
 
     private View adWrapper;
     private AdView adView;
+
+    private TAPPXAdBanner.AdPosition adPosition = TAPPXAdBanner.AdPosition.POSITION_BOTTOM;
 
     private PublisherAdView tappxAdBanner = null;
 
@@ -50,7 +53,12 @@ public class AdActivity extends ActionBarActivity {
         }
     }
 
-    public boolean isTappxTurn(){
+    public void setTopAd(){
+        adPosition = TAPPXAdBanner.AdPosition.POSITION_TOP;
+
+    }
+
+    private boolean isTappxTurn(){
 
         double n = Math.random()*10;
 
@@ -95,7 +103,7 @@ public class AdActivity extends ActionBarActivity {
 
         tappxAdBanner = TAPPXAdBanner.ConfigureAndShow(this,
                 tappxAdBanner, AdsKeys.TAPPX_QUOTEVIEW,
-                TAPPXAdBanner.AdPosition.POSITION_BOTTOM, false, new AdListener() {
+                adPosition, false, new AdListener() {
                     @Override
                     public void onAdLoaded() {
                         super.onAdLoaded();
