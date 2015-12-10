@@ -1,6 +1,8 @@
 package com.medic.quotesbook.views.activities;
 
 import android.app.Dialog;
+import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,6 +43,7 @@ import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 import com.medic.quotesbook.views.fragments.QuotesListFragment;
 
 import android.os.Handler;
+import android.support.v7.widget.SearchView;
 
 public class BaseActivity extends AdActivity implements BaseActivityRequestListener {
 
@@ -183,7 +186,9 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_base, menu);
+
+        getMenuInflater().inflate(R.menu.menu_base, menu);
+
         return true;
     }
 
@@ -201,7 +206,11 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_search) {
+
+            Intent i = new Intent(this, SearchActivity.class);
+            startActivity(i);
+
             return true;
         }
 

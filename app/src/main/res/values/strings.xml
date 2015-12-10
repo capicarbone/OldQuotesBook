@@ -44,6 +44,8 @@
     <string name="title_support_us">Cuéntanos tu opinión</string>
     <string name="message_support_us">Si QuotesBook es de tu agrado recuerda apoyarnos con una opinión, nos motivará a mejorar :)</string>
 
+    <string name="search_hint">Buscar citas</string>
+
     <!-- Examples Quotes -->
 
     <string name="example_quote_aristoteles">Somos lo que hacemos día a día. De modo que la excelencia no es un acto sino un hábito.</string>
@@ -62,6 +64,7 @@
 
 
     <string name="title_activity_welcome">Bienvenido</string>
+    <string name="title_activity_quote_search">QuoteSearchActivity</string>
 
 
 </resources>
