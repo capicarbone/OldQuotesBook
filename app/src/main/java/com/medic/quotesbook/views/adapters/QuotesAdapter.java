@@ -1,30 +1,26 @@
 package com.medic.quotesbook.views.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
-import com.medic.quotesbook.AppController;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
+import com.medic.quotesbook.utils.GAK;
+import com.medic.quotesbook.views.activities.QuoteActivity;
 import com.medic.quotesbook.views.widgets.RoundedImageView;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
-import com.squareup.picasso.Transformation;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -36,11 +32,19 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
     private static final int VIEW_TYPE_FOOTER = 10;
     private static final int VIEW_TYPE_QUOTE = 0;
+    private Tracker tracker;
 
     public ArrayList<Quote> quotes;
-    private BaseActivityRequestListener listener;
 
-    private boolean infiniteScroll = false;
+    private boolean withLoader = false;
+
+    private Context ctx;
+
+    public QuotesAdapter(ArrayList<Quote> quotes, Context ctx, Tracker tracker) {
+        this.quotes = quotes;
+        this.ctx = ctx;
+        this.tracker = tracker;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -54,17 +58,19 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         private BaseActivityRequestListener listener;
         private Context ctx;
+        private Tracker tracker;
 
         public ViewHolder(View itemView){
             super(itemView);
         }
 
-        public ViewHolder(View itemView, Quote quote, BaseActivityRequestListener listener) {
+        public ViewHolder(View itemView, Quote quote, Context ctx, Tracker tracker) {
             super(itemView);
 
             this.listener = listener;
-            this.ctx = (Context) listener;
+            this.ctx = ctx;
             this.quote = quote;
+            this.tracker = tracker;
 
             bodyView = (TextView) itemView.findViewById(R.id.quote_body);
             authorPictureView = (RoundedImageView) itemView.findViewById(R.id.author_picture);
@@ -104,7 +110,16 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
             //Log.d("QuotesAdapter", "Click sobre " + authorNameView.getText() );
 
-            listener.showQuote(this.quote, false);
+            Intent i = new Intent(ctx, QuoteActivity.class);
+            i.putExtra(QuoteActivity.QUOTE_KEY, quote);
+            ctx.startActivity(i);
+
+            HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
+            event.setCategory(GAK.CATEGORY_QUOTE)
+                    .setAction(GAK.ACTION_QUOTE_SELECTED)
+                    .setLabel(quote.getKey());
+
+            tracker.send(event.build()); // TODO: Maybe unnecessary
 
         }
     }
@@ -113,14 +128,10 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         this.quotes = quotes;
     }
 
-    public void setInfiniteScroll(boolean infiniteScroll) {
-        this.infiniteScroll = infiniteScroll;
+    public void withLoader(boolean withLoader) {
+        this.withLoader = withLoader;
     }
 
-    public QuotesAdapter(ArrayList<Quote> quotes, BaseActivityRequestListener listener) {
-        this.quotes = quotes;
-        this.listener = listener;
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
@@ -132,7 +143,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.complete_quote_layout, parent, false);
 
-            vh = new ViewHolder(v, quotes.get(i), listener);
+            vh = new ViewHolder(v, quotes.get(i), ctx, tracker);
         }else{
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.somequotes_footer, parent, false);
@@ -175,7 +186,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
                     final RoundedImageView imageView = (RoundedImageView) v;
 
 
-                    Picasso.with((Context) listener)
+                    Picasso.with(ctx)
                             .load(quote.getAuthor().getFullPictureURL())
                             .placeholder(holder.backgroundColor)
                             .fit()
@@ -197,7 +208,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     @Override
     public int getItemCount() {
         if (quotes != null)
-            if (infiniteScroll)
+            if (withLoader)
                 return quotes.size() + 1;
             else
                 return quotes.size();

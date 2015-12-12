@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.views.adapters.QuotesAdapter;
+import com.medic.quotesbook.views.fragments.QuotesListFragment;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,10 @@ import java.util.ArrayList;
  */
 public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<Quote>> {
 
-    private QuotesAdapter mAdapter;
+    public static final int SOURCETYPE_SERVER = 1;
+    public static final int SOURCETYPE_LOCAL = 2;
+
+    private QuotesAdapter adapter;
     private View loaderLayout;
     private View mainLayout;
     private View exceptionLayout;
@@ -26,9 +30,11 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
 
     ArrayList<Quote> quotes = new ArrayList<Quote>();
 
+    private QuotesListState listState;
+
 
     public GetQuotesTask(QuotesAdapter a, View loaderLayout, View mainLayout, View exceptionLayout) {
-        mAdapter = a;
+        adapter = a;
         this.loaderLayout = loaderLayout;
         this.mainLayout = mainLayout;
         this.exceptionLayout = exceptionLayout;
@@ -36,8 +42,8 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
         loading = true;
     }
 
-    public GetQuotesTask(QuotesAdapter mAdapter, View loaderLayout, View mainLayout, View exceptionLayout, Context ctx) {
-        this.mAdapter = mAdapter;
+    public GetQuotesTask(QuotesAdapter adapter, View loaderLayout, View mainLayout, View exceptionLayout, Context ctx) {
+        this.adapter = adapter;
         this.loaderLayout = loaderLayout;
         this.ctx = ctx;
         this.mainLayout = mainLayout;
@@ -47,12 +53,50 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
 
     }
 
-    public GetQuotesTask(QuotesAdapter mAdapter) {
-        this.mAdapter = mAdapter;
+    public QuotesListState getListState() {
+        return listState;
+    }
+
+    public void setListState(QuotesListState listState) {
+        this.listState = listState;
+    }
+
+    public GetQuotesTask(){}
+
+    public void setLoaderLayout(View loaderLayout) {
+        this.loaderLayout = loaderLayout;
+    }
+
+    public void setMainLayout(View mainLayout) {
+        this.mainLayout = mainLayout;
+    }
+
+    public void setExceptionLayout(View exceptionLayout) {
+        this.exceptionLayout = exceptionLayout;
+    }
+
+    public void setCtx(Context ctx) {
+        this.ctx = ctx;
+    }
+
+    public void setListAdapter(QuotesAdapter mAdapter) {
+        this.adapter = mAdapter;
+
+        if ( getSourceType() == SOURCETYPE_LOCAL && adapter != null && adapter.quotes != null){
+
+            int itemsCount = adapter.quotes.size();
+
+            adapter.quotes.clear();
+            adapter.notifyItemRangeRemoved(0, itemsCount);
+        }
+    }
+
+    public GetQuotesTask(QuotesAdapter adapter) {
+        this.adapter = adapter;
     }
 
     public QuotesAdapter getAdapter() {
-        return mAdapter;
+        return adapter;
     }
 
     public Context getContext() {
@@ -99,20 +143,25 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
 
             int insertionPosition = 0;
 
-            if (mAdapter.quotes == null || mAdapter.quotes.size() == 0 ){
-                mAdapter.quotes = quotes;
+            updateListState(listState);
+
+            if (!listState.isNextPage())
+                adapter.withLoader(false);
+
+            if (adapter.quotes == null || adapter.quotes.size() == 0 ){
+                adapter.quotes = quotes;
 
                showQuotesList();
 
             }else{
 
-                insertionPosition = mAdapter.quotes.size();
+                insertionPosition = adapter.quotes.size();
 
-                mAdapter.quotes.addAll(quotes);
+                adapter.quotes.addAll(quotes);
 
             }
 
-            mAdapter.notifyItemRangeInserted(insertionPosition, quotes.size());
+            adapter.notifyItemRangeInserted(insertionPosition, quotes.size());
 
         }else{
             notifyException(exceptionCode);
@@ -139,6 +188,25 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
     }
 
     abstract protected void notifyException(int exceptionCode);
+    abstract public int getSourceType();
+    abstract public void updateListState(QuotesListState listState);
 
+    // InnerClass
+
+    public static class QuotesListState{
+
+        public long totalItemsWaited = -1;
+        public int pageSize = 12;
+        public int itemsRequested = 0;
+        public int itemsReceived = 0;
+
+        public boolean isNextPage(){
+            if (totalItemsWaited == -1)
+                return true;
+            else
+                return itemsReceived < totalItemsWaited;
+        }
+
+    }
 
 }

@@ -1,14 +1,11 @@
 package com.medic.quotesbook.views.fragments;
 
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +18,15 @@ import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.tasks.GetQuotesTask;
-import com.medic.quotesbook.tasks.GetQuotesbookTask;
 import com.medic.quotesbook.tasks.GetSomeQuotesTask;
-import com.medic.quotesbook.utils.BaseActivityRequestListener;
+import com.medic.quotesbook.tasks.QuotesFromServerTask;
 import com.medic.quotesbook.utils.GAK;
 import com.medic.quotesbook.views.adapters.QuotesAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static com.medic.quotesbook.tasks.GetQuotesTask.*;
 
 /**
  * A fragment representing a list of Items.
@@ -42,14 +40,11 @@ public class QuotesListFragment extends Fragment{
 
     private final String TAG = "QuotesListFragment";
 
-    private static final String ARG_FROM_QUOTESBOOK = "QuotesFragment.FROM_QUOTESBOOK";
+    private static final String ARG_FROM_SERVER = "QuotesFragment.FROM_SERVER";
 
     private static final String STATE_QUOTES = "quotes";
 
-
-    // TODO: Rename and change types of parameters
-    private boolean fromQuotesbook;
-
+    private boolean fromServer;
 
     View loaderLayout;
     View quotesView;
@@ -65,12 +60,15 @@ public class QuotesListFragment extends Fragment{
 
     GetQuotesTask loadTask = null;
 
+    ContextActivity ownerAcitivty;
+
+    GetQuotesTask.QuotesListState listState;
 
     // TODO: Rename and change types of parameters
-    public static QuotesListFragment newInstance(boolean fromQuotesbook) {
+    public static QuotesListFragment newInstance(boolean fromSever) {
         QuotesListFragment fragment = new QuotesListFragment();
         Bundle args = new Bundle();
-        args.putBoolean(ARG_FROM_QUOTESBOOK, fromQuotesbook);
+        args.putBoolean(ARG_FROM_SERVER, fromSever);
         fragment.setArguments(args);
         return fragment;
     }
@@ -86,8 +84,10 @@ public class QuotesListFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ownerAcitivty = (ContextActivity) getActivity();
+
         if (getArguments() != null) {
-            fromQuotesbook = getArguments().getBoolean(ARG_FROM_QUOTESBOOK);
+            fromServer = getArguments().getBoolean(ARG_FROM_SERVER);
         }
 
     }
@@ -102,11 +102,15 @@ public class QuotesListFragment extends Fragment{
         exceptionLayout = view.findViewById(R.id.exception_layout);
         reloadButton = (Button) view.findViewById(R.id.reload_button);
 
-        adapter = new QuotesAdapter(null, (BaseActivityRequestListener) getActivity());
+        Tracker tracker = ((AppController) getActivity().getApplication()).getDefaultTracker();
 
-        if (!fromQuotesbook){
-            adapter.setInfiniteScroll(true);
-        }
+        listState = new GetQuotesTask.QuotesListState();
+
+        adapter = new QuotesAdapter(null, getActivity(), tracker);
+
+
+        adapter.withLoader(true); //TODO: With listState validations may be unnecesary
+
 
         Quote[] quotes = null;
 
@@ -181,9 +185,16 @@ public class QuotesListFragment extends Fragment{
 
     private void getQuotes(){
 
-        if (!fromQuotesbook){
+        loadTask = ownerAcitivty.getQuotesProviderTask();
+        loadTask.setListAdapter(adapter);
+        loadTask.setLoaderLayout(loaderLayout);
+        loadTask.setMainLayout(quotesView);
+        loadTask.setExceptionLayout(exceptionLayout);
+        loadTask.setCtx(getActivity());
+        loadTask.setListState(listState);
 
-            loadTask = new GetSomeQuotesTask(adapter, loaderLayout, quotesView, exceptionLayout);
+
+        if (loadTask.getSourceType() == SOURCETYPE_SERVER){
 
             if (adapter.quotes == null || adapter.quotes.size() == 0 ) // No nos estamos recuperado de un estado anterior
                 loadTask.execute();
@@ -191,16 +202,6 @@ public class QuotesListFragment extends Fragment{
                 loadTask.showQuotesList();
         }else{
 
-            if (adapter != null && adapter.quotes != null){
-
-                int itemsCount = adapter.quotes.size();
-
-                adapter.quotes.clear();
-                adapter.notifyItemRangeRemoved(0, itemsCount);
-            }
-
-
-            loadTask = new GetQuotesbookTask(adapter, loaderLayout, quotesView, exceptionLayout, getActivity());
             loadTask.execute();
         }
 
@@ -215,8 +216,7 @@ public class QuotesListFragment extends Fragment{
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        if (!fromQuotesbook)
-            setInfinityScroll(recyclerView, layoutManager);
+        setInfinityScroll(recyclerView, layoutManager);
 
     }
 
@@ -224,22 +224,22 @@ public class QuotesListFragment extends Fragment{
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
-        if (fromQuotesbook){
+        if (fromServer){
             activity.getSupportActionBar().setTitle(R.string.tl_quotesbook);
         }else{
             activity.getSupportActionBar().setTitle(R.string.tl_home);
         }
     }
 
-    void setInfinityScroll(RecyclerView recycler, final LinearLayoutManager layoutManager){
+    void setInfinityScroll(final RecyclerView recycler, final LinearLayoutManager layoutManager){
 
         final Tracker tracker = ( (AppController) this.getActivity().getApplication()).getDefaultTracker();
 
         recycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
-            GetSomeQuotesTask nextTask = null;
+            QuotesFromServerTask nextTask = null;
 
-            final int PAGE_SIZE = GetSomeQuotesTask.PAGE_SIZE;
+            final int PAGE_SIZE = GetSomeQuotesTask.DEFAULT_PAGE_SIZE;
             final int MINIMUN_FOR_REQUEST = 6;
 
             int nextPageCount = PAGE_SIZE;
@@ -254,26 +254,27 @@ public class QuotesListFragment extends Fragment{
                 int totalItemCount = layoutManager.getItemCount();
                 int pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
 
-
                 int remainingItems = totalItemCount - pastVisiblesItems;
                 int viewedItems = pastVisiblesItems + visibleItemCount;
 
                 //Log.d(TAG, "Quedan " + Integer.toString(remainingItems));
 
                 if (nextTask != null && nextTask.failedRequest()) {
-                    totalItemsRequested = totalItemsRequested - PAGE_SIZE;
+                    listState.itemsRequested = (int) (listState.totalItemsWaited - PAGE_SIZE);
                 }
 
-                if (remainingItems <= MINIMUN_FOR_REQUEST && totalItemsRequested <= totalItemCount) {
+                if (remainingItems <= MINIMUN_FOR_REQUEST && listState.itemsRequested <= totalItemCount) {
 
                     if (nextTask == null || !nextTask.isLoading()) {
 
                         //Log.d(TAG, "Se crea una nueva tarea y se ejecuta. remaining: " + Integer.toString(remainingItems));
 
-                        nextTask = new GetSomeQuotesTask((QuotesAdapter) view.getAdapter());
+                        nextTask = (QuotesFromServerTask) ownerAcitivty.getQuotesProviderTask();
+                        nextTask.setListAdapter((QuotesAdapter) view.getAdapter());
+                        nextTask.setListState(listState);
                         nextTask.execute();
 
-                        totalItemsRequested = totalItemsRequested + PAGE_SIZE;
+                        listState.itemsRequested = (int) (listState.totalItemsWaited + PAGE_SIZE);
 
                     }
 
@@ -289,13 +290,23 @@ public class QuotesListFragment extends Fragment{
 
                 }
 
+                if (!listState.isNextPage())
+                    recycler.setOnScrollListener(null);
+
                 //Log.d(TAG, "Visibles: " + Integer.toString(visibleItemCount) + ", totals: " + Integer.toString(totalItemCount) + ", past: " + Integer.toString(pastVisiblesItems) + ", remaining: " + Integer.toString(remainingItems));
             }
         });
     }
 
     public boolean isQuotesBook(){
-        return fromQuotesbook;
+        return fromServer;
+    }
+
+    // Listener
+
+    public interface ContextActivity {
+
+        public GetQuotesTask getQuotesProviderTask();
     }
 
 }

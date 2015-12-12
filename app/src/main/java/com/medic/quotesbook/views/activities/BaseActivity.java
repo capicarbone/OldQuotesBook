@@ -34,6 +34,9 @@ import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.receivers.OnBootReceiver;
 import com.medic.quotesbook.receivers.QuoteTimeReceiver;
 import com.medic.quotesbook.services.PrepareDaysQuoteService;
+import com.medic.quotesbook.tasks.GetQuotesTask;
+import com.medic.quotesbook.tasks.GetQuotesbookTask;
+import com.medic.quotesbook.tasks.GetSomeQuotesTask;
 import com.medic.quotesbook.tasks.RegisterGCMAppTask;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
 import com.medic.quotesbook.utils.GAK;
@@ -45,7 +48,7 @@ import com.medic.quotesbook.views.fragments.QuotesListFragment;
 import android.os.Handler;
 import android.support.v7.widget.SearchView;
 
-public class BaseActivity extends AdActivity implements BaseActivityRequestListener {
+public class BaseActivity extends AdActivity implements BaseActivityRequestListener, QuotesListFragment.ContextActivity {
 
     static final String TAG = "BaseActivity";
     public static final String SCREEN_NAME_QUOTESBOOK = "Quotesbook";
@@ -247,7 +250,7 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
     @Override
     public void showOption(int optionSelected) {
 
-        Fragment optionView = null;
+        this.optionSelected = optionSelected;
 
         FragmentManager fm = getSupportFragmentManager();
 
@@ -375,4 +378,15 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
         Log.d(TAG, "Density " + Float.toString(dpWidth));
     }
 
+    @Override
+    public GetQuotesTask getQuotesProviderTask() {
+
+        switch (optionSelected){
+            case 0: //SomeQuotes
+                return new GetSomeQuotesTask();
+            case 1: // Quotesbook
+                return new GetQuotesbookTask();
+        }
+        return null;
+    }
 }

@@ -23,6 +23,10 @@ public class GetQuotesbookTask extends GetQuotesTask {
 
     public static final int EXCEPTION_NO_QUOTES = 1;
 
+    public GetQuotesbookTask(){
+        super();
+    }
+
     public GetQuotesbookTask(QuotesAdapter mAdapter, View loaderLayout, View mainLayout, View exceptionLayout, Context ctx) {
         super(mAdapter, loaderLayout, mainLayout, exceptionLayout, ctx );
     }
@@ -57,5 +61,16 @@ public class GetQuotesbookTask extends GetQuotesTask {
         exceptionText.setText(R.string.message_quotesbook_empty);
         exceptionIcon.setImageResource(R.drawable.ic_star_border_black_36dp);
 
+    }
+
+    @Override
+    public int getSourceType() {
+        return SOURCETYPE_LOCAL;
+    }
+
+    @Override
+    public void updateListState(QuotesListState listState) {
+        listState.totalItemsWaited = 0;
+        listState.itemsReceived = 0;
     }
 }
