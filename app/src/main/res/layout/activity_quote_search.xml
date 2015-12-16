@@ -1,13 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.medic.quotesbook.views.activities.SearchActivity">
 
-    <FrameLayout android:id="@+id/list_fragment"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent">
+
+
+        <FrameLayout android:id="@+id/list_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/ad_wrapper"
+            ></FrameLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/ad_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/bg"
+            android:visibility="gone"
+
+            >
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/ad_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                ads:adSize="SMART_BANNER"
+                ads:adUnitId="@string/adid_quotesearch">
+            </com.google.android.gms.ads.AdView>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
 
 </LinearLayout>

@@ -38,7 +38,7 @@ public class SearchQuoteTask extends QuotesFromServerTask {
     public void updateListState(QuotesListState listState) {
 
         listState.totalItemsWaited = searchResult.getTotalResults();
-        listState.itemsReceived = searchResult.getPageQuotes().size();
+        listState.itemsReceived = listState.itemsReceived + searchResult.getPageQuotes().size();
 
     }
 

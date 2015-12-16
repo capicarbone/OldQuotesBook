@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -257,25 +258,33 @@ public class QuotesListFragment extends Fragment{
                 int remainingItems = totalItemCount - pastVisiblesItems;
                 int viewedItems = pastVisiblesItems + visibleItemCount;
 
-                //Log.d(TAG, "Quedan " + Integer.toString(remainingItems));
+                /*Log.d(TAG, "Quedan " + Integer.toString(remainingItems));
+                Log.d(TAG, "Total count " + Integer.toString(totalItemCount));
+                Log.d(TAG, "Items resqueted " + Integer.toString(totalItemsRequested)); */
 
                 if (nextTask != null && nextTask.failedRequest()) {
-                    listState.itemsRequested = (int) (listState.totalItemsWaited - PAGE_SIZE);
+                    listState.itemsRequested = (int) (listState.itemsRequested - PAGE_SIZE);
                 }
 
                 if (remainingItems <= MINIMUN_FOR_REQUEST && listState.itemsRequested <= totalItemCount) {
 
-                    if (nextTask == null || !nextTask.isLoading()) {
+                    if (listState.isNextPage()){
 
-                        //Log.d(TAG, "Se crea una nueva tarea y se ejecuta. remaining: " + Integer.toString(remainingItems));
+                        if (nextTask == null || !nextTask.isLoading()) {
 
-                        nextTask = (QuotesFromServerTask) ownerAcitivty.getQuotesProviderTask();
-                        nextTask.setListAdapter((QuotesAdapter) view.getAdapter());
-                        nextTask.setListState(listState);
-                        nextTask.execute();
+                            //Log.d(TAG, "Se crea una nueva tarea y se ejecuta. remaining: " + Integer.toString(remainingItems));
 
-                        listState.itemsRequested = (int) (listState.totalItemsWaited + PAGE_SIZE);
+                            nextTask = (QuotesFromServerTask) ownerAcitivty.getQuotesProviderTask();
+                            nextTask.setListAdapter((QuotesAdapter) view.getAdapter());
+                            nextTask.setListState(listState);
+                            nextTask.execute();
 
+                            listState.itemsRequested = listState.itemsRequested + PAGE_SIZE;
+
+                        }
+
+                    }else{
+                        recycler.setOnScrollListener(null);
                     }
 
                 }
@@ -289,9 +298,6 @@ public class QuotesListFragment extends Fragment{
                     nextPageCount = nextPageCount + PAGE_SIZE;
 
                 }
-
-                if (!listState.isNextPage())
-                    recycler.setOnScrollListener(null);
 
                 //Log.d(TAG, "Visibles: " + Integer.toString(visibleItemCount) + ", totals: " + Integer.toString(totalItemCount) + ", past: " + Integer.toString(pastVisiblesItems) + ", remaining: " + Integer.toString(remainingItems));
             }

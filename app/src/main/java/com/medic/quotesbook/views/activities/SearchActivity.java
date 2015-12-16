@@ -23,7 +23,7 @@ import com.medic.quotesbook.tasks.QuotesFromServerTask;
 import com.medic.quotesbook.tasks.SearchQuoteTask;
 import com.medic.quotesbook.views.fragments.QuotesListFragment;
 
-public class SearchActivity extends AppCompatActivity implements QuotesListFragment.ContextActivity{
+public class SearchActivity extends AdActivity implements QuotesListFragment.ContextActivity{
 
     private String query;
 
@@ -31,6 +31,8 @@ public class SearchActivity extends AppCompatActivity implements QuotesListFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote_search);
+
+        initAds();
 
     }
 

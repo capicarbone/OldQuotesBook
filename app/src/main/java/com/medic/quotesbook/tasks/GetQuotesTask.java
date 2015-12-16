@@ -146,7 +146,7 @@ public abstract class GetQuotesTask extends AsyncTask<Integer, String,ArrayList<
             updateListState(listState);
 
             if (!listState.isNextPage())
-                adapter.withLoader(false);
+                adapter.removeLoader();
 
             if (adapter.quotes == null || adapter.quotes.size() == 0 ){
                 adapter.quotes = quotes;

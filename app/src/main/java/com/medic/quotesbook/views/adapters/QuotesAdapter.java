@@ -132,6 +132,14 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         this.withLoader = withLoader;
     }
 
+    public void removeLoader(){
+
+        this.withLoader(false);
+
+        if (quotes != null)
+            notifyItemRemoved(quotes.size());
+    }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
@@ -147,6 +155,10 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         }else{
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.somequotes_footer, parent, false);
+
+            if (!withLoader){
+                v.setVisibility(View.GONE);
+            }
 
             vh = new ViewHolder(v);
         }
@@ -212,6 +224,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
                 return quotes.size() + 1;
             else
                 return quotes.size();
+
         else
             return 0;
     }
