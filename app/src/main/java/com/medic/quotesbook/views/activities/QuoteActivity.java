@@ -62,7 +62,8 @@ public class QuoteActivity extends AdActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quote);
+        setContentView(R.layout.activity_quote);        tracker = getAppCtrl().getDefaultTracker();
+
 
         initAds();
 

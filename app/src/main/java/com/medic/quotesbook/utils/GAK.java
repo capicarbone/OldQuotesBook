@@ -11,11 +11,13 @@ public class GAK {
     public static final String CATEGORY_QUOTE = "quote";
     public static final String CATEGORY_GPS = "Google Play Services";
     public static final String CATEGORY_SHARE = "share";
+    public static final String CATEGORY_SEARCH = "search";
 
     public static final String ACTION_QUOTE_SAVED = "quote saved";
     public static final String ACTION_QUOTE_UNSAVED = "quote unsaved";
 
     public static final String ACTION_QUOTE_SELECTED = "quote selected";
+    public static final String ACTION_QUOTE_SEARCH = "quote search";
 
     public static final String ACTION_PAGE_PASSED = "Page passed";
 

@@ -17,15 +17,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.tasks.GetQuotesTask;
 import com.medic.quotesbook.tasks.QuotesFromServerTask;
 import com.medic.quotesbook.tasks.SearchQuoteTask;
+import com.medic.quotesbook.utils.GAK;
 import com.medic.quotesbook.views.fragments.QuotesListFragment;
 
 public class SearchActivity extends AdActivity implements QuotesListFragment.ContextActivity{
 
+    public final static String SCREEN_NAME_QUOTE_SEARCH = "Quote Search";
+
     private String query;
+
+    Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,9 @@ public class SearchActivity extends AdActivity implements QuotesListFragment.Con
         setContentView(R.layout.activity_quote_search);
 
         initAds();
+
+        tracker = getAppCtrl().getDefaultTracker();
+
 
     }
 
@@ -60,6 +70,15 @@ public class SearchActivity extends AdActivity implements QuotesListFragment.Con
         return true;
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        tracker.setScreenName(SCREEN_NAME_QUOTE_SEARCH);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+    }
+
 
     @Override
     protected void onNewIntent(Intent intent){
@@ -80,6 +99,15 @@ public class SearchActivity extends AdActivity implements QuotesListFragment.Con
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.list_fragment, listFragment);
         transaction.commit();
+
+        // Analytics Event
+
+        HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
+
+        event.setCategory(GAK.CATEGORY_QUOTESBOOK);
+        event.setAction(GAK.ACTION_QUOTE_SAVED);
+
+        tracker.send(event.build());
     }
 
 
@@ -88,7 +116,7 @@ public class SearchActivity extends AdActivity implements QuotesListFragment.Con
 
         QuotesFromServerTask task = new SearchQuoteTask();
         task.setQuery(query);
-        task.setPageSize(QuotesFromServerTask.DEFAULT_PAGE_SIZE);
+        task.setPageSize(QuotesFromServerTask.DEFAULT_PAGE_SIZE);  //TODO: Revisar si se está usando
 
         return task;
     }
