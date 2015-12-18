@@ -21,6 +21,7 @@
 
     <string name="message_quotes_connection_error">Sucede que necesitamos conexión a internet para lograr consultar a los sabios.</string>
     <string name="message_quotes_backend_error">Disculpas, algo no ha salido bien contactando a los sabios. Por que no intentas mas tarde.</string>
+    <string name="message_quotes_not_found">No hemos encontrado citas que satisfagan tu búsqueda :( </string>
     <string name="message_quotesbook_empty">Puede usar el botón con la estrella para guardar sus citas favoritas. Las encontrará en este apartado.</string>
 
     <string name="no_dayquote_available">Lo sentimos, sin la actualización de Play Services no podremos entregarte la cita del día cada mañana. En cuanto puedas actualizar, vuelve y podrás recibir la cita del día.</string>
@@ -44,7 +45,7 @@
     <string name="title_support_us">Cuéntanos tu opinión</string>
     <string name="message_support_us">Si QuotesBook es de tu agrado recuerda apoyarnos con una opinión, nos motivará a mejorar :)</string>
 
-    <string name="search_hint">Buscar citas...</string>
+    <string name="search_hint">Buscar citas con...</string>
 
     <!-- Examples Quotes -->
 
@@ -65,7 +66,7 @@
 
 
     <string name="title_activity_welcome">Bienvenido</string>
-    <string name="title_activity_quote_search">QuoteSearchActivity</string>
+    <string name="title_activity_quote_search">Buscar cita</string>
 
 
 </resources>

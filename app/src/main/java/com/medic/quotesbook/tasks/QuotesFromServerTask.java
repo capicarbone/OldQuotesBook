@@ -2,6 +2,7 @@ package com.medic.quotesbook.tasks;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public abstract class QuotesFromServerTask extends GetQuotesTask {
 
     public static final int CONNECTION_DISABLED = 1;
     public static final int CONNECTION_BACKEND_ERROR = 2;
+    public static final int RESULT_NOT_FOUUND = 3;
 
     private String query;
     private int pageNumber;
@@ -136,12 +138,18 @@ public abstract class QuotesFromServerTask extends GetQuotesTask {
 
             TextView exceptionText = (TextView) getExceptionLayout().findViewById(R.id.exception_text);
             ImageView exceptionIcon = (ImageView) getExceptionLayout().findViewById(R.id.exception_icon);
+            Button reloadButton = (Button) getExceptionLayout().findViewById(R.id.reload_button);
 
             switch (exceptionCode){
 
                 case CONNECTION_DISABLED:
                     exceptionText.setText(R.string.message_quotes_connection_error);
                     exceptionIcon.setImageResource(R.drawable.ic_signal_wifi_off_black_36dp);
+                    break;
+                case RESULT_NOT_FOUUND:
+                    exceptionText.setText(R.string.message_quotes_not_found);
+                    exceptionIcon.setImageResource(R.drawable.ic_info_outline_black_24dp);
+                    reloadButton.setVisibility(View.GONE);
                     break;
                 case CONNECTION_BACKEND_ERROR:
                 default:

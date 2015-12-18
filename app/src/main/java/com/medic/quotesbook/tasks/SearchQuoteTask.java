@@ -38,7 +38,9 @@ public class SearchQuoteTask extends QuotesFromServerTask {
     public void updateListState(QuotesListState listState) {
 
         listState.totalItemsWaited = searchResult.getTotalResults();
-        listState.itemsReceived = listState.itemsReceived + searchResult.getPageQuotes().size();
+
+        if (searchResult.getPageQuotes() != null)
+            listState.itemsReceived = listState.itemsReceived + searchResult.getPageQuotes().size();
 
     }
 
@@ -69,6 +71,9 @@ public class SearchQuoteTask extends QuotesFromServerTask {
         resultMsg = service.quotes().search(requestMsg).execute();
 
         searchResult = resultMsg;
+
+        if (resultMsg.getPageQuotes() == null)
+            setException(QuotesFromServerTask.RESULT_NOT_FOUUND);
 
         return resultMsg.getPageQuotes();
 

@@ -108,6 +108,7 @@ public class QuotesListFragment extends Fragment{
         listState = new GetQuotesTask.QuotesListState();
 
         adapter = new QuotesAdapter(null, getActivity(), tracker);
+        adapter.setQuoteHasLogicalParent(ownerAcitivty.quoteViewhasLogicalParent());
 
 
         adapter.withLoader(true); //TODO: With listState validations may be unnecesary
@@ -304,15 +305,12 @@ public class QuotesListFragment extends Fragment{
         });
     }
 
-    public boolean isQuotesBook(){
-        return fromServer;
-    }
-
     // Listener
 
     public interface ContextActivity {
 
         public GetQuotesTask getQuotesProviderTask();
+        public boolean quoteViewhasLogicalParent();
     }
 
 }

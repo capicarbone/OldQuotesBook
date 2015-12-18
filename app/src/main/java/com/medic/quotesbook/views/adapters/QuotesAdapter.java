@@ -1,8 +1,10 @@
 package com.medic.quotesbook.views.adapters;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.utils.BaseActivityRequestListener;
 import com.medic.quotesbook.utils.GAK;
 import com.medic.quotesbook.views.activities.QuoteActivity;
+import com.medic.quotesbook.views.activities.SearchActivity;
 import com.medic.quotesbook.views.widgets.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -39,6 +42,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     private boolean withLoader = false;
 
     private Context ctx;
+    private boolean quoteHasLogicalParent;
 
     public QuotesAdapter(ArrayList<Quote> quotes, Context ctx, Tracker tracker) {
         this.quotes = quotes;
@@ -60,17 +64,20 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         private Context ctx;
         private Tracker tracker;
 
+        private boolean quoteHasLogicalParent;
+
         public ViewHolder(View itemView){
             super(itemView);
         }
 
-        public ViewHolder(View itemView, Quote quote, Context ctx, Tracker tracker) {
+        public ViewHolder(View itemView, Quote quote, Context ctx, Tracker tracker, boolean quoteHasLogicalParent) {
             super(itemView);
 
             this.listener = listener;
             this.ctx = ctx;
             this.quote = quote;
             this.tracker = tracker;
+            this.quoteHasLogicalParent = quoteHasLogicalParent;
 
             bodyView = (TextView) itemView.findViewById(R.id.quote_body);
             authorPictureView = (RoundedImageView) itemView.findViewById(R.id.author_picture);
@@ -112,6 +119,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
             Intent i = new Intent(ctx, QuoteActivity.class);
             i.putExtra(QuoteActivity.QUOTE_KEY, quote);
+            i.putExtra(QuoteActivity.HAS_LOGICAL_PARENT, quoteHasLogicalParent);
             ctx.startActivity(i);
 
             HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
@@ -151,7 +159,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.complete_quote_layout, parent, false);
 
-            vh = new ViewHolder(v, quotes.get(i), ctx, tracker);
+            vh = new ViewHolder(v, quotes.get(i), ctx, tracker, quoteHasLogicalParent);
         }else{
             v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.somequotes_footer, parent, false);
@@ -212,9 +220,14 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
             });
         }
 
+    }
 
+    public boolean isQuoteHasLogicalParent() {
+        return quoteHasLogicalParent;
+    }
 
-
+    public void setQuoteHasLogicalParent(boolean quoteHasLogicalParent) {
+        this.quoteHasLogicalParent = quoteHasLogicalParent;
     }
 
     @Override

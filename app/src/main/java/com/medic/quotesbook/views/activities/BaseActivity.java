@@ -1,18 +1,14 @@
 package com.medic.quotesbook.views.activities;
 
 import android.app.Dialog;
-import android.app.SearchManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Message;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.DisplayMetrics;
@@ -32,8 +28,6 @@ import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.receivers.OnBootReceiver;
-import com.medic.quotesbook.receivers.QuoteTimeReceiver;
-import com.medic.quotesbook.services.PrepareDaysQuoteService;
 import com.medic.quotesbook.tasks.GetQuotesTask;
 import com.medic.quotesbook.tasks.GetQuotesbookTask;
 import com.medic.quotesbook.tasks.GetSomeQuotesTask;
@@ -46,7 +40,6 @@ import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 import com.medic.quotesbook.views.fragments.QuotesListFragment;
 
 import android.os.Handler;
-import android.support.v7.widget.SearchView;
 
 public class BaseActivity extends AdActivity implements BaseActivityRequestListener, QuotesListFragment.ContextActivity {
 
@@ -260,7 +253,7 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
         if (optionSelected == 0 && someQuotesFragmentState != null)
             nextFragment.setInitialSavedState(someQuotesFragmentState);
 
-        if ( !actualFragment.isQuotesBook()){ // Es someQuotes
+        if ( !optionIsQuotesBook() ){ // Es someQuotes
             someQuotesFragmentState = fm.saveFragmentInstanceState(actualFragment);
         }
 
@@ -378,6 +371,10 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
         Log.d(TAG, "Density " + Float.toString(dpWidth));
     }
 
+    private boolean optionIsQuotesBook(){
+        return optionSelected == 1;
+    }
+
     @Override
     public GetQuotesTask getQuotesProviderTask() {
 
@@ -388,5 +385,10 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
                 return new GetQuotesbookTask();
         }
         return null;
+    }
+
+    @Override
+    public boolean quoteViewhasLogicalParent() {
+        return true;
     }
 }

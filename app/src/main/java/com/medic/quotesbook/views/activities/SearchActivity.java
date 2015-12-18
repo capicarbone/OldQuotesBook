@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -27,21 +28,32 @@ import com.medic.quotesbook.utils.GAK;
 import com.medic.quotesbook.views.fragments.QuotesListFragment;
 
 public class SearchActivity extends AdActivity implements QuotesListFragment.ContextActivity{
+    public static final String TAG = "SearchActivity";
 
     public final static String SCREEN_NAME_QUOTE_SEARCH = "Quote Search";
+
+    private final static String DATA_QUERY = "data_query";
 
     private String query;
 
     Tracker tracker;
+
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quote_search);
 
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         initAds();
 
         tracker = getAppCtrl().getDefaultTracker();
+
+
+        if (savedInstanceState != null)
+            query = savedInstanceState.getString(DATA_QUERY, null);
 
 
     }
@@ -55,7 +67,7 @@ public class SearchActivity extends AdActivity implements QuotesListFragment.Con
         getMenuInflater().inflate(R.menu.menu_search, menu);
 
         SearchManager searchManager  = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
         searchView.setIconified(false);
@@ -67,6 +79,10 @@ public class SearchActivity extends AdActivity implements QuotesListFragment.Con
             }
         });
 
+        if (query != null){
+            searchView.setQuery(query, false);
+        }
+
         return true;
     }
 
@@ -76,6 +92,14 @@ public class SearchActivity extends AdActivity implements QuotesListFragment.Con
 
         tracker.setScreenName(SCREEN_NAME_QUOTE_SEARCH);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(DATA_QUERY, query);
 
     }
 
@@ -106,6 +130,7 @@ public class SearchActivity extends AdActivity implements QuotesListFragment.Con
 
         event.setCategory(GAK.CATEGORY_QUOTESBOOK);
         event.setAction(GAK.ACTION_QUOTE_SAVED);
+        event.setLabel(query);
 
         tracker.send(event.build());
     }
@@ -119,5 +144,10 @@ public class SearchActivity extends AdActivity implements QuotesListFragment.Con
         task.setPageSize(QuotesFromServerTask.DEFAULT_PAGE_SIZE);  //TODO: Revisar si se está usando
 
         return task;
+    }
+
+    @Override
+    public boolean quoteViewhasLogicalParent() {
+        return false;
     }
 }

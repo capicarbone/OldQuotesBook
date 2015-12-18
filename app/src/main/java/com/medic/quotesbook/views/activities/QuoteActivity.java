@@ -41,6 +41,7 @@ public class QuoteActivity extends AdActivity {
 
     public static final String QUOTE_KEY = "quotesbook.quote";
     public static final String DAYQUOTE_KEY = "quotesbook.day_quote"; // Indica si es la cita del día
+    public static final String HAS_LOGICAL_PARENT = "quotesbook.logical_parent";
 
     TextView quoteBodyView;
     TextView authorNameView;
@@ -56,14 +57,14 @@ public class QuoteActivity extends AdActivity {
     Tracker tracker;
 
     boolean savedIcon;
+    boolean hasLogicalParent;
 
     QuotesStorage qStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quote);        tracker = getAppCtrl().getDefaultTracker();
-
+        setContentView(R.layout.activity_quote);
 
         initAds();
 
@@ -79,6 +80,8 @@ public class QuoteActivity extends AdActivity {
         fabMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
         fabShareText = (FloatingActionButton) findViewById(R.id.fab_button_share_text);
         fabShareImage = (FloatingActionButton) findViewById(R.id.fab_button_share_image);
+
+        hasLogicalParent = getIntent().getBooleanExtra(HAS_LOGICAL_PARENT, true);
 
     }
 
@@ -215,6 +218,8 @@ public class QuoteActivity extends AdActivity {
 
         getMenuInflater().inflate(R.menu.menu_quote, menu);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         if (qStorage.findQuote(quote.getKey()) != -1 ){
             savedIcon = true;
             setSavedIcon(menu.findItem(R.id.action_save_quote));
@@ -272,6 +277,12 @@ public class QuoteActivity extends AdActivity {
 
             return true;
         }
+
+        if (!hasLogicalParent){
+            finish();
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
