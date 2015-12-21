@@ -243,19 +243,19 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
     @Override
     public void showOption(int optionSelected) {
 
-        this.optionSelected = optionSelected;
-
         FragmentManager fm = getSupportFragmentManager();
-
-        Fragment nextFragment = getFragmentForOption(optionSelected);
         QuotesListFragment actualFragment = (QuotesListFragment) fm.findFragmentById(R.id.frame_content);
-
-        if (optionSelected == 0 && someQuotesFragmentState != null)
-            nextFragment.setInitialSavedState(someQuotesFragmentState);
 
         if ( !optionIsQuotesBook() ){ // Es someQuotes
             someQuotesFragmentState = fm.saveFragmentInstanceState(actualFragment);
         }
+
+        this.optionSelected = optionSelected;
+
+        Fragment nextFragment = getFragmentForOption(optionSelected);
+
+        if (optionSelected == 0 && someQuotesFragmentState != null)
+            nextFragment.setInitialSavedState(someQuotesFragmentState);
 
         fm.beginTransaction()
                 .replace(R.id.frame_content, nextFragment)
