@@ -41,12 +41,8 @@ public class QuotesListFragment extends Fragment{
 
     private final String TAG = "QuotesListFragment";
 
-    private static final String ARG_FROM_SERVER = "QuotesFragment.FROM_SERVER";
-
     private static final String STATE_QUOTES = "quotes";
-
-    private boolean fromServer;
-
+private boolean fromServer;
     View loaderLayout;
     View quotesView;
     View exceptionLayout;
@@ -66,11 +62,8 @@ public class QuotesListFragment extends Fragment{
     GetQuotesTask.QuotesListState listState;
 
     // TODO: Rename and change types of parameters
-    public static QuotesListFragment newInstance(boolean fromSever) {
+    public static QuotesListFragment newInstance() {
         QuotesListFragment fragment = new QuotesListFragment();
-        Bundle args = new Bundle();
-        args.putBoolean(ARG_FROM_SERVER, fromSever);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -86,10 +79,6 @@ public class QuotesListFragment extends Fragment{
         super.onCreate(savedInstanceState);
 
         ownerAcitivty = (ContextActivity) getActivity();
-
-        if (getArguments() != null) {
-            fromServer = getArguments().getBoolean(ARG_FROM_SERVER);
-        }
 
     }
 
@@ -172,8 +161,6 @@ public class QuotesListFragment extends Fragment{
     public void onResume() {
         super.onResume();
 
-        setTitle();
-
         getQuotes();
     }
 
@@ -220,17 +207,6 @@ public class QuotesListFragment extends Fragment{
 
         setInfinityScroll(recyclerView, layoutManager);
 
-    }
-
-    private void setTitle(){
-
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-
-        if (fromServer){
-            activity.getSupportActionBar().setTitle(R.string.tl_quotesbook);
-        }else{
-            activity.getSupportActionBar().setTitle(R.string.tl_home);
-        }
     }
 
     void setInfinityScroll(final RecyclerView recycler, final LinearLayoutManager layoutManager){

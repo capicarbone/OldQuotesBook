@@ -117,7 +117,7 @@ public class SearchActivity extends AdActivity implements QuotesListFragment.Con
 
     private void startSearch(){
 
-        QuotesListFragment listFragment = QuotesListFragment.newInstance(true);
+        QuotesListFragment listFragment = QuotesListFragment.newInstance();
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();

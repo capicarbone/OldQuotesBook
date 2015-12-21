@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -152,6 +153,8 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
     protected void onResume(){
         super.onResume();
 
+        setTitle();
+
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
@@ -160,10 +163,10 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
         Fragment optionView = null;
 
         switch (i){
-            case 0: optionView = QuotesListFragment.newInstance(false);
+            case 0: optionView = QuotesListFragment.newInstance();
                 tracker.setScreenName(SCREEN_NAME_SOMEQUOTES);
                 break;
-            case 1: optionView = QuotesListFragment.newInstance(true);
+            case 1: optionView = QuotesListFragment.newInstance();
                 tracker.setScreenName(SCREEN_NAME_QUOTESBOOK);
                 break;
         }
@@ -262,8 +265,18 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
                 .commit();
 
         mDrawerLayout.closeDrawers();
+        setTitle();
 
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    private void setTitle(){
+
+        switch(optionSelected){
+            case 0: this.getSupportActionBar().setTitle(R.string.tl_home); break;
+            case 1: this.getSupportActionBar().setTitle(R.string.tl_quotesbook); break;
+        }
+
     }
 
     public void showWelcome(){
