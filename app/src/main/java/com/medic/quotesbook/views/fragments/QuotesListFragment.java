@@ -42,7 +42,7 @@ public class QuotesListFragment extends Fragment{
     private final String TAG = "QuotesListFragment";
 
     private static final String STATE_QUOTES = "quotes";
-private boolean fromServer;
+
     View loaderLayout;
     View quotesView;
     View exceptionLayout;
@@ -85,7 +85,7 @@ private boolean fromServer;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_somequotes, container, false);
+        View view = inflater.inflate(R.layout.fragment_quoteslist, container, false);
 
         loaderLayout = view.findViewById(R.id.loader_layout);
         quotesView = view.findViewById(R.id.quotes_list);
