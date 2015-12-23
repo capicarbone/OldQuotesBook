@@ -17,7 +17,8 @@ public class QuoteNetwork {
                 new GsonFactory(),
                 null );
 
-        builder.setRootUrl("https://beta-dot-quotesbookapp.appspot.com/_ah/api/");
+        //builder.setRootUrl("https://beta-dot-quotesbookapp.appspot.com/_ah/api/");
+        builder.setRootUrl("https://quotesbookapp.appspot.com/_ah/api/");
 
         return builder.build();
     }
