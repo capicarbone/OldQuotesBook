@@ -65,7 +65,7 @@ public class Quote implements MessageBasedModelInterface, Parcelable {
 
     public String getShareable(){
 
-        String sQuote = getWithQuotes() + " - ";
+        String sQuote = body + "\n - ";
 
         if (author != null){
 

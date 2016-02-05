@@ -145,10 +145,10 @@ public class QuoteActivity extends AdActivity {
                 i.setType("text/plain");
 
                 String shareable = quote.getShareable();
-                String marketingTail = ", via @" + getResources().getString(R.string.twitter_account);
+                /*String marketingTail = ", via @" + getResources().getString(R.string.twitter_account);
 
                 if (shareable.length() + marketingTail.length() <= 140)
-                    shareable = shareable + marketingTail;
+                    shareable = shareable + marketingTail;*/
 
                 i.putExtra(Intent.EXTRA_TEXT, shareable);
 

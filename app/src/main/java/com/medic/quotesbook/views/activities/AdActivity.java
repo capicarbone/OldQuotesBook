@@ -21,7 +21,7 @@ public class AdActivity extends AppCompatActivity {
 
     //public static final double ADMOB_PROBABILITY = 8.5;
     //public static final double ADMOB_PROBABILITY = 0;
-    public static final double ADMOB_PROBABILITY = 5.0;
+    public static final double ADMOB_PROBABILITY = 0.0;
 
     private AppController app;
 
