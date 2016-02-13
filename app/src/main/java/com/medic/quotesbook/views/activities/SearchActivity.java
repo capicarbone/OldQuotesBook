@@ -128,8 +128,8 @@ public class SearchActivity extends AdActivity implements QuotesListFragment.Con
 
         HitBuilders.EventBuilder event = new HitBuilders.EventBuilder();
 
-        event.setCategory(GAK.CATEGORY_QUOTESBOOK);
-        event.setAction(GAK.ACTION_QUOTE_SAVED);
+        event.setCategory(GAK.CATEGORY_SEARCH);
+        event.setAction(GAK.ACTION_QUOTE_SEARCH);
         event.setLabel(query);
 
         tracker.send(event.build());
