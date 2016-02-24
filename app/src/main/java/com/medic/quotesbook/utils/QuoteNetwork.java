@@ -27,8 +27,8 @@ public class QuoteNetwork {
                     new GsonFactory(),
                     null );
 
-            //String rootUrl = getRootURLByLocaleLanguage();
-            String rootUrl = "https://quotesbookapp.appspot.com/";
+            String rootUrl = getRootURLByLocaleLanguage();
+            //String rootUrl = "https://quotesbookapp.appspot.com/";
 
             //builder.setRootUrl("https://beta-dot-quotesbookapp.appspot.com/_ah/api/");
             builder.setRootUrl(rootUrl +  "_ah/api/");

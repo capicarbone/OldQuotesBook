@@ -17,6 +17,7 @@ import com.medic.quotesbook.AppController;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.services.GlueQuotesService;
+import com.medic.quotesbook.utils.QuoteNetwork;
 import com.medic.quotesbook.views.activities.BaseActivity;
 import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 
@@ -42,7 +43,7 @@ public class RegisterGCMAppTask extends AsyncTask<Context, Void, Boolean> {
         ctx = params[0];
         String senderId = ctx.getString(R.string.SENDER_ID);
 
-        Quotesclient server = AppController.getInstance().getQuotesClient();
+        Quotesclient server = QuoteNetwork.getQuotesService();
 
         String regid;
 

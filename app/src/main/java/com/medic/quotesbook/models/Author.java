@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.appspot.quotesbookapp.quotesclient.model.ApiMessagesAuthorMsg;
 import com.google.api.client.json.GenericJson;
+import com.medic.quotesbook.utils.QuoteNetwork;
 
 /**
  * Created by capi on 01/02/15.
@@ -91,7 +92,7 @@ public class Author implements MessageBasedModelInterface, Parcelable {
     }
 
     public String getFullPictureURL(){
-        return "http://quotesbookapp.appspot.com/" + getPictureUrl();
+        return QuoteNetwork.getRootURLByLocaleLanguage() + getPictureUrl();
     }
 
     @Override
