@@ -2,71 +2,70 @@
 <resources>
 
     <string name="app_name">QuotesBook</string>
-    <string name="tl_home">Algunas citas</string>
-    <string name="tl_quotesbook">Mi libro de citas</string>
-    <string name="action_settings">Coniguración</string>
-    <string name="action_share">Compartir</string>
-    <string name="drawer_opened">Menú Abierto</string>
-    <string name="drawer_closed">Menú Cerrado</string>
-    <string name="title_activity_quote">QuoteActivity</string>
-    <string name="title_dayquote">Cita del día</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_authors">AuthorsActivity</string>
-    <string name="text_loading_quotes">Consultando a sabios...</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Share</string>
 
-    <string name="title_share_in">Compartir en...</string>
+    <string name="title_activity_quote">Quote</string>
 
-    <string name="message_quote_saved">Cita guardada</string>
-    <string name="message_quote_unsaved">Cita eliminada</string>
+    <string name="text_loading_quotes">Referring to wise...</string>
 
-    <string name="message_quotes_connection_error">Sucede que necesitamos conexión a internet para lograr consultar a los sabios.</string>
-    <string name="message_quotes_backend_error">Disculpas, algo no ha salido bien contactando a los sabios. Por que no intentas mas tarde.</string>
-    <string name="message_quotes_not_found">No hemos encontrado citas que satisfagan tu búsqueda :( </string>
-    <string name="message_quotesbook_empty">Puede usar el botón con la estrella para guardar sus citas favoritas. Las encontrará en este apartado.</string>
+    <string name="message_quote_saved">Quote added.</string>
 
-    <string name="no_dayquote_available">Lo sentimos, sin la actualización de Play Services no podremos entregarte la cita del día cada mañana. En cuanto puedas actualizar, vuelve y podrás recibir la cita del día.</string>
-
-    <string name="label_share_image">Imagen</string>
-    <string name="label_share_text">Texto</string>
+    <string name="label_share_image">Image</string>
+    <string name="label_share_text">Text</string>
 
     <string name="twitter_account">1motivacion</string>
 
     <!-- Welcome texts -->
 
-    <string name="title_find_quotes">De líderes para líderes</string>
-    <string name="message_find_quotes">Descubre pensamientos de grandes, útiles para el día a día.</string>
-
-    <string name="title_share_quotes">Guarda y comparte</string>
-    <string name="message_share_quotes">Guarda tus citas favoritas en tu móvil y compártelas como texto o imágenes.</string>
-
-    <string name="title_day_quotes">Una inspiración cada mañana</string>
-    <string name="message_day_quotes">Todas tus mañanas te regalarémos un pensamiento para comenzar tu día.</string>
-
-    <string name="title_support_us">Cuéntanos tu opinión</string>
-    <string name="message_support_us">Si QuotesBook es de tu agrado recuerda apoyarnos con una opinión, nos motivará a mejorar :)</string>
-
-    <string name="search_hint">Buscar citas con...</string>
+    <string name="search_hint">Search quotes with...</string>
 
     <!-- Examples Quotes -->
 
-    <string name="example_quote_aristoteles">Somos lo que hacemos día a día. De modo que la excelencia no es un acto sino un hábito.</string>
-    <string name="example_author_aristoteles">- Aristóteles</string>
+    <string name="example_quote_aristoteles">We are what we do, day by day. So that excellence is not an act but a habit.</string>
+    <string name="example_author_aristoteles">- Aristotle</string>
 
-    <string name="example_quote_shakespeare">En nuestros locos intentos, renunciamos a lo que somos por lo que esperamos ser.</string>
+    <string name="example_quote_shakespeare">In our crazy attempts, we give up what we are for what we expect to be.</string>
     <string name="example_author_shakespeare">- William Shakespeare</string>
 
 
 
     <!-- Ids -->
 
-    <string name="adid_quote"> ca-app-pub-3341795231075884/5215712052</string>
-    <string name="adid_somequotes">ca-app-pub-3341795231075884/6692445255</string>
-    <string name="adid_quoteeditor">ca-app-pub-3341795231075884/8169178456</string>
-    <string name="adid_quotesearch">ca-app-pub-3341795231075884/9645911655</string>
+    <string name="adid_quote" translatable="false"> ca-app-pub-3341795231075884/5215712052</string>
+    <string name="adid_somequotes" translatable="false">ca-app-pub-3341795231075884/6692445255</string>
+    <string name="adid_quoteeditor" translatable="false">ca-app-pub-3341795231075884/8169178456</string>
+    <string name="adid_quotesearch" translatable="false">ca-app-pub-3341795231075884/9645911655</string>
 
 
-    <string name="title_activity_welcome">Bienvenido</string>
-    <string name="title_activity_quote_search">Buscar cita</string>
+    <string name="title_activity_welcome">Welcome</string>
+    <string name="title_activity_quote_search">Search quote</string>
+    <string name="title_find_quotes">From leaders to leaders</string>
+    <string name="title_share_in">Share on...</string>
+    <string name="title_share_quotes">Save and share</string>
+    <string name="tl_home">Some quotes</string>
+    <string name="tl_quotesbook">My Quotesbook</string>
+    <string name="title_dayquote">Today\'s Quote</string>
+    <string name="title_activity_authors">Authors</string>
+    <string name="drawer_opened">Opened</string>
+    <string name="drawer_closed">Closed</string>
+    <string name="message_quote_unsaved">Quote removed.</string>
+    <string name="message_quotesbook_empty">You can use the button with the star to save your favorite quotes. These can be found in this section.</string>
+    <string name="message_day_quotes">All your mornings you will receive a thought to begin your day.</string>
+    <string name="message_find_quotes">Discover thoughts from great people, useful for your days.</string>
+    <string name="message_quotes_not_found">We did not find quotes that satisfy your search :(</string>
+    <string name="message_share_quotes">Save your favorite quotes on your device and share them as text or beautiful images.</string>
+    <string name="message_support_us">If you like QuotesBook reminds support us with an opinion, it will motivate us to improve :)</string>
+    <string name="no_dayquote_available">Sorry, without the Play Services update we can not give you the quote of the day. As you can update, come back and you can receive the quote of the day.</string>
+    <string name="message_quotes_connection_error">It happens that we need internet connection to achieve consult the wise.</string>
+    <string name="message_quotes_backend_error">Our apologies, something has gone wrong by contacting the wise. Why not try later.</string>
+    <string name="title_day_quotes">An inspiration each morning.</string>
+    <string name="title_support_us">Tell us your opinion</string>
+    <string name="quote_long">Anyone can become angry, that is very simple. But to be angry with the right person, at the right degree, at the right time with the right purpose and in the right way, that certainly is not so simple.</string>
+    <string name="by">By</string>
+    <string name="anonymous_author">Anonymous</string>
+    <string name="nt_todaysquote_title">Someone has something to say</string>
+    <string name="nt_todaysquote_subtitle">A message from</string>
 
 
 </resources>

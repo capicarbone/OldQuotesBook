@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="SENDER_ID">385044243155</string>
+    <string name="SENDER_ID" translatable="false">385044243155</string>
 </resources>

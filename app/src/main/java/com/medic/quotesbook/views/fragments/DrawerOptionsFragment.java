@@ -127,6 +127,9 @@ public class DrawerOptionsFragment extends Fragment {
 
         quote = quoteM.getTodayQuote();
 
+        String from = getActivity().getResources().getString(R.string.by);
+        String anonymous = getActivity().getResources().getString(R.string.anonymous_author);
+
         if (quote != null){
 
             drawerTitleView.setText(ctx.getResources().getText(R.string.title_dayquote));
@@ -138,11 +141,11 @@ public class DrawerOptionsFragment extends Fragment {
                         .error(R.drawable.author_background_7)
                         .placeholder(R.drawable.author_background_7)
                         .into(authorPhotoView);
-                authorName.setText("Por " + quote.getAuthor().getFullName());
+                authorName.setText(from + " " + quote.getAuthor().getFullName());
 
 
             }else{
-                authorName.setText("Por Anónimo");
+                authorName.setText(from + " " + anonymous);
             }
 
             return true;

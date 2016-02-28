@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuotesBook</string>
+    <string name="action_settings">Configuración</string>
+    <string name="example_author_shakespeare">- William Shakespeare</string>
+    <string name="example_quote_shakespeare">En nuestros locos intentos, renunciamos a lo que somos por lo que esperamos ser.</string>
+    <string name="label_share_image">Imagen</string>
+    <string name="label_share_text">Texto</string>
+    <string name="example_quote_aristoteles">Somos lo que hacemos día a día. De modo que la excelencia no es un acto sino un hábito.</string>
+    <string name="example_author_aristoteles">- Aristóteles</string>
+    <string name="message_quote_unsaved">Cita eliminada.</string>
+    <string name="text_loading_quotes">Consultando a sabios...</string>
+    <string name="title_activity_quote_search">Buscar cita</string>
+    <string name="search_hint">Buscar citas con...</string>
+    <string name="title_activity_welcome">Bienvenido</string>
+    <string name="title_day_quotes">Una inspiración cada mañana</string>
+    <string name="title_dayquote">Cita del día</string>
+    <string name="title_find_quotes">De líderes para líderes</string>
+    <string name="title_share_in">Compartir en...</string>
+    <string name="title_share_quotes">Guarda y comparte</string>
+    <string name="tl_home">Algunas citas</string>
+    <string name="tl_quotesbook">Mi libro de citas</string>
+    <string name="title_activity_authors">Autores</string>
+    <string name="quote_long">Cualquiera puede enfadarse, eso es algo muy sencillo. Pero enfadarse con la persona adecuada, en el grado exacto, en el momento oportuno, con el propósito justo y del modo correcto, eso, ciertamente, no resulta tan sencillo.</string>
+    <string name="no_dayquote_available">Lo sentimos, sin la actualización de Play Services no podremos entregarte la cita del día cada mañana. En cuanto puedas actualizar, vuelve y podrás recibir la cita del día.</string>
+    <string name="message_support_us">Si QuotesBook es de tu agrado recuerda apoyarnos con una opinión, nos motivará a mejorar :)</string>
+    <string name="message_share_quotes">Guarda tus citas favoritas en tu móvil y compártelas como texto o imágenes.</string>
+    <string name="message_quotesbook_empty">Puede usar el botón con la estrella para guardar sus citas favoritas. Las encontrará en este apartado.</string>
+    <string name="message_quotes_not_found">No hemos encontrado citas que satisfagan tu búsqueda :(</string>
+    <string name="message_quotes_connection_error">Sucede que necesitamos conexión a internet para lograr consultar a los sabios.</string>
+    <string name="message_quotes_backend_error">Disculpas, algo no ha salido bien contactando a los sabios. Por que no intentas mas tarde.</string>
+    <string name="message_day_quotes">Todas tus mañanas te regalarémos un pensamiento para comenzar tu día.</string>
+    <string name="message_find_quotes">Descubre pensamientos de grandes, útiles para el día a día.</string>
+    <string name="title_activity_quote">Cita</string>
+    <string name="message_quote_saved">Cita guardada.</string>
+    <string name="action_share">Compartir</string>
+    <string name="title_support_us">Cuéntanos tu opinión</string>
+    <string name="drawer_closed">Cerrado</string>
+    <string name="drawer_opened">Abierto</string>
+    <string name="twitter_account">_onemotivation</string>
+    <string name="by">Por</string>
+    <string name="anonymous_author">Anónimo</string>
+    <string name="nt_todaysquote_title">Alguien tiene algo que decirte</string>
+    <string name="nt_todaysquote_subtitle">Un mensaje de</string>
+</resources>

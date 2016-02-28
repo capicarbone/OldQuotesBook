@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 import com.medic.quotesbook.R;
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.receivers.QuoteTimeReceiver;
+import com.medic.quotesbook.utils.QuoteNetwork;
 import com.medic.quotesbook.utils.TodayQuoteManager;
 import com.medic.quotesbook.views.activities.QuoteActivity;
 
@@ -73,15 +74,18 @@ public class PrepareDaysQuoteService extends IntentService {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
 
+        String notificationTitle = getBaseContext().getResources().getString(R.string.nt_todaysquote_title);
+        String notificationContent = getBaseContext().getResources().getString(R.string.nt_todaysquote_subtitle);
 
-        builder.setContentText("Un mensaje de " + quote.getAuthor().getFullName())
-                .setContentTitle("Alguien tiene algo que decirte")
+
+        builder.setContentText(notificationContent + " " + quote.getAuthor().getFullName())
+                .setContentTitle(notificationTitle)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setAutoCancel(true);
 
 
         if (quote.getAuthor() != null){
-            Bitmap authorImage = getAuthorImage("http://quotesbookapp.appspot.com/" + quote.getAuthor().getPictureUrl());
+            Bitmap authorImage = getAuthorImage(QuoteNetwork.getRootURLByLocaleLanguage() + quote.getAuthor().getPictureUrl());
 
             builder.setLargeIcon(authorImage);
         }

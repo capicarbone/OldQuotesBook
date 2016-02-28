@@ -29,6 +29,7 @@ import com.medic.quotesbook.R;
 
 import com.medic.quotesbook.models.Quote;
 import com.medic.quotesbook.receivers.OnBootReceiver;
+import com.medic.quotesbook.services.PrepareDaysQuoteService;
 import com.medic.quotesbook.tasks.GetQuotesTask;
 import com.medic.quotesbook.tasks.GetQuotesbookTask;
 import com.medic.quotesbook.tasks.GetSomeQuotesTask;
@@ -368,10 +369,10 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
         // this.sendBroadcast(intent);
 
 
-        // For test QuoteDayService
+         //For test QuoteDayService
 
-        //Intent i = new Intent(this, PrepareDaysQuoteService.class);
-        //this.startService(i);
+        Intent i = new Intent(this, PrepareDaysQuoteService.class);
+        this.startService(i);
 
         // For test TodayQuoteManager
 
