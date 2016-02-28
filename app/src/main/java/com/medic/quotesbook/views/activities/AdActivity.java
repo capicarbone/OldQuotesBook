@@ -40,6 +40,7 @@ public class AdActivity extends AppCompatActivity {
     }
 
     public void initAds(){
+
         adWrapper = findViewById(R.id.ad_wrapper);
         adView = (AdView) findViewById(R.id.ad_view);
 
