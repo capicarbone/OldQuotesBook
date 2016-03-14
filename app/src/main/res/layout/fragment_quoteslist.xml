@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/exception_text"
-            android:text="Intentar de nuevo"
+            android:text="@string/try_again"
             />
     </RelativeLayout>
 

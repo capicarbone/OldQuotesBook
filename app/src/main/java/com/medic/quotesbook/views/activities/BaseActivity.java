@@ -371,8 +371,8 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
 
          //For test QuoteDayService
 
-        Intent i = new Intent(this, PrepareDaysQuoteService.class);
-        this.startService(i);
+        //Intent i = new Intent(this, PrepareDaysQuoteService.class);
+        //this.startService(i);
 
         // For test TodayQuoteManager
 

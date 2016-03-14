@@ -44,20 +44,20 @@
     <string name="title_share_in">Share on...</string>
     <string name="title_share_quotes">Save and share</string>
     <string name="tl_home">Some quotes</string>
-    <string name="tl_quotesbook">My Quotesbook</string>
+    <string name="tl_quotesbook">My Quotes Book</string>
     <string name="title_dayquote">Today\'s Quote</string>
     <string name="title_activity_authors">Authors</string>
     <string name="drawer_opened">Opened</string>
     <string name="drawer_closed">Closed</string>
     <string name="message_quote_unsaved">Quote removed.</string>
-    <string name="message_quotesbook_empty">You can use the button with the star to save your favorite quotes. These can be found in this section.</string>
-    <string name="message_day_quotes">All your mornings you will receive a thought to begin your day.</string>
-    <string name="message_find_quotes">Discover thoughts from great people, useful for your days.</string>
+    <string name="message_quotesbook_empty">Save your favorite quotes clicking the star button and them here.</string>
+    <string name="message_day_quotes">Every morning you will receive a thought to begin your day.</string>
+    <string name="message_find_quotes">Discover thoughts by great people, useful for your days.</string>
     <string name="message_quotes_not_found">We did not find quotes that satisfy your search :(</string>
     <string name="message_share_quotes">Save your favorite quotes on your device and share them as text or beautiful images.</string>
     <string name="message_support_us">If you like QuotesBook reminds support us with an opinion, it will motivate us to improve :)</string>
     <string name="no_dayquote_available">Sorry, without the Play Services update we can not give you the quote of the day. As you can update, come back and you can receive the quote of the day.</string>
-    <string name="message_quotes_connection_error">It happens that we need internet connection to achieve consult the wise.</string>
+    <string name="message_quotes_connection_error">It happens that we need network connection to consult the wise.</string>
     <string name="message_quotes_backend_error">Our apologies, something has gone wrong by contacting the wise. Why not try later.</string>
     <string name="title_day_quotes">An inspiration each morning.</string>
     <string name="title_support_us">Tell us your opinion</string>
@@ -66,6 +66,7 @@
     <string name="anonymous_author">Anonymous</string>
     <string name="nt_todaysquote_title">Someone has something to say</string>
     <string name="nt_todaysquote_subtitle">A message from</string>
+    <string name="try_again">Try Again</string>
 
 
 </resources>
