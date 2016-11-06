@@ -84,14 +84,16 @@ public class AppController extends Application{
             }
         }
 
-
+/*
         if (adsActive == 1){
             return true; // Ads availables
         }
         else{
             return false; // Ads no availables
 
-        }
+        }*/
+
+        return false;
 
     }
 
