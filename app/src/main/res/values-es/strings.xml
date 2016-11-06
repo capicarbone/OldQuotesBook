@@ -9,7 +9,7 @@
     <string name="example_quote_aristoteles">Somos lo que hacemos día a día. De modo que la excelencia no es un acto sino un hábito.</string>
     <string name="example_author_aristoteles">- Aristóteles</string>
     <string name="message_quote_unsaved">Cita eliminada.</string>
-    <string name="text_loading_quotes">Consultando a sabios...</string>
+    <string name="text_loading_quotes">Consultando a los sabios...</string>
     <string name="title_activity_quote_search">Buscar cita</string>
     <string name="search_hint">Buscar citas con...</string>
     <string name="title_activity_welcome">Bienvenido</string>

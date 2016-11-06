@@ -7,7 +7,7 @@
 
     <string name="title_activity_quote">Quote</string>
 
-    <string name="text_loading_quotes">Referring to wise...</string>
+    <string name="text_loading_quotes">Referring to the wise...</string>
 
     <string name="message_quote_saved">Quote added.</string>
 
@@ -50,7 +50,7 @@
     <string name="drawer_opened">Opened</string>
     <string name="drawer_closed">Closed</string>
     <string name="message_quote_unsaved">Quote removed.</string>
-    <string name="message_quotesbook_empty">Save your favorite quotes clicking the star button and them here.</string>
+    <string name="message_quotesbook_empty">Save your favorite quotes clicking the star button.</string>
     <string name="message_day_quotes">Every morning you will receive a thought to begin your day.</string>
     <string name="message_find_quotes">Discover thoughts by great people, useful for your days.</string>
     <string name="message_quotes_not_found">We did not find quotes that satisfy your search :(</string>
