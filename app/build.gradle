@@ -12,13 +12,13 @@ repositories {
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.medic.quotesbook"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 36
+        versionCode 37
         versionName "0.7"
     }
     buildTypes {
