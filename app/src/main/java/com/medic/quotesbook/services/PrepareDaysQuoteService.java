@@ -103,7 +103,7 @@ public class PrepareDaysQuoteService extends IntentService {
 
         */
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         builder.setContentIntent(pendingIntent);
 
