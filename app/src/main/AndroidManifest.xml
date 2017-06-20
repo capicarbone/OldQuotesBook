@@ -145,6 +145,9 @@
                 android:value="com.medic.quotesbook.views.activities.BaseActivity" />
 
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="d626ed8c7b8b09309a302cd5ee99a2217a7555db" />
     </application>
 
 </manifest>

@@ -6,11 +6,13 @@ import android.util.Log;
 
 
 import com.appspot.quotesbookapp.quotesclient.Quotesclient;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
 
+import io.fabric.sdk.android.Fabric;
 import org.joda.time.DateTime;
 
 /**
@@ -36,6 +38,7 @@ public class AppController extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         mInstance = this;
 
         //isAdsActive();

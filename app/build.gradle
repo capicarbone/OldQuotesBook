@@ -1,4 +1,16 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+
+
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 apply plugin: 'com.google.gms.google-services'
 
 repositories {
@@ -7,6 +19,7 @@ repositories {
     }
     mavenCentral()
     mavenLocal()
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 
@@ -47,4 +60,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.clans:fab:1.6.1'
     compile files('libs/tappx-sdk-android-v2.2.09.jar')
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+        transitive = true;
+    }
 }
