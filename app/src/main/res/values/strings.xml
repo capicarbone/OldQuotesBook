@@ -58,7 +58,7 @@
     <string name="message_support_us">If you like QuotesBook reminds support us with an opinion, it will motivate us to improve :)</string>
     <string name="no_dayquote_available">Sorry, without the Play Services update we can not give you the quote of the day. As you can update, come back and you can receive the quote of the day.</string>
     <string name="message_quotes_connection_error">It happens that we need network connection to consult the wise.</string>
-    <string name="message_quotes_backend_error">Our apologies, something has gone wrong by contacting the wise. Why not try later.</string>
+    <string name="message_quotes_backend_error">Our apologies, something has gone wrong by contacting the wise. Try later.</string>
     <string name="title_day_quotes">An inspiration each morning.</string>
     <string name="title_support_us">Tell us your opinion</string>
     <string name="quote_long">Anyone can become angry, that is very simple. But to be angry with the right person, at the right degree, at the right time with the right purpose and in the right way, that certainly is not so simple.</string>

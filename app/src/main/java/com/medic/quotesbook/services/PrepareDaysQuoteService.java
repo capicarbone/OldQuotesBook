@@ -21,6 +21,7 @@ import com.medic.quotesbook.views.activities.QuoteActivity;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 
 /**
  * Created by capi on 27/05/15.
@@ -103,7 +104,7 @@ public class PrepareDaysQuoteService extends IntentService {
 
         */
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(ctx, new Random().nextInt(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         builder.setContentIntent(pendingIntent);
 

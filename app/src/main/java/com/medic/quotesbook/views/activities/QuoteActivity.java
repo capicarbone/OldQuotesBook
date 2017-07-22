@@ -211,8 +211,6 @@ public class QuoteActivity extends AdActivity {
 
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
