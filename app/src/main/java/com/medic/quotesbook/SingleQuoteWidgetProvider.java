@@ -88,9 +88,14 @@ public class SingleQuoteWidgetProvider extends AppWidgetProvider {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 20323, quoteActivityIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         views.setOnClickPendingIntent(R.id.root, pendingIntent);
 
-        for (int i = 0; i < appWidgetIds.length ; i++){
-            awm.updateAppWidget(appWidgetIds[i], views);
+        if (null != awm){
+            for (int i = 0; i < appWidgetIds.length ; i++){
+                awm.updateAppWidget(appWidgetIds[i], views);
+            }
+        }else{
+            Log.e("SingleQuoteWidget", "AppWidgetManager is null");
         }
+
 
     }
 

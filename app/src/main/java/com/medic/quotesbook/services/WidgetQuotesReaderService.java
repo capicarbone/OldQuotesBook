@@ -69,9 +69,12 @@ public class WidgetQuotesReaderService extends IntentService{
 
             AppWidgetManager awm = (AppWidgetManager) getApplicationContext().getSystemService(Context.APPWIDGET_SERVICE);
 
+            if (null == awm){
+                awm = AppWidgetManager.getInstance(getApplicationContext());
+            }
+
             SingleQuoteWidgetProvider.showQuoteInWidget(actualQuote, getApplicationContext(), views, awm, widgetsIds);
         }
-
 
     }
 }
