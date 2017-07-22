@@ -68,5 +68,7 @@
     <string name="nt_todaysquote_subtitle">A message from</string>
     <string name="try_again">Try Again</string>
 
+    <string name="widget_default_message">Getting quotes...</string>
+
 
 </resources>

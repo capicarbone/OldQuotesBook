@@ -43,4 +43,5 @@
     <string name="nt_todaysquote_title">Alguien tiene algo que decirte</string>
     <string name="nt_todaysquote_subtitle">Un mensaje de</string>
     <string name="try_again">Intentar de nuevo</string>
+    <string name="widget_default_message">Obteniendo frases....</string>
 </resources>
