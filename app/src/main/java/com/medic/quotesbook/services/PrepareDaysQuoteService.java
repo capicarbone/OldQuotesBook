@@ -93,6 +93,7 @@ public class PrepareDaysQuoteService extends IntentService {
         Intent intent = new Intent(ctx, QuoteActivity.class);
         intent.putExtra(QuoteActivity.QUOTE_KEY, quote);
         intent.putExtra(QuoteActivity.DAYQUOTE_KEY, true);
+        intent.setAction(quote.getKey()); // Dummuy action for force update current activity
 
         /*
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(ctx);
@@ -103,7 +104,9 @@ public class PrepareDaysQuoteService extends IntentService {
 
         */
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        // https://stackoverflow.com/questions/3168484/pendingintent-works-correctly-for-the-first-notification-but-incorrectly-for-the
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(ctx, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setContentIntent(pendingIntent);
 
