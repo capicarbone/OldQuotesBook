@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/libs/libs.iml" filepath="$PROJECT_DIR$/app/libs/libs.iml" />
-      <module fileurl="file://$PROJECT_DIR$/quotesbook.iml" filepath="$PROJECT_DIR$/quotesbook.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/libs/quotesclient/quotesclient.iml" filepath="$PROJECT_DIR$/app/libs/quotesclient/quotesclient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../capi-principal/capi/Repositorios/quotesbook/app/app.iml" filepath="$PROJECT_DIR$/../../../capi-principal/capi/Repositorios/quotesbook/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../capi-principal/capi/Repositorios/quotesbook/app/libs/libs.iml" filepath="$PROJECT_DIR$/../../../capi-principal/capi/Repositorios/quotesbook/app/libs/libs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../capi-principal/capi/Repositorios/quotesbook/quotesbook.iml" filepath="$PROJECT_DIR$/../../../capi-principal/capi/Repositorios/quotesbook/quotesbook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../capi-principal/capi/Repositorios/quotesbook/app/libs/quotesclient/quotesclient.iml" filepath="$PROJECT_DIR$/../../../capi-principal/capi/Repositorios/quotesbook/app/libs/quotesclient/quotesclient.iml" />
     </modules>
   </component>
 </project>
