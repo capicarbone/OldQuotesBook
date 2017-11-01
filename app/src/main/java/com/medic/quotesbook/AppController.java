@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.appspot.quotesbookapp.quotesclient.Quotesclient;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -38,7 +39,10 @@ public class AppController extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+        // Crashlytics Initialize
+        CrashlyticsCore core = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
+        Fabric.with(this, new Crashlytics.Builder().core(core).build());
+        // ---
         mInstance = this;
 
         //isAdsActive();
