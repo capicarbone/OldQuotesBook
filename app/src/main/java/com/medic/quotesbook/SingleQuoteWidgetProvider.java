@@ -83,6 +83,7 @@ public class SingleQuoteWidgetProvider extends AppWidgetProvider {
         }
 
         Intent quoteActivityIntent = new Intent(context, QuoteActivity.class);
+        quoteActivityIntent.setAction(quote.getKey()); // Dummuy action for force update current activity
         quoteActivityIntent.putExtra(QuoteActivity.QUOTE_KEY, quote);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 20323, quoteActivityIntent, PendingIntent.FLAG_CANCEL_CURRENT);
