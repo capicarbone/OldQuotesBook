@@ -33,14 +33,18 @@ public class SingleQuoteWidgetProvider extends AppWidgetProvider {
 
         Quote[] quotes = qs.getQuotes();
 
-        if (quotes.length > 1){
+        for (int i = 1; i < quotes.length ; i++ ){
 
-            Quote q = quotes[0];
+            Quote q = quotes[i-1];
             qs.removeQuote(q.getKey());
-            q = quotes[1];
+            q = quotes[i];
             qs.commit();
 
-            showQuoteInWidget(q, context, views, appWidgetManager, appWidgetIds);
+            if (q.getBody().length() < 200){
+                showQuoteInWidget(q, context, views, appWidgetManager, appWidgetIds);
+                break;
+            }
+
         }
 
         if (quotes.length <= 5){
@@ -62,14 +66,14 @@ public class SingleQuoteWidgetProvider extends AppWidgetProvider {
 
     public static void showQuoteInWidget(Quote quote, Context context, RemoteViews views, AppWidgetManager awm, int[] appWidgetIds){
 
-        //quote.setBody("Once conform, once do what other people do because they do it, and a lethargy steals over all the finer nerves and faculties of the soul. She becomes all outer show and inward emptiness; dull, callous, and indifferent.");
+        //quote.setBody("Once conform, once do what other people do because they do it, and a lethargy steals over all the finer nerves and faculties of the soul. She becomes all outer show and inward emptiness; dull, callous, and indifferent."); // 218 chars
         //quote.setBody("Be faithful to that which exists within yourself.");
         //quote.setBody("No matter what age you are, or what your circumstances might be, you are special, and you still have something unique to offer. Your life, because of who you are, has meaning.");
         //quote.setBody("The real voyage of discovery consists not in seeking new landscapes, but in having new eyes.");
 
         views.setTextViewText(R.id.quote_text, quote.getBody());
         views.setTextViewText(R.id.quote_author, "- " + quote.getAuthor().getFullName());
-
+/*
         if (quote.getBody().length() >= 200){
             changeQuoteTextSize(views, 16);
         } else if (quote.getBody().length() >= 150){
@@ -78,9 +82,10 @@ public class SingleQuoteWidgetProvider extends AppWidgetProvider {
 
         if (quote.getBody().length() <= 55){
             changeQuoteTextSize(views, 30);
-        }else if (quote.getBody().length() < 90){
+        }else */ if (quote.getBody().length() < 90){
             changeQuoteTextSize(views, 25);
         }
+
 
         Intent quoteActivityIntent = new Intent(context, QuoteActivity.class);
         quoteActivityIntent.setAction(quote.getKey()); // Dummuy action for force update current activity
