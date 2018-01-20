@@ -65,6 +65,12 @@ public class QuotesStorage {
 
     }
 
+    public void clear(){
+        for (Quote quote: getQuotes()){
+            removeQuote(quote.getKey());
+        }
+    }
+
     public Quote removeQuote(String quoteKey){
 
         Quote removedQuote = null;

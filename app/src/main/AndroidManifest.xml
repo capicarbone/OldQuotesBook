@@ -111,11 +111,23 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".SingleQuoteWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widgetinfo_single_quote" />
+        </receiver>
+
         <service
             android:name="com.google.android.gms.analytics.AnalyticsService"
             android:enabled="true"
             android:exported="false" />
 
+        <service android:name=".services.WidgetQuotesReaderService"
+            android:enabled="true"
+            android:exported="false"
+            />
         <activity
             android:name=".views.activities.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden"
