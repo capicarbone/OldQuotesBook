@@ -82,7 +82,6 @@ obj/
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 
-
 # OS-specific files
 .DS_Store
 .DS_Store?
@@ -95,6 +94,8 @@ Thumbs.db
 # Legacy Eclipse project files
 .classpath
 .project
+.cproject
+.settings/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -127,5 +128,5 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.gitignore.io/api/androidstudio
 
+# End of https://www.gitignore.io/api/androidstudio
