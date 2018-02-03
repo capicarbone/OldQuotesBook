@@ -44,4 +44,10 @@
     <color name="slide_background_4">#00BCD4</color>
 
     <color name="slide_text_3">#745405</color>
+
+    <!-- Images Quotes Color Texts -->
+
+    <color name="text_color_1">@color/white</color>
+    <color name="text_color_2">#333333</color>
+    <color name="text_color_9">#32170e</color>
 </resources>

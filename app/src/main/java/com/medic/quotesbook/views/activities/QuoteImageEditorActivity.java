@@ -8,14 +8,11 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -44,14 +41,14 @@ public class QuoteImageEditorActivity extends AdActivity {
     public static final int LIMIT_SMALL_QUOTE = 130;
     public static final int LIMIT_MEDIUM_QUOTE = 180;
 
-    public static final int N_QUOTE_BACKGROUND = 9;
+    public static final int N_QUOTE_BACKGROUND = 5;
 
     ImageView quoteBackgroundView;
     ImageView authorPictureView;
-    TextView quoteBodyView;
+    TextView quoteBodyTV;
 
-    TextView authorFirstNameView;
-    TextView authorLastNameView;
+    TextView authorFirstNameTV;
+    TextView authorLastNameTV;
     View quoteImageRoot;
     FloatingActionButton fab;
     View progessBar;
@@ -73,10 +70,10 @@ public class QuoteImageEditorActivity extends AdActivity {
 
         quoteBackgroundView = (ImageView) findViewById(R.id.quote_background);
         authorPictureView = (ImageView) findViewById(R.id.author_picture);
-        quoteBodyView = (TextView) findViewById(R.id.quote_body);
+        quoteBodyTV = (TextView) findViewById(R.id.quote_body);
 
-        authorFirstNameView = (TextView) findViewById(R.id.author_first_name);
-        authorLastNameView = (TextView) findViewById(R.id.author_last_name);
+        authorFirstNameTV = (TextView) findViewById(R.id.author_first_name);
+        authorLastNameTV = (TextView) findViewById(R.id.author_last_name);
 
         quoteImageRoot = findViewById(R.id.image_quote_root);
 
@@ -99,18 +96,18 @@ public class QuoteImageEditorActivity extends AdActivity {
         String shareableQuote = quote.getWithQuotes();
 
         if (shareableQuote.length() < LIMIT_SHORT_QUOTE){
-            quoteBodyView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22);
+            quoteBodyTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22);
         }
 
         if (shareableQuote.length() > LIMIT_SMALL_QUOTE){
-            quoteBodyView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+            quoteBodyTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         }
 
         if (shareableQuote.length() > LIMIT_MEDIUM_QUOTE){
-            quoteBodyView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+            quoteBodyTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         }
 
-        quoteBodyView.setText(shareableQuote);
+        quoteBodyTV.setText(shareableQuote);
 
         Picasso.with(this)
                 .load(quote.getAuthor().getFullPictureURL())
@@ -131,18 +128,23 @@ public class QuoteImageEditorActivity extends AdActivity {
                 });
 
         if (quote.getAuthor().getLastName().equals("")){
-            authorLastNameView.setText(quote.getAuthor().getFirstName());
+            authorLastNameTV.setText(quote.getAuthor().getFirstName());
         }else{
-            authorLastNameView.setText(quote.getAuthor().getLastName());
-            authorFirstNameView.setText(quote.getAuthor().getFirstName());
+            authorLastNameTV.setText(quote.getAuthor().getLastName());
+            authorFirstNameTV.setText(quote.getAuthor().getFirstName());
         }
 
-        int nBackground = (int) (Math.random() * 10) % N_QUOTE_BACKGROUND ;
+        int nBackground = (int) (Math.random() * N_QUOTE_BACKGROUND) % N_QUOTE_BACKGROUND ;
+        //nBackground = 5;
 
         quoteBackgroundView.setImageResource(getBackgroundQuoteResource(nBackground));
+        quoteBodyTV.setTextColor(getResources().getColor(getImageTextColorResource(nBackground)));
+        authorFirstNameTV.setTextColor(getResources().getColor(getImageTextColorResource(nBackground)));
+        authorLastNameTV.setTextColor(getResources().getColor(getImageTextColorResource(nBackground)));
+        ((TextView) findViewById(R.id.author_separator)).setTextColor(getResources().getColor(getImageTextColorResource(nBackground)));
 
         Typeface font = Typeface.createFromAsset(getAssets(), "RobotoSlab-Regular.ttf");
-        quoteBodyView.setTypeface(font);
+        quoteBodyTV.setTypeface(font);
 
 
     }
@@ -250,14 +252,16 @@ public class QuoteImageEditorActivity extends AdActivity {
             case 2: return R.drawable.bg_quote_share_3;
             case 3: return R.drawable.bg_quote_share_4;
             case 4: return R.drawable.bg_quote_share_5;
-            case 5: return R.drawable.bg_quote_share_6;
-            case 6: return R.drawable.bg_quote_share_7;
-            case 7: return R.drawable.bg_quote_share_8;
-            case 8: return R.drawable.bg_quote_share_9;
             default:
                 return R.drawable.bg_quote_share_2;
 
         }
+    }
 
+    private int getImageTextColorResource(int i){
+        switch (i){
+            case 1: return R.color.text_color_2;
+            default: return R.color.text_color_1;
+        }
     }
 }
