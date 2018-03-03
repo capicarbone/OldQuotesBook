@@ -21,6 +21,9 @@
     <color name="gray_light">#dddddd</color>
     <color name="divider">#B6B6B6</color>
     <color name="bg">#ececec</color>
+    
+    <color name="quote_image_bottom_dark">#7cffffff</color>
+    <color name="quote_image_bottom_light">#585858</color>
 
     <color name="black_semi_transparent">#5c000000</color>
 

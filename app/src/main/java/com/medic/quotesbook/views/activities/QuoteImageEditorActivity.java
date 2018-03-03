@@ -46,6 +46,8 @@ public class QuoteImageEditorActivity extends AdActivity {
     ImageView quoteBackgroundView;
     ImageView authorPictureView;
     TextView quoteBodyTV;
+    TextView qbLogoQuotesTV;
+    TextView qbLogoBookTV;
 
     TextView authorFirstNameTV;
     TextView authorLastNameTV;
@@ -74,6 +76,9 @@ public class QuoteImageEditorActivity extends AdActivity {
 
         authorFirstNameTV = (TextView) findViewById(R.id.author_first_name);
         authorLastNameTV = (TextView) findViewById(R.id.author_last_name);
+
+        qbLogoQuotesTV = (TextView) findViewById(R.id.qb_lobo_quotes);
+        qbLogoBookTV = (TextView) findViewById(R.id.qb_lobo_book);
 
         quoteImageRoot = findViewById(R.id.image_quote_root);
 
@@ -145,6 +150,13 @@ public class QuoteImageEditorActivity extends AdActivity {
 
         Typeface font = Typeface.createFromAsset(getAssets(), "RobotoSlab-Regular.ttf");
         quoteBodyTV.setTypeface(font);
+
+        Typeface fontBold = Typeface.createFromAsset(getAssets(), "RobotoSlab-Bold.ttf");
+        qbLogoBookTV.setTypeface(fontBold);
+        qbLogoQuotesTV.setTypeface(font);
+
+        ( (TextView) findViewById(R.id.qb_lobo_quotes_light)).setTypeface(font);
+        ( (TextView) findViewById(R.id.qb_lobo_book_light)).setTypeface(fontBold);
 
 
     }
@@ -260,8 +272,12 @@ public class QuoteImageEditorActivity extends AdActivity {
 
     private int getImageTextColorResource(int i){
         switch (i){
-            case 1: return R.color.text_color_2;
-            default: return R.color.text_color_1;
+            case 1:
+                findViewById(R.id.bottom_dark).setVisibility(View.GONE);
+                return R.color.text_color_2;
+            default:
+                findViewById(R.id.bottom_light).setVisibility(View.GONE);
+                return R.color.text_color_1;
         }
     }
 }
