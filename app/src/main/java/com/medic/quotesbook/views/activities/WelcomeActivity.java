@@ -9,8 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +27,7 @@ import com.medic.quotesbook.views.fragments.slides.OneInspirationSlideFragment;
 import com.medic.quotesbook.views.fragments.slides.SaveAndShareSlideFragment;
 import com.medic.quotesbook.views.fragments.slides.SupportUsSlideFragment;
 
-public class WelcomeActivity extends ActionBarActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     private AppController app;
 
@@ -73,24 +74,27 @@ public class WelcomeActivity extends ActionBarActivity {
                 @Override
                 public void onPageSelected(int position) {
 
-                    switch (position){
-                        case 0:
-                            window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_1));
-                            window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_1));
-                            break;
-                        case 1:
-                            window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_2));
-                            window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_2));
-                            break;
-                        case 2:
-                            window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_3));
-                            window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_3));
-                            break;
-                        case 3:
-                            window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_4));
-                            window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_4));
-                            break;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                        switch (position){
+                            case 0:
+                                window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_1));
+                                window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_1));
+                                break;
+                            case 1:
+                                window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_2));
+                                window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_2));
+                                break;
+                            case 2:
+                                window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_3));
+                                window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_3));
+                                break;
+                            case 3:
+                                window.setStatusBarColor(ctx.getResources().getColor(R.color.slide_background_4));
+                                window.setNavigationBarColor(ctx.getResources().getColor(R.color.slide_background_4));
+                                break;
+                        }
                     }
+
                 }
 
                 @Override

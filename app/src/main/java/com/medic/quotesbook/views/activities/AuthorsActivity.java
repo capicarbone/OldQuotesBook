@@ -1,13 +1,13 @@
 package com.medic.quotesbook.views.activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.medic.quotesbook.R;
 
-public class AuthorsActivity extends ActionBarActivity {
+public class AuthorsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -100,6 +100,7 @@ public class QuoteImageEditorActivity extends AdActivity {
 
         String shareableQuote = quote.getWithQuotes();
 
+        /*
         if (shareableQuote.length() < LIMIT_SHORT_QUOTE){
             quoteBodyTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22);
         }
@@ -111,6 +112,7 @@ public class QuoteImageEditorActivity extends AdActivity {
         if (shareableQuote.length() > LIMIT_MEDIUM_QUOTE){
             quoteBodyTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         }
+        */
 
         quoteBodyTV.setText(shareableQuote);
 

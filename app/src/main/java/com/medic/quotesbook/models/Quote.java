@@ -81,9 +81,9 @@ public class Quote implements MessageBasedModelInterface, Parcelable {
 
         if (body.charAt(body.length() - 1) == '.'){
 
-            return "\"" + body.substring(0, body.length()-1) + "\".";
+            return "\"" + body.substring(0, body.length()-1) + "\"";
         }else
-            return "\"" + body + "\".";
+            return "\"" + body + "\"";
 
     }
 
