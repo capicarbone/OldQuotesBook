@@ -3,5 +3,6 @@
     <string-array name="drawer_options">
         <item>@string/tl_home</item>
         <item>@string/tl_quotesbook</item>
+        <item>@string/tl_settings</item>
     </string-array>
 </resources>

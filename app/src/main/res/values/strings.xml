@@ -29,7 +29,6 @@
     <string name="example_author_shakespeare">- William Shakespeare</string>
 
 
-
     <!-- Ids -->
 
     <string name="adid_quote" translatable="false"> ca-app-pub-3341795231075884/5215712052</string>
@@ -45,6 +44,7 @@
     <string name="title_share_quotes">Save and share</string>
     <string name="tl_home">Some quotes</string>
     <string name="tl_quotesbook">My Quotes Book</string>
+    <string name="tl_settings">Settings</string>
     <string name="title_dayquote">Today\'s Quote</string>
     <string name="title_activity_authors">Authors</string>
     <string name="drawer_opened">Opened</string>
@@ -69,6 +69,9 @@
     <string name="try_again">Try Again</string>
 
     <string name="widget_default_message">Getting quotes...</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

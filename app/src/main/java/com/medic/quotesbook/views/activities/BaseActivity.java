@@ -40,6 +40,7 @@ import com.medic.quotesbook.utils.TodayQuoteManager;
 import com.medic.quotesbook.views.dialogs.NoQuoteDayDialog;
 import com.medic.quotesbook.views.fragments.DrawerOptionsFragment;
 import com.medic.quotesbook.views.fragments.QuotesListFragment;
+import com.medic.quotesbook.views.fragments.SettingsFragment;
 
 import android.os.Handler;
 
@@ -48,6 +49,7 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
     static final String TAG = "BaseActivity";
     public static final String SCREEN_NAME_QUOTESBOOK = "Quotesbook";
     public static final String SCREEN_NAME_SOMEQUOTES = "Some Quotes";
+    public static final String SCREEN_NAME_SETTINGS = "Settings";
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
@@ -170,6 +172,9 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
             case 1: optionView = QuotesListFragment.newInstance();
                 tracker.setScreenName(SCREEN_NAME_QUOTESBOOK);
                 break;
+            case 2: optionView = SettingsFragment.newInstance();
+                tracker.setScreenName(SCREEN_NAME_SETTINGS);
+                break;
         }
 
         return optionView;
@@ -248,11 +253,17 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
     public void showOption(int optionSelected) {
 
         FragmentManager fm = getSupportFragmentManager();
-        QuotesListFragment actualFragment = (QuotesListFragment) fm.findFragmentById(R.id.frame_content);
 
-        if ( !optionIsQuotesBook() ){ // Es someQuotes
-            someQuotesFragmentState = fm.saveFragmentInstanceState(actualFragment);
+        try{
+            QuotesListFragment actualFragment = (QuotesListFragment) fm.findFragmentById(R.id.frame_content);
+
+            if ( !optionIsQuotesBook() ){ // Es someQuotes
+                someQuotesFragmentState = fm.saveFragmentInstanceState(actualFragment);
+            }
+        }catch (Exception ex){
+
         }
+
 
         this.optionSelected = optionSelected;
 
@@ -276,6 +287,7 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
         switch(optionSelected){
             case 0: this.getSupportActionBar().setTitle(R.string.tl_home); break;
             case 1: this.getSupportActionBar().setTitle(R.string.tl_quotesbook); break;
+            case 2: getSupportActionBar().setTitle(R.string.tl_settings);
         }
 
     }
@@ -397,6 +409,7 @@ public class BaseActivity extends AdActivity implements BaseActivityRequestListe
                 return new GetSomeQuotesTask();
             case 1: // Quotesbook
                 return new GetQuotesbookTask();
+
         }
         return null;
     }

@@ -44,6 +44,10 @@ public class DrawerOptionsAdapter extends ArrayAdapter<String> {
                 // TODO: Colocar if para diferentes versiones.
                 icon = getContext().getResources().getDrawable(R.drawable.ic_book_selector);
                 break;
+            case 2:
+                icon = getContext().getResources().getDrawable(R.drawable.ic_settings_selector);
+                break;
+
         }
 
         optionIconView.setBackgroundDrawable(icon);

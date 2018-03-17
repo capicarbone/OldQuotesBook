@@ -52,6 +52,7 @@ configurations {
 }
 
 dependencies {
+    implementation 'com.android.support:support-v4:27.1.0'
     compile 'com.google.http-client:google-http-client-gson:1.17.0-rc'
     compile([group: 'com.google.api-client', name: 'google-api-client-android', version: '1.19.0'])
     compile project(path: ':app:libs:quotesclient')
