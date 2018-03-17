@@ -34,6 +34,7 @@ android {
         targetSdkVersion 27
         versionCode 48
         versionName "0.8.3"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -67,6 +68,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.clans:fab:1.6.1'
+    compile 'com.android.support:multidex:1.0.0'
     compile files('libs/tappx-sdk-android-v2.2.09.jar')
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;

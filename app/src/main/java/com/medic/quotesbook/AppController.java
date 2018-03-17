@@ -2,6 +2,7 @@ package com.medic.quotesbook;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 
@@ -19,7 +20,7 @@ import org.joda.time.DateTime;
 /**
  * Created by capi on 12/03/15.
  */
-public class AppController extends Application{
+public class AppController extends MultiDexApplication{
 
     public static final String TAG = AppController.class.getSimpleName();
 
