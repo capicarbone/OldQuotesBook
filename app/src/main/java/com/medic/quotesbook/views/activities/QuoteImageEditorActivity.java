@@ -41,7 +41,7 @@ public class QuoteImageEditorActivity extends AdActivity {
     public static final int LIMIT_SMALL_QUOTE = 130;
     public static final int LIMIT_MEDIUM_QUOTE = 180;
 
-    public static final int N_QUOTE_BACKGROUND = 5;
+    public static final int N_QUOTE_BACKGROUND = 2;
 
     ImageView quoteBackgroundView;
     ImageView authorPictureView;
