@@ -1,5 +1,6 @@
-# QuotesBook App
+# QuotesBook App (Old version)
 
-### Librerías usadas:
+![Screens Summary](/promo/screens.png)
+![Widget](/promo/widget.png)
 
- - (FAB) https://github.com/Clans/FloatingActionButton 
+
